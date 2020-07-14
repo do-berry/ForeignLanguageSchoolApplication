@@ -1,9 +1,11 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser
 
 
 # user roles
 class User(AbstractUser):
+    username = models.CharField(max_length=16, unique=True)
+    password = models.CharField(max_length=32)
     is_student = models.BooleanField('student', default=False)
     is_teacher = models.BooleanField('teacher', default=False)
     is_customer_assistant = models.BooleanField('customer assistant', default=False)
