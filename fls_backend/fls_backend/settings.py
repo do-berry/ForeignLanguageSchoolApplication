@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'fls_backend',
     'rest_framework',
     'app',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'fls_backend.urls'
@@ -125,3 +127,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 AUTH_USER_MODEL = 'app.User'
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+)

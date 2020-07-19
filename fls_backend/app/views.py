@@ -31,3 +31,5 @@ def user_login(request):
     if user.password != request.data['password']:
         return Response("Incorrect password was used", status=status.HTTP_406_NOT_ACCEPTABLE)
     return Response("OK", status=status.HTTP_200_OK)
+
+
