@@ -4,14 +4,14 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from app.models import User
-from app.serializers import UserSerializer
+from app.serializers import UserSerializer, PersonSerializer
 
 
 @api_view(['POST'])
 def create_user(request):
-    serializer = UserSerializer(data=request.data)
+    serializer = PersonSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save()
+        serializer.create(validated_data=request.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 

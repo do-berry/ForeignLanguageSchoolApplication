@@ -19,4 +19,4 @@ class Person(models.Model):
     name = models.TextField()
     mobile_number = models.IntegerField()
     address = models.TextField()
-    payment_id = models.IntegerField()
+    # payment_id = models.IntegerField()
