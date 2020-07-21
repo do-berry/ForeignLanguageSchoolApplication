@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import {Route} from 'react-router-dom';
 
 import Login from './login/Login.js';
 import Register from './registration/Register.js';

@@ -24,7 +24,7 @@ class RegisterForm extends React.Component {
 
     async register() {
         try {
-            let res = await fetch('http://127.0.0.1:8000/createuser', {
+            await fetch('http://127.0.0.1:8000/createuser', {
                 method: 'post',
                 headers: {
                     'Accept': 'application/json',
