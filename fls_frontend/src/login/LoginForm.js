@@ -28,7 +28,7 @@ class LoginForm extends React.Component {
 
   async doLogin() {
     try {
-      let res = await fetch('http://127.0.0.1:8000/login', {
+        await fetch('http://127.0.0.1:8000/login', {
         method: 'post',
         headers: {
           'Accept': 'application/json',
