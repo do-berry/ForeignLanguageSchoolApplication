@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Label, Control, ControlLabel, FormControl, Button, Alert} from "react-bootstrap";
+import {Alert, Button, Control, Form} from "react-bootstrap";
 import InputField from "./InputField";
 import FormGroup from "reactstrap/es/FormGroup";
 
@@ -24,15 +24,6 @@ class LoginForm extends React.Component {
     this.setState({
       [property]: val
     });
-  }
-
-  resetForm() {
-    this.setState({
-      username: '',
-      password: '',
-      correctLogin: null,
-      isLoggedIn: false,
-    })
   }
 
   async doLogin() {
