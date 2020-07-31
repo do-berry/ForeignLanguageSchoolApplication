@@ -1,0 +1,12 @@
+.registerForm  {
+    width: 640px;
+    display: inline-block;
+}
+
+.checkboxes {
+    display: inline-block;
+}
+
+input[type=checkbox] {
+    width: 30px;
+}
