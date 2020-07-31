@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'app',
     'corsheaders',
     'knox',
+    'school',
 ]
 
 MIDDLEWARE = [
