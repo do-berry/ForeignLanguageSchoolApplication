@@ -9,6 +9,9 @@ verify_ssl = true
 django = "*"
 djangorestframework = "*"
 django-rest-knox = "*"
+django-enumfield = "==1.2.1"
+django-cors-headers = "*"
+django-enumchoicefield = "*"
 
 [requires]
 python_version = "3.8"

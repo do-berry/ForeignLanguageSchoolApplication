@@ -28,6 +28,15 @@ class PersonSerializer(serializers.ModelSerializer):
         return person
 
 
+# todo
+class AssignTeacherSerializer(serializers.ModelSerializer):
+    user = UserSerializer
+
+    class Meta:
+        model = Person
+        fields = ('name', 'surname',)
+
+
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User

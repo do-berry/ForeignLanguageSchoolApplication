@@ -2,3 +2,4 @@ djangorestframework
 Django~=3.0.5
 knox
 Jinja2
+django-enumchoicefield

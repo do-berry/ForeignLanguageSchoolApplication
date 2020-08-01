@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from app.models import User
+from app.models import User, Person
 from app.serializers import UserSerializer, PersonSerializer
 
 
@@ -22,6 +22,12 @@ def all_users(request):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+def assign_teacher_to_group(request):
+    teacher = Person.objects.get(surname=request.data['surname'], name=request.data['name'])
+    # todo
+
+
 @api_view(['POST'])
 def user_login(request):
     try:
@@ -31,5 +37,3 @@ def user_login(request):
     if user.password != request.data['password']:
         return Response("Incorrect password was used", status=status.HTTP_406_NOT_ACCEPTABLE)
     return Response("OK", status=status.HTTP_200_OK)
-
-

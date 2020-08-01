@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.urls import path
 
-from app import views
+from app import app_views
+from school import school_views
 
 urlpatterns = [
-    path('createuser', views.create_user),
-    path('allusers', views.all_users),
-    path('login', views.user_login),
+    path('createuser', app_views.create_user),
+    path('allusers', app_views.all_users),
+    path('login', app_views.user_login),
+    path('school/creategroup', school_views.create_group)
 ]

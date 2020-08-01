@@ -133,3 +133,7 @@ AUTH_USER_MODEL = 'app.User'
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
 )
+
+DATETIME_FORMAT = '%d-%m-%Y %H:%M:%S'
+USE_L10N = False
+USE_TZ = False
