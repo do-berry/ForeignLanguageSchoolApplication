@@ -14,8 +14,14 @@ class User(AbstractUser):
 
 # personal data
 class Person(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     surname = models.TextField()
     name = models.TextField()
     mobile_number = models.IntegerField()
     address = models.TextField()
+
+    def findTeacher(self):
+        return Person.objects.filter(user__is_teacher=True).select_related()
+
+    def findStudent(self):
+        return Person.objects.filter(user__is_student=True).select_related()

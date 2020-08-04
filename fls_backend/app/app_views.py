@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from app.models import User, Person
+from app.models import User
 from app.serializers import UserSerializer, PersonSerializer
 
 
@@ -13,6 +13,8 @@ def create_user(request):
     if serializer.is_valid():
         serializer.create(validated_data=request.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(['GET'])
@@ -20,12 +22,6 @@ def all_users(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
-
-
-@api_view(['GET'])
-def assign_teacher_to_group(request):
-    teacher = Person.objects.get(surname=request.data['surname'], name=request.data['name'])
-    # todo
 
 
 @api_view(['POST'])

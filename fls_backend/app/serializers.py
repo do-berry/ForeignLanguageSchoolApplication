@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.serializers import Serializer
 
 from app.models import Person
 from . import models
@@ -16,7 +17,8 @@ class PersonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Person
-        fields = ('user', 'name', 'surname', 'mobile_number', 'address')
+        fields = ('id', 'user', 'name', 'surname', 'mobile_number', 'address')
+        extra_kwargs = {'id': {'read_only': True}}
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
@@ -28,10 +30,19 @@ class PersonSerializer(serializers.ModelSerializer):
         return person
 
 
-# todo
-class AssignTeacherSerializer(serializers.ModelSerializer):
-    user = UserSerializer
+class TeacherAssignmentSerializer(Serializer):
+    class Meta:
+        model = Person
+        fields = ('pk',)
 
+    def assignTeacherWithId(self, id):
+        p = Person()
+        p.pk = id
+        return p
+
+
+# todo
+class StudentAssignmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Person
         fields = ('name', 'surname',)
