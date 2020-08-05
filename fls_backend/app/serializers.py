@@ -20,7 +20,7 @@ class PersonSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'name', 'surname', 'mobile_number', 'address')
 
     def create(self, validated_data):
-        person, created = Person.objects.update_or_create(validated_data)
+        person, created = Person.objects.update_or_create(**validated_data)
         return person
 
     def find(self, validated_data):
