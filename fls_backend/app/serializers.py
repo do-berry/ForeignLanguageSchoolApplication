@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from rest_framework.serializers import Serializer
 
-from app.models import Person
+from app.models import Person, GroupAssignment
+from school.serializers import GroupSerializer
 from . import models
 
 
@@ -13,39 +13,38 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PersonSerializer(serializers.ModelSerializer):
-    user = UserSerializer(required=True)
+    user = UserSerializer(required=False)
 
     class Meta:
         model = Person
         fields = ('id', 'user', 'name', 'surname', 'mobile_number', 'address')
-        extra_kwargs = {'id': {'read_only': True}}
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
         user = UserSerializer.create(UserSerializer(), validated_data=user_data)
-        person, created = Person.objects.update_or_create(user=user, name=validated_data.pop('name'),
-                                                          surname=validated_data.pop('surname'),
-                                                          mobile_number=validated_data.pop('mobile_number'),
-                                                          address=validated_data.pop('address'))
+        person, created = Person.objects.update_or_create(validated_data)
         return person
 
+    def find(self, validated_data):
+        return Person.objects.get(id=validated_data['id'])
 
-class TeacherAssignmentSerializer(Serializer):
+
+class GroupAssignmentSerializer(serializers.ModelSerializer):
+    person = PersonSerializer()
+    group = GroupSerializer()
+
     class Meta:
-        model = Person
-        fields = ('pk',)
+        model = models.GroupAssignment
+        fields = ('person', 'group',)
 
-    def assignTeacherWithId(self, id):
-        p = Person()
-        p.pk = id
-        return p
-
-
-# todo
-class StudentAssignmentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Person
-        fields = ('name', 'surname',)
+    def create(self, validated_data):
+        person_data = validated_data.pop('person')
+        person = PersonSerializer.find(PersonSerializer(), person_data)
+        group_data = validated_data.pop('group')
+        group = GroupSerializer.find(GroupSerializer(), group_data)
+        assignment, created = GroupAssignment.objects.update_or_create(person=person,
+                                                                       group=group)
+        return assignment
 
 
 class LoginSerializer(serializers.ModelSerializer):

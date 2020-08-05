@@ -13,7 +13,7 @@ def create_group(request):
         serializer.create(validated_data=request.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
-        return Response(serializer.error_messages, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(['GET'])
