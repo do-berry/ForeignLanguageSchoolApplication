@@ -16,11 +16,11 @@ class User(AbstractUser):
 
 # app data
 class Person(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
-    surname = models.TextField(null=True, blank=True)
-    name = models.TextField(null=True, blank=True)
-    mobile_number = models.IntegerField(null=True, blank=True)
-    address = models.TextField(null=True, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    surname = models.TextField()
+    name = models.TextField()
+    mobile_number = models.IntegerField()
+    address = models.TextField()
 
 
 class GroupAssignment(models.Model):

@@ -26,5 +26,12 @@ class GroupSerializer(serializers.ModelSerializer):
                                                         language=language)
         return group
 
+
+class FindGroupSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+
+    class Meta:
+        model = Group
+
     def find(self, validated_data):
         return Group.objects.get(id=validated_data['id'])

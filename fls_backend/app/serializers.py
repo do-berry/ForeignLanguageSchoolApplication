@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from app.models import Person, GroupAssignment
-from school.serializers import GroupSerializer
+from school.serializers import GroupSerializer, FindGroupSerializer
 from . import models
 
 
@@ -29,8 +29,17 @@ class PersonSerializer(serializers.ModelSerializer):
         return Person.objects.get(id=validated_data['id'])
 
 
+class FindPersonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Person
+        fields = ('id',)
+
+    def find(self, validated_data):
+        return Person.objects.get(id=validated_data['id'])
+
+
 class GroupAssignmentSerializer(serializers.ModelSerializer):
-    person = PersonSerializer()
+    person = FindPersonSerializer()
     group = GroupSerializer()
 
     class Meta:
@@ -39,12 +48,12 @@ class GroupAssignmentSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         person_data = validated_data.pop('person')
-        person = PersonSerializer.find(PersonSerializer(), person_data)
+        person = FindPersonSerializer.find(FindPersonSerializer(), person_data)
         group_data = validated_data.pop('group')
-        group = GroupSerializer.find(GroupSerializer(), group_data)
+        group = FindGroupSerializer.find(FindGroupSerializer(), group_data)
         assignment, created = GroupAssignment.objects.update_or_create(person=person,
                                                                        group=group)
-        return assignment
+        return assignment.person.name
 
 
 class LoginSerializer(serializers.ModelSerializer):
