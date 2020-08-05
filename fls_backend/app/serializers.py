@@ -20,8 +20,6 @@ class PersonSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'name', 'surname', 'mobile_number', 'address')
 
     def create(self, validated_data):
-        user_data = validated_data.pop('user')
-        user = UserSerializer.create(UserSerializer(), validated_data=user_data)
         person, created = Person.objects.update_or_create(validated_data)
         return person
 
