@@ -30,10 +30,8 @@ class PersonSerializer(serializers.ModelSerializer):
 class FindPersonByNameAndSurname(serializers.ModelSerializer):
     class Meta:
         model = Person
-        fields = ('name', 'surname')
+        fields = ('id', 'name', 'surname')
 
-    def find(self, validated_data):
-        return Person.objects.get()
 
 
 class FindPersonSerializer(serializers.ModelSerializer):

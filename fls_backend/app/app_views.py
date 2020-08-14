@@ -1,9 +1,11 @@
+from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from app.models import User
+from app.models import User, Person
 from app.serializers import UserSerializer, PersonSerializer, GroupAssignmentSerializer
 
 
@@ -44,3 +46,17 @@ def user_login(request):
         return Response("Incorrect password was used", status=status.HTTP_406_NOT_ACCEPTABLE)
     return Response("OK", status=status.HTTP_200_OK)
 
+
+@api_view(['GET'])
+def find_user_by_surname_and_name(request):
+    try:
+        if request.data['name'] == '':
+            users = Person.objects.filter(Q(surname=request.data['surname']))
+        elif request.data['surname'] == '':
+            users = Person.objects.filter(Q(name=request.data['name']))
+        else:
+            users = Person.objects.filter(Q(name=request.data['name']) & Q(surname=request.data['surname']))
+        users_to_return = serializers.serialize("json", users)
+    except ObjectDoesNotExist:
+        return Response("Object does not exist", status=status.HTTP_404_NOT_FOUND)
+    return Response(users_to_return, status=status.HTTP_200_OK)
