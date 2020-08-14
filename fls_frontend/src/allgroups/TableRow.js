@@ -1,6 +1,7 @@
 import React from 'react';
 import {Day, Language, LanguageLevel} from '../stores/SchoolStore';
 import AssignToGroupButton from "./AssignToGroupButton";
+import './Table.css';
 
 class TableRow extends React.Component {
     constructor(props) {

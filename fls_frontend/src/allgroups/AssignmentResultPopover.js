@@ -1,10 +1,14 @@
 import React from 'react';
-import {Popover} from "react-bootstrap";
+import {Alert} from "react-bootstrap";
+import './Table.css';
 
-export const AssignmentResultPopover = (strong_message, info_message) => {
+export const AssignmentResultPopover = ({strong_message}) => {
     return (
-        <Popover id="popover-positioned-left" title="Popover left">
-            <strong>{strong_message}</strong>{info_message}
-        </Popover>
+        <div className='alert'>
+            <Alert bsStyle="warning">
+                <strong>{strong_message}</strong> Best check yo self, you're not looking too
+                good.
+            </Alert>
+        </div>
     );
 }

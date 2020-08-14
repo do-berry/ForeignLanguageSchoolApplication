@@ -1,0 +1,25 @@
+.findUser {
+    width: 350px;
+    display: inline-block;
+}
+
+.usersTable {
+    margin-top: 50px;
+    margin-right: 550px;
+    margin-left: 550px;
+    margin-bottom: 100px;
+}
+
+.noResultsAlert {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#alert {
+    width: 500px;
+    display: inline-block;
+}
+
+#name #surname {
+    width: 100px;
+}
