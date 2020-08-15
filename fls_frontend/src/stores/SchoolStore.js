@@ -30,3 +30,7 @@ export const Group = {
     date_day: null,
     language: null
 }
+
+export const Users = {
+    users: []
+}

@@ -1,7 +1,7 @@
 import React from 'react';
-import FindUser from "./FindUser";
 import UsersTable from "./UsersTable";
 import './AllUsers.css';
+import FindUser from "./FindUser";
 
 class UsersForm extends React.Component {
     render() {

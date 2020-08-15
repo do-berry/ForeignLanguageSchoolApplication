@@ -10,6 +10,13 @@ class UsersTable extends React.Component {
         }
     }
 
+    setInputValue(property, val) {
+        this.setState({
+            [property]: val
+        });
+        console.log(this.state[property]);
+    }
+
     render() {
         return (
             <div className='usersTable'>

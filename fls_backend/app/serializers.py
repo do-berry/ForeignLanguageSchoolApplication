@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers, permissions
 
 from app.models import Person, GroupAssignment
 from school.serializers import GroupSerializer, FindGroupSerializer
@@ -13,6 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PersonSerializer(serializers.ModelSerializer):
+    permission_classes = (permissions.AllowAny,)
     user = UserSerializer(required=False)
 
     class Meta:

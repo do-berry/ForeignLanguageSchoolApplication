@@ -47,7 +47,7 @@ def user_login(request):
     return Response("OK", status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def find_user_by_surname_and_name(request):
     try:
         if request.data['name'] == '':
@@ -59,4 +59,4 @@ def find_user_by_surname_and_name(request):
         users_to_return = serializers.serialize("json", users)
     except ObjectDoesNotExist:
         return Response("Object does not exist", status=status.HTTP_404_NOT_FOUND)
-    return Response(users_to_return, status=status.HTTP_200_OK)
+    return Response(users_to_return, content_type="text/json-comment-filtered", status=status.HTTP_200_OK)
