@@ -1,3 +1,5 @@
+import json
+
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -19,5 +21,9 @@ def create_group(request):
 @api_view(['GET'])
 def all_groups(request):
     groups = Group.objects.all()
-    serializer = GroupSerializer(groups, many=True)
-    return Response(serializer.data)
+    result = []
+    for group in groups:
+        result.append({'id': group.id, 'room': group.room, 'date_hour': str(group.date_hour),
+                       'date_day': str(group.date_day), 'language_name': group.language.name,
+                       'language_level': group.language.level, 'language_cost': group.language.cost})
+    return Response(json.dumps(result), content_type='application/json', status=status.HTTP_200_OK)

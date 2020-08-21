@@ -1,3 +1,5 @@
+import json
+
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
@@ -59,4 +61,4 @@ def find_user_by_surname_and_name(request):
         users_to_return = serializers.serialize("json", users)
     except ObjectDoesNotExist:
         return Response("Object does not exist", status=status.HTTP_404_NOT_FOUND)
-    return Response(users_to_return, content_type="text/json-comment-filtered", status=status.HTTP_200_OK)
+    return Response(json.loads(users_to_return), status=status.HTTP_200_OK)
