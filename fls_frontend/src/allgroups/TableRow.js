@@ -1,26 +1,48 @@
 import React from 'react';
 import {Day, Language, LanguageLevel} from '../stores/SchoolStore';
-import AssignToGroupButton from "./AssignToGroupButton";
 import './Table.css';
+import {Link} from "react-router-dom";
 
-class TableRow extends React.Component {
-    constructor(props) {
-        super(props);
+const TableRow = (props) => {
+    function handleClick() {
+        sessionStorage.setItem('group', props.item['id']);
+
+        fetch('http://127.0.0.1:8000/user/assigntogroup', {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "person": {"id": sessionStorage.getItem('person')},
+                "group": {"id": sessionStorage.getItem('group')}
+            })
+        }).then(res => {
+            if (res.ok) {
+                sessionStorage.setItem('saved', true);
+            } else {
+                sessionStorage.setItem('saved', false);
+            }
+        })
     }
 
-    render() {
-        return (
-            <tr>
-                <td>{this.props.item.room}</td>
-                <td>{this.props.item.date_hour}</td>
-                <td>{Day[this.props.item.date_day]}</td>
-                <td>{Language[this.props.item.language.name]}</td>
-                <td>{LanguageLevel[this.props.item.language.level]}</td>
-                <td>{this.props.item.language.cost}</td>
-                <td><AssignToGroupButton/></td>
-            </tr>
-        );
-    }
+    return (
+        <tr>
+            <td>{props.item.room}</td>
+            <td>{props.item.date_hour}</td>
+            <td>{Day[props.item.date_day]}</td>
+            <td>{Language[props.item.language_name]}</td>
+            <td>{LanguageLevel[props.item.language_level]}</td>
+            <td>{props.item.language_cost}</td>
+            <td>
+                <Link
+                    bsStyle="info"
+                    onClick={handleClick.bind(this)}>
+                    Wybierz
+                </Link>
+            </td>
+        </tr>
+    );
 }
 
 export default TableRow;

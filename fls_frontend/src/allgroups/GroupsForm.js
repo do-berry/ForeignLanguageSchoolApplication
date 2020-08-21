@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table} from 'react-bootstrap';
+import {Alert, Table} from 'react-bootstrap';
 import TableRow from "./TableRow";
 import './Table.css';
 
@@ -12,17 +12,26 @@ class GroupsForm extends React.Component {
     }
 
     componentDidMount() {
+        let myGroups = []
+
         fetch('http://127.0.0.1:8000/school/allgroups')
             .then(response => response.json())
-            .then(response => this.setState({
-                groups: Object.assign(this.state.groups, response)
-            }));
-        console.log(this.state.groups);
+            .then(response => {
+                Object.entries(response).map(([key, value]) => {
+                    myGroups.push(value);
+                })
+                this.setState({groups: myGroups})
+            });
     }
 
     render() {
         return (
             <div className='groupsTable'>
+                {sessionStorage.getItem('saved') === 'true' &&
+                <Alert id='okAlert' bsStyle="warning">
+                    Uzytkownik zostal przypisany do grupy.
+                </Alert>
+                }
                 <Table striped bordered condensed hover>
                     <thead>
                     <th>sala</th>
@@ -34,9 +43,9 @@ class GroupsForm extends React.Component {
                     <th>x</th>
                     </thead>
                     <tbody>
-                    {this.state.groups.map((item) =>
-                        <TableRow item={item}/>
-                    )}
+                    {Object.entries(this.state.groups).map(([key, value]) => (
+                        <TableRow key={value} item={value}/>
+                    ))}
                     </tbody>
                 </Table>
             </div>

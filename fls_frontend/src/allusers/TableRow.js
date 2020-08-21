@@ -1,19 +1,25 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
-class TableRow extends React.Component {
-    constructor(props) {
-        super(props);
+const TableRow = (props) => {
+    function handleClick() {
+        sessionStorage.setItem('person', props.item['pk']);
     }
 
-    render() {
-        return (
-            <tr>
-                <td>{this.props.item.name}</td>
-                <td>{this.props.item.surname}</td>
-                <td><Button bsStyle="info">Wybierz</Button></td>
-            </tr>
-        );
-    }
+    return (
+        <tr>
+            <td>{props.item.fields.name}</td>
+            <td>{props.item.fields.surname}</td>
+            <td>
+                <Link
+                    bsStyle="info"
+                    onClick={handleClick.bind(this)}
+                    to="/school/allgroups">
+                    Wybierz
+                </Link>
+            </td>
+        </tr>
+    );
 }
 
 export default TableRow;

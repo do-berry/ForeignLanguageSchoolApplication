@@ -26,4 +26,4 @@ def all_groups(request):
         result.append({'id': group.id, 'room': group.room, 'date_hour': str(group.date_hour),
                        'date_day': str(group.date_day), 'language_name': group.language.name,
                        'language_level': group.language.level, 'language_cost': group.language.cost})
-    return Response(json.dumps(result), content_type='application/json', status=status.HTTP_200_OK)
+    return Response(json.loads(json.dumps(result)), content_type='application/json', status=status.HTTP_200_OK)

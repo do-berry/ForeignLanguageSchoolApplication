@@ -6,3 +6,9 @@
 .alert {
     width: 60px;
 }
+
+#okAlert {
+    display: inline-block;
+    width: 500px;
+    align-content: center;
+}
