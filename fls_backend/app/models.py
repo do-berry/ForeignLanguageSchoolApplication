@@ -16,7 +16,7 @@ class User(AbstractUser):
 
 # app data
 class Person(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
     surname = models.TextField()
     name = models.TextField()
     mobile_number = models.IntegerField()
