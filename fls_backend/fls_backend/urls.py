@@ -26,4 +26,5 @@ urlpatterns = [
     path('school/allgroups', school_views.all_groups),
     path('user/assigntogroup', app_views.group_assignment),
     path('user/finduserbysurnameandname', app_views.find_user_by_surname_and_name),
+    path('user/checkifpersonisassigned', app_views.check_if_person_is_assigned),
 ]

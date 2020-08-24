@@ -27,3 +27,4 @@ def all_groups(request):
                        'date_day': str(group.date_day), 'language_name': group.language.name,
                        'language_level': group.language.level, 'language_cost': group.language.cost})
     return Response(json.loads(json.dumps(result)), content_type='application/json', status=status.HTTP_200_OK)
+

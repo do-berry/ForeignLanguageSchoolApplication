@@ -6,24 +6,43 @@ import {Link} from "react-router-dom";
 const TableRow = (props) => {
     function handleClick() {
         sessionStorage.setItem('group', props.item['id']);
+        let response = false;
 
-        fetch('http://127.0.0.1:8000/user/assigntogroup', {
+        fetch('http://127.0.0.1:8000/user/checkifpersonisassigned', {
             method: 'post',
             headers: {
-                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "person": {"id": sessionStorage.getItem('person')},
-                "group": {"id": sessionStorage.getItem('group')}
+                "person": sessionStorage.getItem('person'),
+                "group": sessionStorage.getItem('group')
             })
-        }).then(res => {
-            if (res.ok) {
-                sessionStorage.setItem('saved', true);
-            } else {
-                sessionStorage.setItem('saved', false);
-            }
-        })
+        }).then(res => res.json())
+            .then(res => {
+                response = res;
+            });
+
+        if (response) {
+            fetch('http://127.0.0.1:8000/user/assigntogroup', {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "person": {"id": sessionStorage.getItem('person')},
+                    "group": {"id": sessionStorage.getItem('group')}
+                })
+            }).then(res => {
+                if (res.ok) {
+                    sessionStorage.setItem('saved', true);
+                } else {
+                    sessionStorage.setItem('saved', false);
+                }
+            });
+        } else {
+            sessionStorage.setItem('saved', false);
+        }
     }
 
     return (

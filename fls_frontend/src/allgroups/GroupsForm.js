@@ -12,6 +12,7 @@ class GroupsForm extends React.Component {
     }
 
     componentDidMount() {
+        sessionStorage.removeItem('saved');
         let myGroups = []
 
         fetch('http://127.0.0.1:8000/school/allgroups')
@@ -30,6 +31,11 @@ class GroupsForm extends React.Component {
                 {sessionStorage.getItem('saved') === 'true' &&
                 <Alert id='okAlert' bsStyle="warning">
                     Uzytkownik zostal przypisany do grupy.
+                </Alert>
+                }
+                {sessionStorage.getItem('saved') === 'false' &&
+                <Alert id='okAlert' bsStyle="warning">
+                    <strong>Uzytkownik nie zostal przypisany do grupy.</strong> Nalezy wybrac inna grupe.
                 </Alert>
                 }
                 <Table striped bordered condensed hover>

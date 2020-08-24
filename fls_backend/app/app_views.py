@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from app.models import User, Person
+from app.models import User, Person, GroupAssignment
 from app.serializers import UserSerializer, PersonSerializer, GroupAssignmentSerializer
 
 
@@ -62,3 +62,12 @@ def find_user_by_surname_and_name(request):
     except ObjectDoesNotExist:
         return Response("Object does not exist", status=status.HTTP_404_NOT_FOUND)
     return Response(json.loads(users_to_return), status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def check_if_person_is_assigned(request):
+    if GroupAssignment.objects.filter(Q(person=request.data['person']) & Q(group=request.data['group'])).exists():
+        return Response(True, status=status.HTTP_200_OK)
+    else:
+        return Response(False, status=status.HTTP_200_OK)
+
