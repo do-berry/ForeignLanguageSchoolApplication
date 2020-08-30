@@ -28,31 +28,33 @@ export const LoginForm = () => {
                     username: username,
                     password: password
                 })
-            }).then(res => {
-                if (res.ok) {
-                    setCorrectLogin(true);
-                    sessionStorage.setItem("username", username.toString());
-                    window.location.reload(false);
-
-                    fetch('http://127.0.0.1:8000/user/type', {
-                        method: 'post',
-                        body: JSON.stringify({
-                            username: username,
-                            password: password
-                        }),
-                        headers: {
-                            'Content-Type': 'application/json',
-                        }
-                    }).then(resp => resp.json())
-                        .then(data => {
-                            Object.entries(data).map(([key, value]) => (
-                                setUserType(key.toString())
-                            ));
-                        });
-                } else {
-                    setCorrectLogin(false);
-                }
-            });
+            }).then(res => res.json())
+                .then(data => {
+                    if (data.length !== 1) {
+                        setCorrectLogin(false);
+                    } else {
+                        setCorrectLogin(true);
+                        sessionStorage.setItem("username", username.toString());
+                        sessionStorage.setItem("userId", data[0]['pk']);
+                        window.location.reload(false);
+                    
+                        fetch('http://127.0.0.1:8000/user/type', {
+                            method: 'post',
+                            body: JSON.stringify({
+                                username: username,
+                                password: password
+                            }),
+                            headers: {
+                                'Content-Type': 'application/json',
+                            }
+                        }).then(resp => resp.json())
+                            .then(data => {
+                                Object.entries(data).map(([key, value]) => (
+                                    setUserType(key.toString())
+                                ));
+                            });
+                    }
+                });
         } catch (e) {
             console.log(e);
         }

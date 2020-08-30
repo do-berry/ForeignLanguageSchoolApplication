@@ -10,6 +10,8 @@ from rest_framework.response import Response
 from app.models import User, Person, GroupAssignment
 from app.serializers import UserSerializer, PersonSerializer, GroupAssignmentSerializer
 
+APPLICATION_JSON = 'application/json'
+
 
 @api_view(['POST'])
 def create_user(request):
@@ -46,7 +48,8 @@ def user_login(request):
         return Response("User does not exist", status=status.HTTP_404_NOT_FOUND)
     if user.password != request.data['password']:
         return Response("Incorrect password was used", status=status.HTTP_406_NOT_ACCEPTABLE)
-    return Response("OK", status=status.HTTP_200_OK)
+    result = serializers.serialize('json', [user,])
+    return Response(json.loads(result), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
@@ -79,7 +82,7 @@ def get_type_of_user(request):
     types_dict = {'student': types[0][0], 'teacher': types[0][1], 'customer_assistant': types[0][2],
                   'admin': types[0][3]}
     tmp = {key: value for key, value in types_dict.items() if value == True}
-    return Response(json.loads(json.dumps(tmp)), content_type='application/json', status=status.HTTP_200_OK)
+    return Response(json.loads(json.dumps(tmp)), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
 
 
 @api_view(['PUT'])
@@ -88,4 +91,4 @@ def update_person(request):
                                                         name=request.data['name'],
                                                         mobile_number=request.data['mobile_number'],
                                                         address=request.data['address'])
-    return Response("updated", content_type='application/json', status=status.HTTP_200_OK)
+    return Response("updated", content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
