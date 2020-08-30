@@ -28,4 +28,5 @@ urlpatterns = [
     path('user/finduserbysurnameandname', app_views.find_user_by_surname_and_name),
     path('user/checkifpersonisassigned', app_views.check_if_person_is_assigned),
     path('user/type', app_views.get_type_of_user),
+    path('user/update', app_views.update_person),
 ]

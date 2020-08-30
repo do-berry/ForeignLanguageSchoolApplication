@@ -76,6 +76,16 @@ def check_if_person_is_assigned(request):
 def get_type_of_user(request):
     types = User.objects.filter(Q(username=request.data['username']) & Q(password=request.data['password'])) \
         .values_list('is_student', 'is_teacher', 'is_customer_assistant', 'is_admin')
-    types_dict = {'student': types[0][0], 'teacher': types[0][1], 'customer_assistant': types[0][2], 'admin': types[0][3]}
-    tmp = {key:value for key, value in types_dict.items() if value == True}
+    types_dict = {'student': types[0][0], 'teacher': types[0][1], 'customer_assistant': types[0][2],
+                  'admin': types[0][3]}
+    tmp = {key: value for key, value in types_dict.items() if value == True}
     return Response(json.loads(json.dumps(tmp)), content_type='application/json', status=status.HTTP_200_OK)
+
+
+@api_view(['PUT'])
+def update_person(request):
+    person = Person.objects.filter(id=request.data['id']).update(surname=request.data['surname'],
+                                                                 name=request.data['name'],
+                                                                 mobile_number=request.data['mobile_number'],
+                                                                 address=request.data['address'])
+    return Response("updated", content_type='application/json', status=status.HTTP_200_OK)
