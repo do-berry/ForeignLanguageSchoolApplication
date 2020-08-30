@@ -84,8 +84,8 @@ def get_type_of_user(request):
 
 @api_view(['PUT'])
 def update_person(request):
-    person = Person.objects.filter(id=request.data['id']).update(surname=request.data['surname'],
-                                                                 name=request.data['name'],
-                                                                 mobile_number=request.data['mobile_number'],
-                                                                 address=request.data['address'])
+    Person.objects.filter(id=request.data['id']).update(surname=request.data['surname'],
+                                                        name=request.data['name'],
+                                                        mobile_number=request.data['mobile_number'],
+                                                        address=request.data['address'])
     return Response("updated", content_type='application/json', status=status.HTTP_200_OK)
