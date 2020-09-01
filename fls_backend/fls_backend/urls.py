@@ -29,4 +29,6 @@ urlpatterns = [
     path('user/checkifpersonisassigned', app_views.check_if_person_is_assigned),
     path('user/type', app_views.get_type_of_user),
     path('user/update', app_views.update_person),
+    path('user/groupsassigned', app_views.groups_assigned_to_user),
+    path('user/getuserdata', app_views.get_user_data),
 ]

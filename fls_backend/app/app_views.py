@@ -93,3 +93,21 @@ def update_person(request):
                                                         mobile_number=request.data['mobile_number'],
                                                         address=request.data['address'])
     return Response("updated", content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def get_user_data(request):
+    person = Person.objects.filter(id=request.data['id'])
+    result = serializers.serialize('json', person)
+    return Response(json.loads(result), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def groups_assigned_to_user(request):
+    groups = GroupAssignment.objects.filter(id=request.data['id'])
+    result = []
+    for group in groups:
+        result.append({'room': group.group.room, 'date_hour': str(group.group.date_hour),
+                       'date_day': str(group.group.date_day), 'language_name': group.group.language.name,
+                       'language_level': group.group.language.level})
+    return Response(json.loads(json.dumps(result)), content_type='application/json', status=status.HTTP_200_OK)
