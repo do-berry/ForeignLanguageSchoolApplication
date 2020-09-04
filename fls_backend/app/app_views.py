@@ -104,7 +104,7 @@ def get_user_data(request):
 
 @api_view(['POST'])
 def groups_assigned_to_user(request):
-    groups = GroupAssignment.objects.filter(id=request.data['id'])
+    groups = GroupAssignment.objects.filter(person_id=request.data['id'])
     result = []
     for group in groups:
         result.append({'room': group.group.room, 'date_hour': str(group.group.date_hour),

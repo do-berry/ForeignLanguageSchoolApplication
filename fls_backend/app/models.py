@@ -24,6 +24,6 @@ class Person(models.Model):
 
 
 class GroupAssignment(models.Model):
-    person = models.OneToOneField(Person, on_delete=models.CASCADE)
-    group = models.OneToOneField(Group, on_delete=models.CASCADE)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
     assigment_date = models.DateTimeField(auto_now=True, null=True, blank=True)
