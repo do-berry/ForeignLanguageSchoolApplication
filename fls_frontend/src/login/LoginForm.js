@@ -48,8 +48,8 @@ export const LoginForm = () => {
                                 'Content-Type': 'application/json',
                             }
                         }).then(resp => resp.json())
-                            .then(data => {
-                                Object.entries(data).map(([key, value]) => (
+                            .then(usetypes => {
+                                Object.entries(usetypes).map(([key, value]) => (
                                     setUserType(key.toString())
                                 ));
                             });

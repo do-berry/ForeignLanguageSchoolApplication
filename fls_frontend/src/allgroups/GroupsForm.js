@@ -16,7 +16,7 @@ const GroupsForm = () => {
             .then(response => response.json())
             .then(response => {
                 Object.entries(response).map(([key, value]) => {
-                    myGroups.push(value);
+                    return myGroups.push(value);
                 })
                 setGroups(myGroups);
             });

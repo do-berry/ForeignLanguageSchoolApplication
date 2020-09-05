@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import {SavedAssignmentContext} from "../SavedAssignmentContext";
 
 const TableRow = (props) => {
-    const [savedAssignment, setSavedAssignment] = useContext(SavedAssignmentContext);
+    const [setSavedAssignment] = useContext(SavedAssignmentContext);
 
     function handleClick() {
         sessionStorage.setItem('group', props.item['id']);

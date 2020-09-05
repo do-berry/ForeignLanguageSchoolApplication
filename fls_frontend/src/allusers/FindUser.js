@@ -9,7 +9,7 @@ const FindUser = () => {
     const [surname, setSurname] = useState('');
     const [noData, setNoData] = useState(false);
 
-    const [users, setUsers] = useContext(AllUsersContext);
+    const [setUsers] = useContext(AllUsersContext);
 
     function findUser() {
         if (name === '' && surname === '') {

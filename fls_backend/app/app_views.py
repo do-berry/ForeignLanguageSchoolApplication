@@ -34,7 +34,7 @@ def group_assignment(request):
 
 
 @api_view(['GET'])
-def all_users(request):
+def all_users():
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
@@ -82,7 +82,7 @@ def get_type_of_user(request):
         .values_list('is_student', 'is_teacher', 'is_customer_assistant', 'is_admin')
     types_dict = {'student': types[0][0], 'teacher': types[0][1], 'customer_assistant': types[0][2],
                   'admin': types[0][3]}
-    tmp = {key: value for key, value in types_dict.items() if value == True}
+    tmp = {key: value for key, value in types_dict.items() if value is True}
     return Response(json.loads(json.dumps(tmp)), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
 
 
