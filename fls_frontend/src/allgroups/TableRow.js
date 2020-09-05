@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Day, Language, LanguageLevel} from '../stores/SchoolStore';
 import './Table.css';
 import {Link} from "react-router-dom";
+import {SavedAssignmentContext} from "../SavedAssignmentContext";
 
 const TableRow = (props) => {
+    const [savedAssignment, setSavedAssignment] = useContext(SavedAssignmentContext);
+
     function handleClick() {
         sessionStorage.setItem('group', props.item['id']);
-        let response = false;
 
         fetch('http://127.0.0.1:8000/user/checkifpersonisassigned', {
             method: 'post',
@@ -19,30 +21,25 @@ const TableRow = (props) => {
             })
         }).then(res => res.json())
             .then(res => {
-                response = res;
-            });
+                if (res === false) {
+                    fetch('http://127.0.0.1:8000/user/assigntogroup', {
+                        method: 'post',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            person: {id: sessionStorage.getItem('person')},
+                            group: {id: sessionStorage.getItem('group')}
+                        })
+                    });
 
-        if (response) {
-            fetch('http://127.0.0.1:8000/user/assigntogroup', {
-                method: 'post',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "person": {"id": sessionStorage.getItem('person')},
-                    "group": {"id": sessionStorage.getItem('group')}
-                })
-            }).then(res => {
-                if (res.ok) {
-                    sessionStorage.setItem('saved', true);
+                    //sessionStorage.setItem('saved', true);
+                    setSavedAssignment(true);
                 } else {
-                    sessionStorage.setItem('saved', false);
+                    setSavedAssignment(false);
+                    //sessionStorage.setItem('saved', false);
                 }
             });
-        } else {
-            sessionStorage.setItem('saved', false);
-        }
     }
 
     return (
