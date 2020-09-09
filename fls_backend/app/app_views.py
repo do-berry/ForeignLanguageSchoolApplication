@@ -109,5 +109,5 @@ def groups_assigned_to_user(request):
     for group in groups:
         result.append({'room': group.group.room, 'date_hour': str(group.group.date_hour),
                        'date_day': str(group.group.date_day), 'language_name': group.group.language.name,
-                       'language_level': group.group.language.level})
+                       'language_level': group.group.language.level, 'id': group.group.id})
     return Response(json.loads(json.dumps(result)), content_type='application/json', status=status.HTTP_200_OK)

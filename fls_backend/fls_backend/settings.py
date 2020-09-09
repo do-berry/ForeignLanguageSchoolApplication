@@ -135,5 +135,7 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 DATETIME_FORMAT = '%d-%m-%Y %H:%M:%S'
+DATE_INPUT_FORMATS = ['%d-%m-%Y']
+
 USE_L10N = False
 USE_TZ = False
