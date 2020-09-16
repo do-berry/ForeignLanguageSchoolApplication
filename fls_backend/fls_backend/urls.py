@@ -16,6 +16,7 @@ Including another URL conf
 from django.urls import path
 
 from app import app_views
+from payment import payment_views
 from school import school_views
 
 urlpatterns = [
@@ -36,4 +37,5 @@ urlpatterns = [
     path('school/alllessons', school_views.all_lesson),
     path('school/lesson/createupdatenote', school_views.create_or_update_note),
     path('school/lesson/getnote', school_views.get_note_by_lesson_id),
+    path('payment/createpayment', payment_views.create_payment),
 ]

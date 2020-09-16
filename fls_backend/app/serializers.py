@@ -1,6 +1,7 @@
 from rest_framework import serializers, permissions
 
 from app.models import Person, GroupAssignment
+from school.models import Language
 from school.serializers import GroupSerializer, FindGroupSerializer
 from . import models
 
@@ -43,6 +44,15 @@ class FindPersonSerializer(serializers.ModelSerializer):
 
     def find(self, validated_data):
         return Person.objects.get(id=validated_data['id'])
+
+
+class FindLanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Language
+        fields = ('id',)
+
+    def find(self, validated_data):
+        return Language.objects.get(id=validated_data['id'])
 
 
 class GroupAssignmentSerializer(serializers.ModelSerializer):
