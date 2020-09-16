@@ -1,9 +1,7 @@
 import React from 'react';
 import LoginForm from './LoginForm';
-import SubmitButton from './SubmitButton';
 import './Login.css';
 import isLoggedIn from './UserStore.js';
-import {Button} from "react-bootstrap";
 
 class Login extends React.Component {
     logOut() {

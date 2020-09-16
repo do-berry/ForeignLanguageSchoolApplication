@@ -1,0 +1,17 @@
+#topic {
+    width: 350px;
+}
+
+#description textarea {
+    rows: 5;
+    resize: none;
+    cols: 25;
+}
+
+div#shownNote {
+    width: 450px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: justify;
+    border: 2px outset black;
+}

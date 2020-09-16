@@ -1,8 +1,10 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-
 # user roles
+from school.models import Group
+
+
 class User(AbstractUser):
     username = models.CharField(max_length=16, unique=True)
     password = models.CharField(max_length=32)
@@ -12,10 +14,16 @@ class User(AbstractUser):
     is_admin = models.BooleanField('admin', default=False)
 
 
-# personal data
+# app data
 class Person(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
     surname = models.TextField()
     name = models.TextField()
     mobile_number = models.IntegerField()
     address = models.TextField()
+
+
+class GroupAssignment(models.Model):
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    assigment_date = models.DateTimeField(auto_now=True, null=True, blank=True)
