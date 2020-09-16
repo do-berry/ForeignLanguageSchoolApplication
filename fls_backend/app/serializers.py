@@ -1,6 +1,7 @@
-from rest_framework import serializers
+from rest_framework import serializers, permissions
 
-from app.models import Person
+from app.models import Person, GroupAssignment
+from school.serializers import GroupSerializer, FindGroupSerializer
 from . import models
 
 
@@ -12,7 +13,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PersonSerializer(serializers.ModelSerializer):
-    user = UserSerializer(required=True)
+    permission_classes = (permissions.AllowAny,)
+    user = UserSerializer(required=False)
 
     class Meta:
         model = Person
@@ -26,6 +28,39 @@ class PersonSerializer(serializers.ModelSerializer):
                                                           mobile_number=validated_data.pop('mobile_number'),
                                                           address=validated_data.pop('address'))
         return person
+
+
+class FindPersonByNameAndSurname(serializers.ModelSerializer):
+    class Meta:
+        model = Person
+        fields = ('id', 'name', 'surname')
+
+
+class FindPersonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Person
+        fields = ('id',)
+
+    def find(self, validated_data):
+        return Person.objects.get(id=validated_data['id'])
+
+
+class GroupAssignmentSerializer(serializers.ModelSerializer):
+    person = FindPersonSerializer()
+    group = GroupSerializer()
+
+    class Meta:
+        model = models.GroupAssignment
+        fields = ('person', 'group',)
+
+    def create(self, validated_data):
+        person_data = validated_data.pop('person')
+        person = FindPersonSerializer.find(FindPersonSerializer(), person_data)
+        group_data = validated_data.pop('group')
+        group = FindGroupSerializer.find(FindGroupSerializer(), group_data)
+        assignment, created = GroupAssignment.objects.update_or_create(person=person,
+                                                                       group=group)
+        return assignment.person.name
 
 
 class LoginSerializer(serializers.ModelSerializer):

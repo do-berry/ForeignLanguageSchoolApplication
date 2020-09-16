@@ -1,0 +1,36 @@
+div#userCredentials {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+div#buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 36%;
+}
+
+#saveButton, #editButton {
+    margin: 10px;
+}
+
+#savedAlert {
+    width: 250px;
+    margin-left: 43%;
+    display: block;
+}
+
+div#userCredentialsForm {
+    display: block;
+}
+
+div#assignedGroups {
+    margin-top: 20px;
+    margin-right: 550px;
+    margin-left: 550px;
+    margin-bottom: 100px;
+}
+

@@ -1,114 +1,117 @@
-import React from 'react';
-import {Alert, Button, Control, Form} from "react-bootstrap";
+import React, {useContext, useState} from 'react';
+import {Alert, Button, Form} from "react-bootstrap";
 import InputField from "./InputField";
 import FormGroup from "reactstrap/es/FormGroup";
+import {UserTypeContext} from "../static/UserType";
 
-class LoginForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: '',
-            password: '',
-            correctLogin: null,
-            isLoggedIn: false
-        }
-    }
+export const LoginForm = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [correctLogin, setCorrectLogin] = useState(null);
 
-    async doLogout() {
+    const [setUserType] = useContext(UserTypeContext);
+
+    function doLogout() {
         sessionStorage.removeItem("username");
-        this.forceUpdate();
+        window.location.reload(false);
     }
 
-    setInputValue(property, val) {
-        val = val.trim();
-        this.setState({
-            [property]: val
-        });
-    }
-
-    async doLogin() {
+    function doLogin() {
         try {
-            await fetch('http://127.0.0.1:8000/login', {
+            fetch('http://127.0.0.1:8000/login', {
                 method: 'post',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    username: this.state.username,
-                    password: this.state.password
+                    username: username,
+                    password: password
                 })
-            }).then(res => {
-                if (res.ok) {
-                    this.setState({
-                        correctLogin: true,
-                    })
-                    sessionStorage.setItem("username", this.state.username.toString());
-                } else {
-                    this.setState({
-                        correctLogin: false,
-                    })
-                }
-            });
+            }).then(res => res.json())
+                .then(data => {
+                    if (data.length !== 1) {
+                        setCorrectLogin(false);
+                    } else {
+                        setCorrectLogin(true);
+                        sessionStorage.setItem("username", username.toString());
+                        sessionStorage.setItem("userId", data[0]['pk']);
+                        window.location.reload(false);
+                    
+                        fetch('http://127.0.0.1:8000/user/type', {
+                            method: 'post',
+                            body: JSON.stringify({
+                                username: username,
+                                password: password
+                            }),
+                            headers: {
+                                'Content-Type': 'application/json',
+                            }
+                        }).then(resp => resp.json())
+                            .then(usetypes => {
+                                Object.entries(usetypes).map(([key, value]) => (
+                                    setUserType(key.toString())
+                                ));
+                            });
+                    }
+                });
         } catch (e) {
             console.log(e);
         }
     }
 
-    render() {
-        if (sessionStorage.getItem("username") != null) {
-            return (
-                <div>
-                    <h1>Witaj {sessionStorage.getItem("username")}!</h1>
+    if (sessionStorage.getItem("username") != null) {
+        return (
+            <div>
+                <h1>Witaj {sessionStorage.getItem("username")}!</h1>
+                <Button
+                    bsStyle="primary"
+                    bsSize="large"
+                    active
+                    onClick={doLogout.bind(this)}
+                >
+                    Wyloguj
+                </Button>
+            </div>
+        );
+    } else {
+        return (
+            <div className='loginForm'>
+                {correctLogin === false &&
+                <Alert bsStyle="warning">
+                    <strong>Niepowodzenie logowania!</strong> Wprowadz poprawny login i haslo.
+                </Alert>
+                }
+                <h1>Logowanie</h1>
+                <br/>
+                <Form>
+                    <FormGroup controlId='usernameInput'>
+                        <InputField
+                            type='username'
+                            placeholder='Nazwa uzytkownika'
+                            value={username}
+                            onChange={setUsername}
+                        />
+                    </FormGroup>
+                    <FormGroup controlId='passwordInput'>
+                        <InputField
+                            type='password'
+                            placeholder='Haslo'
+                            value={password}
+                            onChange={setPassword}
+                        />
+                    </FormGroup>
                     <Button
-                        bsStyle="primary"
-                        bsSize="large"
-                        active
-                        onClick={this.doLogout.bind(this)}
+                        bsStyle='info'
+                        bsSize="primary"
+                        onClick={doLogin.bind(this)}
+                        disabled={!username || !password}
                     >
-                        Wyloguj
+                        Zaloguj
                     </Button>
-                </div>
-            );
-        } else {
-            return (
-                <div className='loginForm'>
-                    {this.state.correctLogin === false &&
-                    <Alert bsStyle="warning">
-                        <strong>Niepowodzenie logowania!</strong> Wprowadz poprawny login i haslo.
-                    </Alert>
-                    }
-                    <h1>Logowanie</h1>
-                    <br/>
-                    <Form>
-                        <FormGroup controlId='usernameInput'>
-                            <InputField
-                                type='username'
-                                placeholder='Nazwa uzytkownika'
-                                value={this.state.username}
-                                onChange={(val) => this.setInputValue('username', val)}
-                            />
-                        </FormGroup>
-                        <FormGroup controlId='passwordInput'>
-                            <InputField
-                                type='password'
-                                placeholder='Haslo'
-                                value={this.state.password}
-                                onChange={(val) => this.setInputValue('password', val)}
-                            />
-                        </FormGroup>
-                        <Button
-                            bsStyle='info'
-                            bsSize="primary"
-                            onClick={this.doLogin.bind(this)}
-                            disabled={!this.state.username || !this.state.password}
-                        >
-                            Zaloguj
-                        </Button>
-                    </Form>
-                </div>
-            )
-        }
+                </Form>
+            </div>
+        )
     }
 }
 
