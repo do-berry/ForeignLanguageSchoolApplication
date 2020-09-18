@@ -3,23 +3,24 @@ from rest_framework import serializers, permissions
 from app.serializers import FindPersonSerializer, FindLanguageSerializer
 from payment import models
 from payment.models import Payment
+from school.serializers import FindGroupSerializer
 
 
 class PaymentSerializer(serializers.ModelSerializer):
     permission_classes = (permissions.AllowAny,)
     person = FindPersonSerializer()
-    language = FindLanguageSerializer()
+    group = FindGroupSerializer()
 
     class Meta:
         model = models.Payment
-        fields = ('person', 'language', 'paid',)
+        fields = ('person', 'group', 'paid',)
 
     def create(self, validated_data):
         person_data = validated_data.pop('person')
         person = FindPersonSerializer.find(FindPersonSerializer(), person_data)
-        language_data = validated_data.pop('language')
-        language = FindLanguageSerializer.find(FindLanguageSerializer(), language_data)
+        group_data = validated_data.pop('group')
+        group = FindGroupSerializer.find(FindGroupSerializer(), group_data)
         payment, created = Payment.objects.update_or_create(person=person,
-                                                            language=language,
+                                                            group=group,
                                                             paid=validated_data.pop('paid'))
         return created

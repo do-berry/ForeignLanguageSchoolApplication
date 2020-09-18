@@ -49,7 +49,7 @@ const TableRow = (props) => {
             <td>{Day[props.item.date_day]}</td>
             <td>{Language[props.item.language_name]}</td>
             <td>{LanguageLevel[props.item.language_level]}</td>
-            <td>{props.item.language_cost}</td>
+            <td>{props.item.cost}</td>
             <td>
                 <Link
                     bsStyle="info"

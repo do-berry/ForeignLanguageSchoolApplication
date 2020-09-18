@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers, permissions
 
 from school import models
 from school.models import Group, Lesson, Note
@@ -6,16 +6,17 @@ from school.models import Group, Lesson, Note
 
 class LanguageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.LanguageName
-        fields = ('name', 'level', 'cost')
+        model = models.Language
+        fields = ('name', 'level', )
 
 
 class GroupSerializer(serializers.ModelSerializer):
-    language = LanguageSerializer(required=False)
+    permission_classes = (permissions.AllowAny,)
+    language = LanguageSerializer(required=False, read_only=True, many=True, allow_null=True)
 
     class Meta:
         model = models.Group
-        fields = ('room', 'date_hour', 'date_day', 'language')
+        fields = ('room', 'date_hour', 'date_day', 'language', 'cost', )
 
     def create(self, validated_data):
         language_data = validated_data.pop('language')
@@ -23,7 +24,8 @@ class GroupSerializer(serializers.ModelSerializer):
         group, created = Group.objects.update_or_create(room=validated_data.pop('room'),
                                                         date_hour=validated_data.pop('date_hour'),
                                                         date_day=validated_data.pop('date_day'),
-                                                        language=language)
+                                                        language=language,
+                                                        cost=validated_data.pop('cost'))
         return group
 
 

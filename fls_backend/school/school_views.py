@@ -1,5 +1,6 @@
 import datetime
 import json
+import sys
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -13,7 +14,10 @@ from school.serializers import GroupSerializer, LessonSerializer, NoteSerializer
 
 @api_view(['POST'])
 def create_group(request):
-    serializer = GroupSerializer(data=request.data)
+    try:
+        serializer = GroupSerializer(data=request.data)
+    except AttributeError:
+        print(sys.exc_info()[0])
     if serializer.is_valid():
         serializer.create(validated_data=request.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -28,7 +32,7 @@ def all_groups(request):
     for group in groups:
         result.append({'id': group.id, 'room': group.room, 'date_hour': str(group.date_hour),
                        'date_day': str(group.date_day), 'language_name': group.language.name,
-                       'language_level': group.language.level, 'language_cost': group.language.cost})
+                       'language_level': group.language.level, 'cost': group.cost})
     return Response(json.loads(json.dumps(result)), content_type='application/json', status=status.HTTP_200_OK)
 
 
