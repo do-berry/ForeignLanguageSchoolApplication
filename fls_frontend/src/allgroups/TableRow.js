@@ -33,11 +33,11 @@ const TableRow = (props) => {
                         })
                     });
 
-                    //sessionStorage.setItem('saved', true);
+                    sessionStorage.setItem('saved', true);
                     setSavedAssignment(true);
                 } else {
                     setSavedAssignment(false);
-                    //sessionStorage.setItem('saved', false);
+                    sessionStorage.setItem('saved', false);
                 }
             });
     }

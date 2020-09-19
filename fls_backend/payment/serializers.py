@@ -13,7 +13,7 @@ class PaymentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Payment
-        fields = ('person', 'group', 'paid',)
+        fields = ('person', 'group', 'to_pay', 'paid', )
 
     def create(self, validated_data):
         person_data = validated_data.pop('person')
@@ -22,5 +22,6 @@ class PaymentSerializer(serializers.ModelSerializer):
         group = FindGroupSerializer.find(FindGroupSerializer(), group_data)
         payment, created = Payment.objects.update_or_create(person=person,
                                                             group=group,
+                                                            to_pay=validated_data.pop('to_pay'),
                                                             paid=validated_data.pop('paid'))
         return created

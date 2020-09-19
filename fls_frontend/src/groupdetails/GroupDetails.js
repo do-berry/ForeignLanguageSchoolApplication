@@ -1,5 +1,6 @@
 import React from 'react';
 import {LessonList} from "../lessonlist/LessonList";
+import {PaymentTable} from "./PaymentTable";
 
 export const GroupDetails = (props) => {
     return (
@@ -7,6 +8,9 @@ export const GroupDetails = (props) => {
             <h1>Szczegoly grupy</h1>
             <h4>Plan zajec</h4>
             <LessonList item={props.match.params.id}/>
+            <br/>
+            <br/>
+            <PaymentTable group={props.match.params.id}/>
         </div>
     );
 }

@@ -1,0 +1,6 @@
+table#paymentTable, th, td {
+    margin: auto;
+    width: 35%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
