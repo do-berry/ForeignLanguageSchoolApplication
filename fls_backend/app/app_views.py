@@ -78,12 +78,9 @@ def check_if_person_is_assigned(request):
 
 @api_view(['POST'])
 def get_type_of_user(request):
-    types = User.objects.filter(Q(username=request.data['username']) & Q(password=request.data['password'])) \
-        .values_list('is_student', 'is_teacher', 'is_customer_assistant', 'is_admin')
-    types_dict = {'student': types[0][0], 'teacher': types[0][1], 'customer_assistant': types[0][2],
-                  'admin': types[0][3]}
-    tmp = {key: value for key, value in types_dict.items() if value is True}
-    return Response(json.loads(json.dumps(tmp)), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
+    types = User.objects.filter(Q(username=request.data['username']) & Q(password=request.data['password']))
+    result = {'user_type': types[0].user_type}
+    return Response(json.loads(json.dumps(result)), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
 
 
 @api_view(['PUT'])

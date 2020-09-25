@@ -1,11 +1,10 @@
 import json
 
+from django.core import serializers
 from django.db.models import Q
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
-from django.core import serializers
 
 from payment.models import Payment
 from payment.serializers import PaymentSerializer
@@ -23,7 +22,8 @@ def create_payment(request):
 
 @api_view(['PUT'])
 def set_paid(request):
-    Payment.objects.filter(id=request.data['id']).update(paid=request.data['paid'])
+    for payment in request.data:
+        Payment.objects.filter(id=payment['id']).update(paid=payment['paid'])
     return Response("updated", status=status.HTTP_200_OK)
 
 
