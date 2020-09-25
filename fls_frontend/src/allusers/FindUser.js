@@ -9,7 +9,7 @@ const FindUser = () => {
     const [surname, setSurname] = useState('');
     const [noData, setNoData] = useState(false);
 
-    const [setUsers] = useContext(AllUsersContext);
+    const [users, setUsers] = useContext(AllUsersContext);
 
     function findUser() {
         if (name === '' && surname === '') {
@@ -30,10 +30,10 @@ const FindUser = () => {
                     'Content-Type': 'application/json',
                 }
             }).then(res => res.json())
-                .then(data => {
-                    if (Object.keys(data).length > 0) {
-                        data.map(item => {
-                            myUsers.push(item)
+                .then(response => {
+                    if (Object.keys(response).length > 0) {
+                        Object.entries(response).map(([key, value]) => {
+                            return myUsers.push(value);
                         })
                         setUsers(myUsers);
                     } else {

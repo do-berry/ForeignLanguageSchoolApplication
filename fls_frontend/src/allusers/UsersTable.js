@@ -21,7 +21,7 @@ const UsersTable = () => {
                 </thead>
                 <tbody>
                 {Object.entries(users).map(([key, value]) => (
-                    <TableRow key={value} item={value}/>
+                    <TableRow key={key} item={value}/>
                 ))}
                 </tbody>
             </Table>

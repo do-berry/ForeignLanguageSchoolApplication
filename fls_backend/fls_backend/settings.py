@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'knox',
     'school',
+    'payment',
 ]
 
 MIDDLEWARE = [

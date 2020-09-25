@@ -28,9 +28,9 @@ export const CreateGroupForm = () => {
                 date_day: dateDay,
                 language: {
                     name: languageName,
-                    level: languageLevel,
-                    cost: parseInt(cost)
-                }
+                    level: languageLevel
+                },
+                cost: parseInt(cost)
             })
         }).then(res => {
             if (res.ok) {

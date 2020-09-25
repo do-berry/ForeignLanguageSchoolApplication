@@ -10,7 +10,7 @@ const GroupsForm = () => {
 
     useEffect(() => {
         let myGroups = []
-        setSavedAssignment(null);
+        //setSavedAssignment(null);
 
         fetch('http://127.0.0.1:8000/school/allgroups')
             .then(response => response.json())

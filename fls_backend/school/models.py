@@ -4,9 +4,10 @@ from school.languages_enums import LanguageName, LanguageLevel, Day
 
 
 class Language(models.Model):
-    name = models.CharField(max_length=10, choices=[(tag.name, tag.value) for tag in LanguageName])
-    level = models.CharField(max_length=10, choices=[(tag.name, tag.value) for tag in LanguageLevel])
-    cost = models.FloatField(default=0.0)
+    name = models.CharField(max_length=10, choices=[(tag.name, tag.value) for tag in LanguageName],
+                            default=LanguageName.ENG)
+    level = models.CharField(max_length=10, choices=[(tag.name, tag.value) for tag in LanguageLevel],
+                             default=LanguageLevel.A1)
 
 
 class Group(models.Model):
@@ -14,6 +15,7 @@ class Group(models.Model):
     date_hour = models.TimeField(auto_now=False, auto_now_add=False, default="00:00:00")
     date_day = models.CharField(max_length=10, choices=[(tag.name, tag.value) for tag in Day], default=Day.D1)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
+    cost = models.FloatField(default=0.0)
 
 
 class Lesson(models.Model):
