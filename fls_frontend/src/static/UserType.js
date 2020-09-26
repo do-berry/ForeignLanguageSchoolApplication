@@ -2,8 +2,8 @@ import React, {createContext, useState} from "react";
 
 export const UserType = {
     STUDENT: 'student',
-    TEACHER: 'teacher',
-    CUSTOMER_ASSISTANT: 'customer_assistant',
+    TEACHER: 'lektor',
+    CUSTOMER_ASSISTANT: 'doradca klienta',
     ADMIN: 'admin',
 }
 

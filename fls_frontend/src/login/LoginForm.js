@@ -1,15 +1,12 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {Alert, Button, Form} from "react-bootstrap";
 import InputField from "./InputField";
 import FormGroup from "reactstrap/es/FormGroup";
-import {UserTypeContext} from "../static/UserType";
 
 export const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [correctLogin, setCorrectLogin] = useState(null);
-
-    const [setUserType] = useContext(UserTypeContext);
 
     function doLogout() {
         sessionStorage.removeItem("username");
@@ -37,7 +34,7 @@ export const LoginForm = () => {
                         sessionStorage.setItem("username", username.toString());
                         sessionStorage.setItem("userId", data[0]['pk']);
                         window.location.reload(false);
-                    
+
                         fetch('http://127.0.0.1:8000/user/type', {
                             method: 'post',
                             body: JSON.stringify({
@@ -48,11 +45,7 @@ export const LoginForm = () => {
                                 'Content-Type': 'application/json',
                             }
                         }).then(resp => resp.json())
-                            .then(usetypes => {
-                                Object.entries(usetypes).map(([key, value]) => (
-                                    setUserType(key.toString())
-                                ));
-                            });
+                            .then(resp => sessionStorage.setItem("userType", resp['user_type']));
                     }
                 });
         } catch (e) {
