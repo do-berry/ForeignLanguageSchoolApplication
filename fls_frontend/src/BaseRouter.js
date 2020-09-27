@@ -9,18 +9,37 @@ import {CreateGroup} from "./creategroup/CreateGroup";
 import {UserProfile} from "./userprofile/UserProfile";
 import {GroupDetails} from "./groupdetails/GroupDetails";
 import {LessonDetails} from "./lessondetails/LessonDetails";
+import {PageNotFound} from "./pagenotfound/PageNotFound";
+import {Redirect} from "react-router";
+import {UserType} from "./static/UserType";
 
 const BaseRouter = () => (
     <div>
-            <Route exact path='/login' component={Login}/>
-            <Route exact path='/register' component={Register}/>
-            <Route exact path='/school/allgroups' component={AllGroups}/>
-            <Route exact path='/school/allusers' component={AllUsers}/>
-            <Route exact path='/school/creategroup' component={CreateGroup}/>
-            <Route exact path='/user/profile' component={UserProfile}/>
-            <Route exact path='/school/group/:id' component={GroupDetails}/>
-            <Route exact path='/school/group/lesson/note' component={LessonDetails}/>
+        <Route exact path='/login' component={Login}/>
+        <ProtectedRoute path='/register' component={Register} type={[UserType.CUSTOMER_ASSISTANT]}/>
+        <ProtectedRoute path='/school/allgroups' component={AllGroups} type={[UserType.CUSTOMER_ASSISTANT]}/>
+        <ProtectedRoute path='/school/allusers' component={AllUsers} type={[UserType.CUSTOMER_ASSISTANT]}/>
+        <ProtectedRoute path='/school/creategroup' component={CreateGroup} type={[UserType.CUSTOMER_ASSISTANT]}/>
+        <ProtectedRoute path='/user/profile' component={UserProfile} type={[UserType.STUDENT, UserType.TEACHER,
+            UserType.CUSTOMER_ASSISTANT, UserType.ADMIN]}/>
+        <ProtectedRoute path='/school/group/:id' component={GroupDetails} type={[UserType.STUDENT, UserType.TEACHER,
+            UserType.CUSTOMER_ASSISTANT]}/>
+        <ProtectedRoute path='/school/group/lesson/note' component={LessonDetails}
+                        type={[UserType.STUDENT, UserType.TEACHER,
+                            UserType.CUSTOMER_ASSISTANT]}/>
+        <Route exact path='/404' component={PageNotFound}/>
     </div>
+);
+
+// type -> an array contains type of users
+const ProtectedRoute = ({component: Component, type: type, ...rest}) => (
+    <Route {...rest} render={props => (
+        type.length > 0 ? (
+            sessionStorage.getItem('userType') !== null
+            && type.includes(sessionStorage.getItem('userType').toString()) ? (
+                <Component {...props} />) : (
+                <Redirect to={{pathname: '/404'}}/>
+            )) : (<Redirect to={{pathname: '/404'}}/>))}/>
 );
 
 export default BaseRouter;

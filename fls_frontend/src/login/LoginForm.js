@@ -10,6 +10,8 @@ export const LoginForm = () => {
 
     function doLogout() {
         sessionStorage.removeItem("username");
+        sessionStorage.removeItem("userId");
+        sessionStorage.removeItem("userType");
         window.location.reload(false);
     }
 
@@ -45,7 +47,7 @@ export const LoginForm = () => {
                                 'Content-Type': 'application/json',
                             }
                         }).then(resp => resp.json())
-                            .then(resp => sessionStorage.setItem("userType", resp['user_type']));
+                            .then(resp => sessionStorage.setItem("userType", resp.user_type));
                     }
                 });
         } catch (e) {

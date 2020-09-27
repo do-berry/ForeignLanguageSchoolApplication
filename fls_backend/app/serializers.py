@@ -57,7 +57,7 @@ class FindLanguageSerializer(serializers.ModelSerializer):
 
 class GroupAssignmentSerializer(serializers.ModelSerializer):
     person = FindPersonSerializer()
-    group = GroupSerializer()
+    group = FindGroupSerializer()
 
     class Meta:
         model = models.GroupAssignment

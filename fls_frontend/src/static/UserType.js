@@ -1,10 +1,10 @@
 import React, {createContext, useState} from "react";
 
 export const UserType = {
-    STUDENT: 'student',
-    TEACHER: 'lektor',
-    CUSTOMER_ASSISTANT: 'doradca klienta',
-    ADMIN: 'admin',
+    STUDENT: 'STUDENT',
+    TEACHER: 'TEACHER',
+    CUSTOMER_ASSISTANT: 'CUSTOMER_ASSISTANT',
+    ADMIN: 'ADMIN',
 }
 
 export const UserTypeContext = createContext();
