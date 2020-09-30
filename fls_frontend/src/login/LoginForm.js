@@ -2,18 +2,12 @@ import React, {useState} from 'react';
 import {Alert, Button, Form} from "react-bootstrap";
 import InputField from "./InputField";
 import FormGroup from "reactstrap/es/FormGroup";
+import {Redirect} from "react-router";
 
 export const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [correctLogin, setCorrectLogin] = useState(null);
-
-    function doLogout() {
-        sessionStorage.removeItem("username");
-        sessionStorage.removeItem("userId");
-        sessionStorage.removeItem("userType");
-        window.location.reload(false);
-    }
 
     function doLogin() {
         try {
@@ -57,17 +51,18 @@ export const LoginForm = () => {
 
     if (sessionStorage.getItem("username") != null) {
         return (
-            <div>
-                <h1>Witaj {sessionStorage.getItem("username")}!</h1>
-                <Button
-                    bsStyle="primary"
-                    bsSize="large"
-                    active
-                    onClick={doLogout.bind(this)}
-                >
-                    Wyloguj
-                </Button>
-            </div>
+            <Redirect to='/'/>
+            // <div>
+            //     <h1>Witaj {sessionStorage.getItem("username")}!</h1>
+            //     <Button
+            //         bsStyle="primary"
+            //         bsSize="large"
+            //         active
+            //         onClick={doLogout.bind(this)}
+            //     >
+            //         Wyloguj
+            //     </Button>
+            // </div>
         );
     } else {
         return (

@@ -12,6 +12,7 @@ import {LessonDetails} from "./lessondetails/LessonDetails";
 import {PageNotFound} from "./pagenotfound/PageNotFound";
 import {Redirect} from "react-router";
 import {UserType} from "./static/UserType";
+import {LogOut} from "./login/LogOut";
 
 const BaseRouter = () => (
     <div>
@@ -28,6 +29,7 @@ const BaseRouter = () => (
                         type={[UserType.STUDENT, UserType.TEACHER,
                             UserType.CUSTOMER_ASSISTANT]}/>
         <Route exact path='/404' component={PageNotFound}/>
+        <Route exact path='/logout' component={LogOut}/>
     </div>
 );
 
