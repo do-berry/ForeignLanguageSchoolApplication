@@ -18,7 +18,7 @@ const UsersTable = () => {
                     <th>Imie</th>
                     <th>Nazwisko</th>
                     <th>Przypisz do grupy</th>
-                    <th>Szczegoly</th>
+                    <th>Platnosci</th>
                 </tr>
                 {Object.entries(users).map(([key, value]) => (
                     <TableRow key={key} item={value}/>

@@ -7,6 +7,12 @@ import {SavedAssignmentContext} from "../SavedAssignmentContext";
 const TableRow = (props) => {
     const [savedAssignment, setSavedAssignment] = useContext(SavedAssignmentContext);
 
+    function plan() {
+        if (sessionStorage.getItem("group") !== null) {
+            sessionStorage.removeItem("group");
+        }
+    }
+
     function handleClick() {
         sessionStorage.setItem('group', props.item['id']);
 
@@ -53,6 +59,7 @@ const TableRow = (props) => {
             <td>
                 <Link
                     to={"/school/group/" + props.item['id']}
+                    onClick={plan.bind(this)}
                     bsStyle="info">
                     Plan
                 </Link>

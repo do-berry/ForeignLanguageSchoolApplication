@@ -13,6 +13,7 @@ import {PageNotFound} from "./pagenotfound/PageNotFound";
 import {Redirect} from "react-router";
 import {UserType} from "./static/UserType";
 import {LogOut} from "./login/LogOut";
+import {Payments} from "./payments/Payments";
 
 const BaseRouter = () => (
     <div>
@@ -28,6 +29,8 @@ const BaseRouter = () => (
         <ProtectedRoute path='/school/group/lesson/note' component={LessonDetails}
                         type={[UserType.STUDENT, UserType.TEACHER,
                             UserType.CUSTOMER_ASSISTANT]}/>
+        <ProtectedRoute path='/user/:id/payments' component={Payments} type={[UserType.CUSTOMER_ASSISTANT,
+            UserType.STUDENT]}/>
         <Route exact path='/404' component={PageNotFound}/>
         <Route exact path='/logout' component={LogOut}/>
     </div>

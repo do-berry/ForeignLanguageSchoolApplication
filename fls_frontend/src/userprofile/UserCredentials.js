@@ -123,6 +123,11 @@ export const UserCredentials = () => {
                                 bsStyle='info'
                                 onClick={() => setEditIsDisabled(false)}
                             >Edytuj</Button>
+                            <Button
+                                id='editButton'
+                                bsStyle='info'
+                                href={'/user/' + sessionStorage.getItem('userId') + '/payments'}
+                            >Platnosci</Button>
                         </ButtonToolbar></Row>
                     </div>
                 </Form>

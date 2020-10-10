@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 
 export const NewPayment = (props) => {
     const [cost, setCost] = useState(0);
+    const [description, setDescription] = useState("");
     const [paid, setPaid] = useState(false);
 
     function newPayment() {
@@ -12,8 +13,8 @@ export const NewPayment = (props) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                person: { id: sessionStorage.getItem('userId') },
-                group: { id: props.group },
+                person: {id: props.user},
+                description: description,
                 to_pay: cost,
                 paid: Boolean(paid)
             })
@@ -27,6 +28,10 @@ export const NewPayment = (props) => {
             <label>Kwota:</label>{'   '}
             <input type='number' placeholder='kwota'
                    value={cost} onChange={e => setCost(e.target.value)}/>
+            <br/>
+            <label>Opis:</label>{'     '}
+            <input type='text' placeholder='opis'
+                   value={description} onChange={e => setDescription(e.target.value)}/>
             <br/>
             <label>Wplacono:</label>{'    '}
             <input type="checkbox" id="paid" value={paid}

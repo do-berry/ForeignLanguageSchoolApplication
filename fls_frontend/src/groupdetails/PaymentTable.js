@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './PaymentTable.css';
-import {AddPayment} from "./AddPayment";
+import {NewPayment} from "./NewPayment";
 
 export const PaymentTable = (props) => {
     const [payments, setPayments] = useState([]);
@@ -70,8 +70,7 @@ export const PaymentTable = (props) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "person": sessionStorage.getItem("userId"),
-                "group": props.group
+                "person": props.user
             })
         })
             .then(response => response.json())
@@ -89,6 +88,7 @@ export const PaymentTable = (props) => {
             <table id='paymentTable'>
                 <tr>
                     <th>Nr</th>
+                    <th>Opis</th>
                     <th>Kwota</th>
                     <th>Zaplacono</th>
                 </tr>
@@ -96,6 +96,7 @@ export const PaymentTable = (props) => {
                 payments.map((value, index) => {
                     return (<tr key={index}>
                             <td>{index}</td>
+                            <td>{value.fields.description}</td>
                             <td>{value.fields.to_pay}</td>
                             <td>
                                 <input type="checkbox"
@@ -108,8 +109,14 @@ export const PaymentTable = (props) => {
                 })
                 }
             </table>
+            <br/>
             {sessionStorage.getItem('userType') === "CUSTOMER_ASSISTANT" &&
-            <AddPayment group={props.group}/>}
+            <button onClick={addPayment}>Dodaj platnosc</button>}
+            {'   '}
+            {sessionStorage.getItem('userType') === "CUSTOMER_ASSISTANT" &&
+            <button onClick={acceptPayments}>{acceptButtonText}</button>}
+            {newPayment &&
+            <NewPayment user={props.user}/>}
         </div>
     );
 }

@@ -10,7 +10,7 @@ div#buttons {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-left: 36%;
+    margin-left: 28%;
 }
 
 #saveButton, #editButton {
