@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {Day, Language, LanguageLevel} from '../stores/SchoolStore';
 import './Table.css';
 import {Link} from "react-router-dom";
@@ -6,12 +6,6 @@ import {SavedAssignmentContext} from "../SavedAssignmentContext";
 
 const TableRow = (props) => {
     const [savedAssignment, setSavedAssignment] = useContext(SavedAssignmentContext);
-    const [path, setPath] = useState("");
-
-    function plan() {
-        var tmpPath = "/school/group/" + props.item['id'];
-        setPath(tmpPath);
-    }
 
     function handleClick() {
         sessionStorage.setItem('group', props.item['id']);
@@ -59,8 +53,7 @@ const TableRow = (props) => {
             <td>
                 <Link
                     to={"/school/group/" + props.item['id']}
-                    bsStyle="info"
-                    onClick={plan.bind(this)}>
+                    bsStyle="info">
                     Plan
                 </Link>
             </td>
