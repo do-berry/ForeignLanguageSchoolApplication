@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import './PaymentTable.css';
-import {AddPayment} from "./AddPayment";
+import React, {useState} from 'react';
+import {NewPayment} from "./NewPayment";
 
-export const PaymentTable = (props) => {
+export const AddPayment = (props) => {
     const [payments, setPayments] = useState([]);
     const [paymentsCounter, setPaymentsCounter] = useState(0);
     const [toPay, setToPay] = useState(0);
@@ -63,53 +62,14 @@ export const PaymentTable = (props) => {
         setPayments(newState);
     }
 
-    useEffect(() => {
-        fetch('http://127.0.0.1:8000/payment/findpaymentbypersonandgroup', {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                "person": sessionStorage.getItem("userId"),
-                "group": props.group
-            })
-        })
-            .then(response => response.json())
-            .then(data => {
-                data.map(item => {
-                    payments.push(item)
-                });
-                setPaymentsCounter(data.length);
-            });
-    }, []);
-
     return (
         <div>
-            <h4>Platnosci uzytkownika</h4>
-            <table id='paymentTable'>
-                <tr>
-                    <th>Nr</th>
-                    <th>Kwota</th>
-                    <th>Zaplacono</th>
-                </tr>
-                {paymentsCounter > 0 &&
-                payments.map((value, index) => {
-                    return (<tr key={index}>
-                            <td>{index}</td>
-                            <td>{value.fields.to_pay}</td>
-                            <td>
-                                <input type="checkbox"
-                                       checked={value.fields.paid}
-                                       onChange={() => checkCheckbox(value)}
-                                       disabled={!edit}/>
-                            </td>
-                        </tr>
-                    )
-                })
-                }
-            </table>
-            {sessionStorage.getItem('userType') === "CUSTOMER_ASSISTANT" &&
-            <AddPayment group={props.group}/>}
+            <br/>
+            <button onClick={addPayment}>Dodaj platnosc</button>
+            {'   '}
+            <button onClick={acceptPayments}>{acceptButtonText}</button>
+            {newPayment &&
+            <NewPayment group={props.group}/>}
         </div>
     );
-}
+};

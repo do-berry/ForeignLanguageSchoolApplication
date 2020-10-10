@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import {SavedAssignmentContext} from "../SavedAssignmentContext";
 
 const TableRow = (props) => {
-    const [setSavedAssignment] = useContext(SavedAssignmentContext);
+    const [savedAssignment, setSavedAssignment] = useContext(SavedAssignmentContext);
 
     function handleClick() {
         sessionStorage.setItem('group', props.item['id']);
@@ -33,11 +33,9 @@ const TableRow = (props) => {
                         })
                     });
 
-                    sessionStorage.setItem('saved', true);
                     setSavedAssignment(true);
                 } else {
                     setSavedAssignment(false);
-                    sessionStorage.setItem('saved', false);
                 }
             });
     }
@@ -50,13 +48,15 @@ const TableRow = (props) => {
             <td>{Language[props.item.language_name]}</td>
             <td>{LanguageLevel[props.item.language_level]}</td>
             <td>{props.item.cost}</td>
-            <td>
-                <Link
-                    bsStyle="info"
-                    onClick={handleClick.bind(this)}>
-                    Wybierz
-                </Link>
-            </td>
+            {
+                sessionStorage.getItem('person') &&
+                <td>
+                    <Link
+                        bsStyle="info"
+                        onClick={handleClick.bind(this)}>
+                        Wybierz
+                    </Link>
+                </td>}
         </tr>
     );
 }

@@ -27,10 +27,8 @@ export const LoginForm = () => {
                         setCorrectLogin(false);
                     } else {
                         setCorrectLogin(true);
-                        sessionStorage.setItem("username", username.toString());
-                        sessionStorage.setItem("userId", data[0]['pk']);
-                        window.location.reload(false);
 
+                        var type;
                         fetch('http://127.0.0.1:8000/user/type', {
                             method: 'post',
                             body: JSON.stringify({
@@ -41,7 +39,14 @@ export const LoginForm = () => {
                                 'Content-Type': 'application/json',
                             }
                         }).then(resp => resp.json())
-                            .then(resp => sessionStorage.setItem("userType", resp.user_type));
+                            .then(resp => {
+                                type = resp.user_type;
+                                console.log(type);
+                                sessionStorage.setItem("userType", type.toString());
+                            });
+                        sessionStorage.setItem("username", username.toString());
+                        sessionStorage.setItem("userId", data[0]['pk']);
+                        window.location.reload(false);
                     }
                 });
         } catch (e) {
