@@ -31,9 +31,9 @@ export const LessonListTable = (props) => {
 
     return (
         <div id='lessonListTable'>
+            {lessonCounter === 0 &&
+            <div><h5>Nie wprowadzono zadnych dat.</h5></div>}
             <table id='listTable'>
-                {lessonCounter === 0 &&
-                <td><h5>Nie wprowadzono zadnych dat.</h5></td>}
                 <tr>
                     <th>Nr</th>
                     <th>Data</th>

@@ -13,7 +13,8 @@ export const LessonDetails = () => {
         <div id='lessonDetails'>
             <Note/>
             <br/>
-            <button onClick={enableEdit}>Edytuj notatke</button>
+            {sessionStorage.getItem('userType') === "TEACHER" &&
+            <button onClick={enableEdit}>Edytuj notatke</button>}
             <br/><br/>
             {edit ? <CreateUpdateNote/> : null}
         </div>
