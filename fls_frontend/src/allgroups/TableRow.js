@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {Day, Language, LanguageLevel} from '../stores/SchoolStore';
 import './Table.css';
 import {Link} from "react-router-dom";
@@ -6,6 +6,12 @@ import {SavedAssignmentContext} from "../SavedAssignmentContext";
 
 const TableRow = (props) => {
     const [savedAssignment, setSavedAssignment] = useContext(SavedAssignmentContext);
+    const [path, setPath] = useState("");
+
+    function plan() {
+        var tmpPath = "/school/group/" + props.item['id'];
+        setPath(tmpPath);
+    }
 
     function handleClick() {
         sessionStorage.setItem('group', props.item['id']);
@@ -34,6 +40,8 @@ const TableRow = (props) => {
                     });
 
                     setSavedAssignment(true);
+                    sessionStorage.removeItem("person");
+                    sessionStorage.removeItem("group");
                 } else {
                     setSavedAssignment(false);
                 }
@@ -48,13 +56,21 @@ const TableRow = (props) => {
             <td>{Language[props.item.language_name]}</td>
             <td>{LanguageLevel[props.item.language_level]}</td>
             <td>{props.item.cost}</td>
+            <td>
+                <Link
+                    to={"/school/group/" + props.item['id']}
+                    bsStyle="info"
+                    onClick={plan.bind(this)}>
+                    Plan
+                </Link>
+            </td>
             {
                 sessionStorage.getItem('person') &&
                 <td>
                     <Link
                         bsStyle="info"
                         onClick={handleClick.bind(this)}>
-                        Wybierz
+                        Przypisz
                     </Link>
                 </td>}
         </tr>

@@ -10,7 +10,8 @@ export const GroupDetails = (props) => {
             <LessonList item={props.match.params.id}/>
             <br/>
             <br/>
-            <PaymentTable group={props.match.params.id}/>
+            {sessionStorage.getItem("person") !== null &&
+            <PaymentTable group={props.match.params.id}/>}
         </div>
     );
 }
