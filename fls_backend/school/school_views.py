@@ -73,6 +73,6 @@ def all_lesson(request):
 
 @api_view(['POST'])
 def get_note_by_lesson_id(request):
-    note = Note.objects.filter(lesson=request.data['id'])
-    result = serializers.serialize('json', note)
+    note = Note.objects.filter(lesson=request.data['id']).last()
+    result = serializers.serialize('json', [note, ])
     return Response(json.loads(result), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)

@@ -9,6 +9,7 @@ export const UserCredentials = () => {
     const [address, setAddress] = useState('');
     const [editIsDisabled, setEditIsDisabled] = useState(true);
     const [saved, setSaved] = useState(false);
+    const [student, setStudent] = useState(true);
 
     function saveData() {
         if (!editIsDisabled) {
@@ -35,6 +36,10 @@ export const UserCredentials = () => {
     }
 
     useEffect(() => {
+        if (sessionStorage.getItem("userType") !== "STUDENT") {
+            setStudent(false);
+        }
+
         fetch('http://127.0.0.1:8000/user/getuserdata', {
             method: 'post',
             headers: {
@@ -125,6 +130,7 @@ export const UserCredentials = () => {
                             >Edytuj</Button>
                             <Button
                                 id='editButton'
+                                disabled={!student}
                                 bsStyle='info'
                                 href={'/user/' + sessionStorage.getItem('userId') + '/payments'}
                             >Platnosci</Button>

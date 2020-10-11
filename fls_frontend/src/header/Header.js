@@ -26,7 +26,6 @@ export const Header = () => {
                 setMenu(assistantArray);
             }
         }
-        console.log(menu);
     }, []);
 
     return (

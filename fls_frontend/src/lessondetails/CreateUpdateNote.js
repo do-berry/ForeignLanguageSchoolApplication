@@ -1,7 +1,10 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import './lessondetails.css';
+import {ShowNoteContext} from "./ShowNoteContext";
 
 export const CreateUpdateNote = () => {
+    const [show, setShow] = useContext(ShowNoteContext);
+
     function save() {
         fetch('http://127.0.0.1:8000/school/lesson/createupdatenote', {
             method: 'post',
@@ -17,6 +20,7 @@ export const CreateUpdateNote = () => {
         });
         window.location.reload(false);
     }
+
 
     const [topic, setTopic] = useState('');
     const [desc, setDesc] = useState('');
