@@ -1,11 +1,10 @@
-import datetime
 import json
 import sys
 
+from django.core import serializers
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.core import serializers
 
 from app.app_views import APPLICATION_JSON
 from school.models import Group, Note, Lesson

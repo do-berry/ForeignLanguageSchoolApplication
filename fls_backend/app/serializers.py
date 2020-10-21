@@ -1,8 +1,8 @@
 from rest_framework import serializers, permissions
 
-from app.models import Person, GroupAssignment
+from app.models import Person, GroupAssignment, Mark, Presence
 from school.models import Language
-from school.serializers import GroupSerializer, FindGroupSerializer
+from school.serializers import FindGroupSerializer
 from . import models
 
 
@@ -56,6 +56,7 @@ class FindLanguageSerializer(serializers.ModelSerializer):
 
 
 class GroupAssignmentSerializer(serializers.ModelSerializer):
+    permission_classes = (permissions.AllowAny,)
     person = FindPersonSerializer()
     group = FindGroupSerializer()
 
@@ -77,3 +78,46 @@ class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
         fields = ('username', 'password')
+
+
+class FindGroupAssignmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GroupAssignment
+        fields = ('id',)
+
+    def find(self, validated_data):
+        return GroupAssignment.objects.filter(id=validated_data['id']).first()
+
+
+class PresenceSerializer(serializers.ModelSerializer):
+    group_assignment = FindGroupAssignmentSerializer(required=True)
+
+    class Meta:
+        model = Presence
+        fields = ('present', 'group_assignment',)
+
+    def create(self, validated_data):
+        ga_data = validated_data.pop('group_assignment')
+        group_assignment = FindGroupAssignmentSerializer.find(FindGroupAssignmentSerializer(), validated_data=ga_data)
+        try:
+            Presence.objects.create(present=validated_data.pop('present'),
+                                    group_assignment=group_assignment)
+            return True
+        except Exception:
+            print("Exception occurred")
+
+
+class MarkSerializer(serializers.ModelSerializer):
+    group_assignment = FindGroupAssignmentSerializer(required=True)
+
+    class Meta:
+        model = Mark
+        fields = ('value', 'description', 'group_assignment',)
+
+    def create(self, validated_data):
+        ga_data = validated_data.pop('group_assignment')
+        group_assignment = FindGroupAssignmentSerializer.find(FindGroupAssignmentSerializer(), validated_data=ga_data)
+        mark, created = Mark.objects.update_or_create(value=validated_data.pop('value'),
+                                                      description=validated_data.pop('description'),
+                                                      group_assignment=group_assignment)
+        return created

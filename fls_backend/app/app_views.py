@@ -8,7 +8,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from app.models import User, Person, GroupAssignment
-from app.serializers import UserSerializer, PersonSerializer, GroupAssignmentSerializer
+from app.serializers import UserSerializer, PersonSerializer, GroupAssignmentSerializer, MarkSerializer, \
+    PresenceSerializer
 
 APPLICATION_JSON = 'application/json'
 
@@ -109,3 +110,23 @@ def groups_assigned_to_user(request):
                        'language_level': group.group.language.level, 'id': group.group.id,
                        'cost': group.group.cost})
     return Response(json.loads(json.dumps(result)), content_type='application/json', status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def create_presence(request):
+    serializer = PresenceSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.create(validated_data=request.data)
+        return Response(True, status=status.HTTP_201_CREATED)
+    else:
+        return Response(False, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['POST'])
+def create_mark(request):
+    serializer = MarkSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.create(validated_data=request.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

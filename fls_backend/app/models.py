@@ -25,3 +25,16 @@ class GroupAssignment(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     assigment_date = models.DateTimeField(auto_now=True, null=True, blank=True)
+
+
+class Mark(models.Model):
+    value = models.CharField(max_length=1, choices=[(str(x), x) for x in range(1, 7)], default='1')
+    date = models.DateField(auto_now=True)
+    description = models.TextField(default='')
+    group_assignment = models.ForeignKey("app.GroupAssignment", on_delete=models.CASCADE, null=True)
+
+
+class Presence(models.Model):
+    date = models.DateField(auto_now=True)
+    present = models.BooleanField(default=False)
+    group_assignment = models.ForeignKey("app.GroupAssignment", on_delete=models.CASCADE, null=True)
