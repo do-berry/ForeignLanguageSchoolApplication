@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework import serializers, permissions
 
 from app.models import Person, GroupAssignment, Mark, Presence
@@ -83,10 +84,11 @@ class LoginSerializer(serializers.ModelSerializer):
 class FindGroupAssignmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = GroupAssignment
-        fields = ('id',)
+        fields = ('person', 'group',)
 
     def find(self, validated_data):
-        return GroupAssignment.objects.filter(id=validated_data['id']).first()
+        return GroupAssignment.objects.filter(Q(person_id=validated_data['person'])
+                                              & Q(group_id=validated_data['group'])).first()
 
 
 class PresenceSerializer(serializers.ModelSerializer):

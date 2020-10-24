@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from app.models import User, Person, GroupAssignment
+from app.models import User, Person, GroupAssignment, Mark
 from app.serializers import UserSerializer, PersonSerializer, GroupAssignmentSerializer, MarkSerializer, \
     PresenceSerializer
 
@@ -130,3 +130,30 @@ def create_mark(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
         return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['POST'])
+def get_marks_by_person_and_group(request):
+    ga = GroupAssignment.objects.filter(Q(person_id=request.data['person']) & Q(group_id=request.data['group'])).last()
+    marks = Mark.objects.filter(Q(group_assignment__group=request.data['group'])
+                                & Q(group_assignment__person=request.data['person']))
+    result = []
+    result = {'person_id': ga.person.id, 'name': ga.person.name, 'surname': ga.person.surname,
+              'group_id': ga.group.id, 'marks': []}
+    result['marks'] = [{'mark_id': mark.id, 'description': mark.description, 'value': int(mark.value)}
+                       for mark in marks]
+    return Response(json.loads(json.dumps(result)), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def get_marks_by_group(request):
+    marks = Mark.objects.filter(group_assignment__group=request.data['group'])
+    persons = []
+    for mark in marks:
+        persons.append({'person_id': mark.group_assignment.person.id, 'surname': mark.group_assignment.person.surname,
+                        'name': mark.group_assignment.person.name, 'group_id': mark.group_assignment.group.id,
+                        'marks': []})
+    for person in persons:
+        person['marks'] = [{'mark_id': mark.id, 'description': mark.description, 'value': int(mark.value)}
+                           for mark in marks if mark.group_assignment.person.id == person['person_id']]
+    return Response(json.loads(json.dumps(persons)), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
