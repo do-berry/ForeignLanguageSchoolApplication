@@ -169,3 +169,14 @@ def is_person_id_in_list(person, list):
         if i == person['person_id']:
             return True
     return False
+
+
+@api_view(['POST'])
+def get_students_by_group_id(request):
+    students = GroupAssignment.objects.filter(Q(group_id=request.data['group'])
+                                              & Q(person__user__user_type="STUDENT"))
+    result = []
+    for student in students:
+        result.append({'person_id': student.person.id, 'name': student.person.name,
+                       'surname': student.person.surname, 'group_assignment': student.pk})
+    return Response(json.loads(json.dumps(result)), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
