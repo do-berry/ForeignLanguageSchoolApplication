@@ -150,23 +150,21 @@ def get_marks_by_group(request):
     marks = Mark.objects.filter(group_assignment__group=request.data['group'])
     persons = []
     for mark in marks:
-        persons.append({'person_id': mark.group_assignment.person.id, 'surname': mark.group_assignment.person.surname,
-                        'name': mark.group_assignment.person.name, 'group_id': mark.group_assignment.group.id,
-                        'marks': []})
-    checked_ids = []
+        if not is_person_id_in_list(mark.group_assignment.person.id, persons):
+            persons.append(
+                {'person_id': mark.group_assignment.person.id, 'surname': mark.group_assignment.person.surname,
+                 'name': mark.group_assignment.person.name, 'group_id': mark.group_assignment.group.id,
+                 'marks': []})
     for person in persons:
-        if not is_person_id_in_list(person, checked_ids):
-            person['marks'] = [{'mark_id': mark.id, 'description': mark.description, 'value': int(mark.value)}
-                               for mark in marks if mark.group_assignment.person.id == person['person_id']]
-            checked_ids.append(person['person_id'])
-        else:
-            persons.remove(person)
+        person['marks'] = [{'mark_id': mark.id, 'description': mark.description, 'value': int(mark.value)}
+                           for mark in marks if mark.group_assignment.person.id == person['person_id']]
+
     return Response(json.loads(json.dumps(persons)), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
 
 
-def is_person_id_in_list(person, list):
+def is_person_id_in_list(id, list):
     for i in list:
-        if i == person['person_id']:
+        if i['person_id'] == id:
             return True
     return False
 
