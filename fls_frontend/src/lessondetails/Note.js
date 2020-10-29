@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+import {ShowNoteContext} from "./ShowNoteContext";
 
 export const Note = () => {
     const [description, setDescription] = useState('');
     const [topic, setTopic] = useState('');
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useContext(ShowNoteContext);
     const [created, setCreated] = useState('');
     var arr = [];
 
     useEffect(() => {
-        setShow(false);
         let lesson = sessionStorage.getItem('lesson');
         fetch('http://127.0.0.1:8000/school/lesson/getnote', {
             method: 'post',
@@ -25,7 +25,6 @@ export const Note = () => {
                     arr.push(data[0].fields.created);
                     arr.push(data[0].fields.description);
                     arr.push(data[0].fields.topic);
-                    setShow(true);
                 }
                 setCreated(arr[0]);
                 setDescription(arr[1]);
@@ -37,6 +36,7 @@ export const Note = () => {
         <div id='note'>
             {!show &&
             <h4>Brak notatki</h4>}
+            <br/>
             {show &&
             <div id='shownNote'>
                 <h3>Temat: {topic}</h3>

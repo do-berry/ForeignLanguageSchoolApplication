@@ -1,11 +1,10 @@
-import datetime
 import json
 import sys
 
+from django.core import serializers
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.core import serializers
 
 from app.app_views import APPLICATION_JSON
 from school.models import Group, Note, Lesson
@@ -73,6 +72,6 @@ def all_lesson(request):
 
 @api_view(['POST'])
 def get_note_by_lesson_id(request):
-    note = Note.objects.filter(lesson=request.data['id'])
-    result = serializers.serialize('json', note)
+    note = Note.objects.filter(lesson=request.data['id']).last()
+    result = serializers.serialize('json', [note, ])
     return Response(json.loads(result), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)

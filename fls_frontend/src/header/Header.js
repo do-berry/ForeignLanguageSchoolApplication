@@ -1,35 +1,50 @@
-import React, { Component } from 'react'
+import React, {useEffect, useState} from 'react'
 import '../static/Header.css';
 
 
-class Header extends Component {
-    constructor(props) {
-        super(props);
-        this.title = 'Page';
-        this.menu = ['Login', 'Add new task', 'All tasks'];
-    }
+export const Header = () => {
+    const [menu, setMenu] = useState([]);
 
-    render() {
-        return (
-            <div class="page-header">
-                <MenuList menu={this.menu} />
-            </div>
-        );
-    }
+    const studentArray = [{'key': 'Wyloguj', 'value': '/logout'}, {'key': 'Profil', 'value': '/user/profile'}];
+    const assistantArray = [{'key': 'Wyloguj', 'value': '/logout'}, {'key': 'Grupy', 'value': '/school/allgroups'},
+        {'key': 'Nowa grupa', 'value': '/school/creategroup'}, {'key': 'Uzytkownicy', 'value': '/school/allusers'}, {
+            'key': 'Nowy uzytkownik',
+            'value': '/register'
+        }];
+    const teacherArray = [{'key': 'Wyloguj', 'value': '/logout'}, {'key': 'Profil', 'value': '/user/profile'}];
+    const notLogged = [{'key': 'Zaloguj', 'value': '/login'}];
+
+    useEffect(() => {
+        if (sessionStorage.getItem('userType') === null) {
+            setMenu(notLogged);
+        } else {
+            if (sessionStorage.getItem('userType') === "STUDENT") {
+                setMenu(studentArray);
+            } else if (sessionStorage.getItem('userType') === "TEACHER") {
+                setMenu(teacherArray);
+            } else {
+                setMenu(assistantArray);
+            }
+        }
+    }, []);
+
+    return (
+        <div class="page-header">
+            <MenuList menu={menu}/>
+        </div>
+    );
 }
 
 function MenuList(props) {
     return (
         <ul>
-            {props.menu.map((item) => 
+            {props.menu.map((item) =>
                 <li><a
-                        key={item}
-                        href={item.toLowerCase().replace(/ /g, '')}
-                        id={item}>
-                {item}</a></li>
+                    key={item.key}
+                    href={item.value.toLowerCase().replace(/ /g, '')}
+                    id={item.key}>
+                    {item.key}</a></li>
             )}
         </ul>
     );
 }
-
-export default Header;

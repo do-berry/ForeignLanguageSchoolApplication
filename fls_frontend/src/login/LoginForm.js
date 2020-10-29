@@ -1,20 +1,14 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {Alert, Button, Form} from "react-bootstrap";
 import InputField from "./InputField";
 import FormGroup from "reactstrap/es/FormGroup";
-import {UserTypeContext} from "../static/UserType";
+import {Redirect} from "react-router";
 
 export const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [type, setType] = useState('');
     const [correctLogin, setCorrectLogin] = useState(null);
-
-    const [setUserType] = useContext(UserTypeContext);
-
-    function doLogout() {
-        sessionStorage.removeItem("username");
-        window.location.reload(false);
-    }
 
     function doLogin() {
         try {
@@ -34,10 +28,8 @@ export const LoginForm = () => {
                         setCorrectLogin(false);
                     } else {
                         setCorrectLogin(true);
-                        sessionStorage.setItem("username", username.toString());
-                        sessionStorage.setItem("userId", data[0]['pk']);
-                        window.location.reload(false);
-                    
+                        //window.location.reload(false);
+
                         fetch('http://127.0.0.1:8000/user/type', {
                             method: 'post',
                             body: JSON.stringify({
@@ -48,11 +40,11 @@ export const LoginForm = () => {
                                 'Content-Type': 'application/json',
                             }
                         }).then(resp => resp.json())
-                            .then(usetypes => {
-                                Object.entries(usetypes).map(([key, value]) => (
-                                    setUserType(key.toString())
-                                ));
+                            .then(resp => {
+                                sessionStorage.setItem("userType", resp.user_type.toString());
                             });
+                        sessionStorage.setItem("username", username.toString());
+                        sessionStorage.setItem("userId", data[0]['pk']);
                     }
                 });
         } catch (e) {
@@ -60,59 +52,68 @@ export const LoginForm = () => {
         }
     }
 
-    if (sessionStorage.getItem("username") != null) {
-        return (
-            <div>
-                <h1>Witaj {sessionStorage.getItem("username")}!</h1>
-                <Button
-                    bsStyle="primary"
-                    bsSize="large"
-                    active
-                    onClick={doLogout.bind(this)}
-                >
-                    Wyloguj
-                </Button>
-            </div>
-        );
-    } else {
-        return (
-            <div className='loginForm'>
-                {correctLogin === false &&
-                <Alert bsStyle="warning">
-                    <strong>Niepowodzenie logowania!</strong> Wprowadz poprawny login i haslo.
-                </Alert>
-                }
-                <h1>Logowanie</h1>
-                <br/>
-                <Form>
-                    <FormGroup controlId='usernameInput'>
-                        <InputField
-                            type='username'
-                            placeholder='Nazwa uzytkownika'
-                            value={username}
-                            onChange={setUsername}
-                        />
-                    </FormGroup>
-                    <FormGroup controlId='passwordInput'>
-                        <InputField
-                            type='password'
-                            placeholder='Haslo'
-                            value={password}
-                            onChange={setPassword}
-                        />
-                    </FormGroup>
-                    <Button
-                        bsStyle='info'
-                        bsSize="primary"
-                        onClick={doLogin.bind(this)}
-                        disabled={!username || !password}
-                    >
-                        Zaloguj
-                    </Button>
-                </Form>
-            </div>
-        )
+
+    function handleRedirect() {
+        window.location.reload(false);
     }
+
+    //if (sessionStorage.getItem("username") != null) {
+    return (
+        // <div>
+        //     <h1>Witaj {sessionStorage.getItem("username")}!</h1>
+        //     <Button
+        //         bsStyle="primary"
+        //         bsSize="large"
+        //         active
+        //         onClick={doLogout.bind(this)}
+        //     >
+        //         Wyloguj
+        //     </Button>
+        // </div>
+        // );
+        //} else {
+        //return (
+
+
+        <div className='loginForm'>
+            {correctLogin &&
+            <Redirect to='/'/>
+            }
+            {correctLogin === false &&
+            <Alert bsStyle="warning">
+                <strong>Niepowodzenie logowania!</strong> Wprowadz poprawny login i haslo.
+            </Alert>
+            }
+            <h1>Logowanie</h1>
+            <br/>
+            <Form>
+                <FormGroup controlId='usernameInput'>
+                    <InputField
+                        type='username'
+                        placeholder='Nazwa uzytkownika'
+                        value={username}
+                        onChange={setUsername}
+                    />
+                </FormGroup>
+                <FormGroup controlId='passwordInput'>
+                    <InputField
+                        type='password'
+                        placeholder='Haslo'
+                        value={password}
+                        onChange={setPassword}
+                    />
+                </FormGroup>
+                <Button
+                    bsStyle='info'
+                    bsSize="primary"
+                    onClick={doLogin.bind(this)}
+                    disabled={!username || !password}
+                >
+                    Zaloguj
+                </Button>
+            </Form>
+        </div>
+    )
 }
 
 export default LoginForm;

@@ -5,7 +5,13 @@ import {Link} from "react-router-dom";
 import {SavedAssignmentContext} from "../SavedAssignmentContext";
 
 const TableRow = (props) => {
-    const [setSavedAssignment] = useContext(SavedAssignmentContext);
+    const [savedAssignment, setSavedAssignment] = useContext(SavedAssignmentContext);
+
+    function plan() {
+        if (sessionStorage.getItem("group") !== null) {
+            sessionStorage.removeItem("group");
+        }
+    }
 
     function handleClick() {
         sessionStorage.setItem('group', props.item['id']);
@@ -33,11 +39,11 @@ const TableRow = (props) => {
                         })
                     });
 
-                    sessionStorage.setItem('saved', true);
                     setSavedAssignment(true);
+                    sessionStorage.removeItem("person");
+                    sessionStorage.removeItem("group");
                 } else {
                     setSavedAssignment(false);
-                    sessionStorage.setItem('saved', false);
                 }
             });
     }
@@ -52,11 +58,21 @@ const TableRow = (props) => {
             <td>{props.item.cost}</td>
             <td>
                 <Link
-                    bsStyle="info"
-                    onClick={handleClick.bind(this)}>
-                    Wybierz
+                    to={"/school/group/" + props.item['id']}
+                    onClick={plan.bind(this)}
+                    bsStyle="info">
+                    Plan
                 </Link>
             </td>
+            {
+                sessionStorage.getItem('person') &&
+                <td>
+                    <Link
+                        bsStyle="info"
+                        onClick={handleClick.bind(this)}>
+                        Przypisz
+                    </Link>
+                </td>}
         </tr>
     );
 }

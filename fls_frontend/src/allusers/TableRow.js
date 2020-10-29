@@ -15,7 +15,15 @@ const TableRow = (props) => {
                     bsStyle="info"
                     onClick={handleClick.bind(this)}
                     to="/school/allgroups">
-                    Wybierz
+                    Grupy
+                </Link>
+            </td>
+            <td>
+                <Link
+                    bsStyle="info"
+                    onClick={handleClick.bind(this)}
+                    to={'/user/' + props.item['pk'] + '/payments/'}>
+                    Platnosci
                 </Link>
             </td>
         </tr>

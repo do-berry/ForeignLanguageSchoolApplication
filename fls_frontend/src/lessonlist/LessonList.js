@@ -1,22 +1,22 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import {LessonListTable} from "./LessonListTable";
-import {Calendar} from "../groupdetails/Calendar";
+import {AddLessons} from "./AddLessons";
+import {ShowNoteContext} from "../lessondetails/ShowNoteContext";
+import {LessonDetails} from "../lessondetails/LessonDetails";
 
 export const LessonList = (props) => {
-    const [calendarDisabled, setCalendarDisabled] = useState(false);
+    const [show, setShow] = useContext(ShowNoteContext);
 
-    function enable() {
-        setCalendarDisabled(!calendarDisabled);
+    function handleClick() {
+        console.log(show.toString());
     }
 
     return (
         <div id='lessonlist'>
             <LessonListTable item={props.item}/>
-            <br/>
-            <button type='button' onClick={enable}>Uzupelnij daty zajec</button>
-            <br/>
-            <br/>
-            {calendarDisabled ? <Calendar id={props.item}/> : null}
+            {sessionStorage.getItem('userType') === "CUSTOMER_ASSISTANT" &&
+            <AddLessons item={props.item}/>}
+            {show && <LessonDetails/>}
         </div>
     );
 }

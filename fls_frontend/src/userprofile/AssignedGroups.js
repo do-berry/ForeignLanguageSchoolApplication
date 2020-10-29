@@ -32,6 +32,7 @@ export const AssignedGroups = () => {
 
     return (
         <div id='assignedGroups'>
+            <h4>Przypisany do grup</h4>
             <Table striped bordered condensed hover>
                 <thead>
                 <th>Sala</th>

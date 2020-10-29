@@ -1,0 +1,11 @@
+table {
+    table-layout: fixed;
+    width: 35%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+td {
+    width: 25%;
+}

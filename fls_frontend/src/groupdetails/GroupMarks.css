@@ -1,0 +1,7 @@
+td#marks {
+    white-space: pre-line;
+}
+
+div#newMark {
+    display: inline-block;
+}

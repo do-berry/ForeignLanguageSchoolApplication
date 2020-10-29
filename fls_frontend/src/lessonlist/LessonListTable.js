@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './LessonList.css';
-import {Link} from "react-router-dom";
+import {TableRow} from "../lessondetails/TableRow";
 
 export const LessonListTable = (props) => {
     const [lessonCounter, setLessonCounter] = useState(0);
@@ -31,30 +31,17 @@ export const LessonListTable = (props) => {
 
     return (
         <div id='lessonListTable'>
+            {lessonCounter === 0 &&
+            <div><h5>Nie wprowadzono zadnych dat.</h5></div>}
             <table id='listTable'>
-                {lessonCounter === 0 &&
-                <td><h5>Nie wprowadzono zadnych dat.</h5></td>}
                 <tr>
                     <th>Nr</th>
                     <th>Data</th>
-                    <th>x</th>
+                    <th>Szczegoly lekcji</th>
                 </tr>
                 {lessonCounter > 0 &&
                 dates.map((value, index) => {
-                    return (
-                        <tr key={index}>
-                            <td>{++index}</td>
-                            <td>{value.date}</td>
-                            <td>
-                                <Link
-                                    bsStyle="info"
-                                    to='/school/group/lesson/note'
-                                    onClick={() => handleClick(value.id)}>
-                                    Notatka
-                                </Link>
-                            </td>
-                        </tr>
-                    );
+                    return <TableRow value={value} index={index}/>
                 })
                 }
             </table>

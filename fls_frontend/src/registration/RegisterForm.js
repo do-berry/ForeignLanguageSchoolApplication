@@ -1,7 +1,8 @@
 import React from 'react';
 import './Register.css';
-import {Alert, Button, Checkbox, Col, ControlLabel, Form, FormGroup, Row} from "react-bootstrap";
+import {Alert, Button, Col, ControlLabel, Form, FormGroup, Row} from "react-bootstrap";
 import InputField from "./InputField";
+import {UserType} from "../static/UserType";
 
 const UserCredentials = {
     username: '',
@@ -20,6 +21,9 @@ class RegisterForm extends React.Component {
             surname: '',
             mobile_number: '',
             address: '',
+            username: '',
+            password: '',
+            userType: UserType.STUDENT,
             isRegistered: null,
             user: UserCredentials
         }
@@ -36,7 +40,11 @@ class RegisterForm extends React.Component {
                 body: JSON.stringify({
                     surname: this.state.surname,
                     name: this.state.name,
-                    user: this.state.user,
+                    user: {
+                        username: this.state.username,
+                        password: this.state.password,
+                        user_type: this.state.userType
+                    },
                     mobile_number: this.state.mobile_number,
                     address: this.state.address
                 })
@@ -108,8 +116,8 @@ class RegisterForm extends React.Component {
                                     <InputField
                                         type="text"
                                         placeholder="Username"
-                                        value={this.state.user.username}
-                                        onChange={(val) => this.setInputValueForUserCredentials(
+                                        value={this.state.username}
+                                        onChange={(val) => this.setInputValue(
                                             'username', val)}
                                     />
                                 </Col>
@@ -124,8 +132,8 @@ class RegisterForm extends React.Component {
                                     <InputField
                                         type="text"
                                         placeholder="Password"
-                                        value={this.state.user.password}
-                                        onChange={(val) => this.setInputValueForUserCredentials(
+                                        value={this.state.password}
+                                        onChange={(val) => this.setInputValue(
                                             'password', val)}
                                     />
                                 </Col>
@@ -198,22 +206,14 @@ class RegisterForm extends React.Component {
                 <div className='checkboxes'>
                     <Form>
                         <FormGroup>
-                            <Checkbox inline
-                                      checked={this.state.user.is_student}
-                                      onChange={() => this.checkCheckbox('is_student')}
-                            >Sluchacz</Checkbox>
-                            <Checkbox inline
-                                      checked={this.state.user.is_teacher}
-                                      onChange={() => this.checkCheckbox('is_teacher')}
-                            >Lektor</Checkbox>{' '}
-                            <Checkbox inline
-                                      checked={this.state.user.is_customer_assistant}
-                                      onChange={() => this.checkCheckbox('is_customer_assistant')}
-                            >Doradca klienta</Checkbox>
-                            <Checkbox inline
-                                      checked={this.state.user.is_admin}
-                                      onChange={() => this.checkCheckbox('is_admin')}
-                            >Administrator</Checkbox>
+                            <select className="form-control"
+                                    value={this.state.userType}
+                                    onChange={e => this
+                                        .setInputValue('userType', e.target.value)}>
+                                {Object.keys(UserType).map(item =>
+                                    <option value={item}>{UserType[item]}</option>
+                                )}
+                            </select>
                         </FormGroup>
                     </Form>
                 </div>

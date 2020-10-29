@@ -28,3 +28,4 @@ class Note(models.Model):
     description = models.TextField(default='')
     created = models.DateTimeField(auto_now=True)
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+

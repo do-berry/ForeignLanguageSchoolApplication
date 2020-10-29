@@ -24,3 +24,4 @@ class Day(Enum):
     D3 = "Wednesday"
     D4 = "Thursday"
     D5 = "Friday"
+

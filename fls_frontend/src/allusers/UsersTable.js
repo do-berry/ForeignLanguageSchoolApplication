@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Alert, Table} from "react-bootstrap";
+import {Alert} from "react-bootstrap";
 import TableRow from "../allusers/TableRow";
 import {AllUsersContext} from "../AllUsersContext";
 
@@ -13,18 +13,17 @@ const UsersTable = () => {
                 <strong>Brak wynikow dla zapytania.</strong>
             </Alert>
             }
-            <Table striped bordered condensed hover>
-                <thead>
-                <th>Imie</th>
-                <th>Nazwisko</th>
-                <th>x</th>
-                </thead>
-                <tbody>
+            <table>
+                <tr>
+                    <th>Imie</th>
+                    <th>Nazwisko</th>
+                    <th>Przypisz do grupy</th>
+                    <th>Platnosci</th>
+                </tr>
                 {Object.entries(users).map(([key, value]) => (
                     <TableRow key={key} item={value}/>
                 ))}
-                </tbody>
-            </Table>
+            </table>
         </div>
     );
 }

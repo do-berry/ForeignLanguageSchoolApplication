@@ -41,4 +41,9 @@ urlpatterns = [
     path('payment/setpaid', payment_views.set_paid),
     path('payment/findpaymentbypersonandgroup', payment_views.find_payments_by_person_and_group),
     path('payment/deletepayment', payment_views.delete_payment),
+    path('school/group/presence', app_views.create_presence),
+    path('school/group/marks', app_views.create_mark),
+    path('school/group/get_marks_by_ga', app_views.get_marks_by_person_and_group),
+    path('school/group/get_marks_by_group', app_views.get_marks_by_group),
+    path('school/group/get_students_by_group', app_views.get_students_by_group_id),
 ]

@@ -1,8 +1,3 @@
-.groupsTable {
-    margin-left: 75px;
-    margin-right: 75px;
-}
-
 .alert {
     width: 60px;
 }
@@ -11,4 +6,16 @@
     display: inline-block;
     width: 500px;
     align-content: center;
+}
+
+table {
+    table-layout: fixed;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+td {
+    width: 25%;
 }

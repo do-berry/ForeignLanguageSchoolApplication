@@ -7,8 +7,9 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from app.models import User, Person, GroupAssignment
-from app.serializers import UserSerializer, PersonSerializer, GroupAssignmentSerializer
+from app.models import User, Person, GroupAssignment, Mark
+from app.serializers import UserSerializer, PersonSerializer, GroupAssignmentSerializer, MarkSerializer, \
+    PresenceSerializer
 
 APPLICATION_JSON = 'application/json'
 
@@ -78,12 +79,9 @@ def check_if_person_is_assigned(request):
 
 @api_view(['POST'])
 def get_type_of_user(request):
-    types = User.objects.filter(Q(username=request.data['username']) & Q(password=request.data['password'])) \
-        .values_list('is_student', 'is_teacher', 'is_customer_assistant', 'is_admin')
-    types_dict = {'student': types[0][0], 'teacher': types[0][1], 'customer_assistant': types[0][2],
-                  'admin': types[0][3]}
-    tmp = {key: value for key, value in types_dict.items() if value is True}
-    return Response(json.loads(json.dumps(tmp)), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
+    types = User.objects.filter(Q(username=request.data['username']) & Q(password=request.data['password']))
+    result = {'user_type': types[0].user_type}
+    return Response(json.loads(json.dumps(result)), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
 
 
 @api_view(['PUT'])
@@ -112,3 +110,71 @@ def groups_assigned_to_user(request):
                        'language_level': group.group.language.level, 'id': group.group.id,
                        'cost': group.group.cost})
     return Response(json.loads(json.dumps(result)), content_type='application/json', status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def create_presence(request):
+    serializer = PresenceSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.create(validated_data=request.data)
+        return Response(True, status=status.HTTP_201_CREATED)
+    else:
+        return Response(False, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['POST'])
+def create_mark(request):
+    serializer = MarkSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.create(validated_data=request.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['POST'])
+def get_marks_by_person_and_group(request):
+    ga = GroupAssignment.objects.filter(Q(person_id=request.data['person']) & Q(group_id=request.data['group'])).last()
+    marks = Mark.objects.filter(Q(group_assignment__group=request.data['group'])
+                                & Q(group_assignment__person=request.data['person']))
+    result = []
+    result = {'person_id': ga.person.id, 'name': ga.person.name, 'surname': ga.person.surname,
+              'group_id': ga.group.id, 'marks': []}
+    result['marks'] = [{'mark_id': mark.id, 'description': mark.description, 'value': int(mark.value)}
+                       for mark in marks]
+    return Response(json.loads(json.dumps(result)), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def get_marks_by_group(request):
+    marks = Mark.objects.filter(group_assignment__group=request.data['group'])
+    persons = []
+    for mark in marks:
+        if not is_person_id_in_list(mark.group_assignment.person.id, persons):
+            persons.append(
+                {'person_id': mark.group_assignment.person.id, 'surname': mark.group_assignment.person.surname,
+                 'name': mark.group_assignment.person.name, 'group_id': mark.group_assignment.group.id,
+                 'marks': []})
+    for person in persons:
+        person['marks'] = [{'mark_id': mark.id, 'description': mark.description, 'value': int(mark.value)}
+                           for mark in marks if mark.group_assignment.person.id == person['person_id']]
+
+    return Response(json.loads(json.dumps(persons)), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
+
+
+def is_person_id_in_list(id, list):
+    for i in list:
+        if i['person_id'] == id:
+            return True
+    return False
+
+
+@api_view(['POST'])
+def get_students_by_group_id(request):
+    students = GroupAssignment.objects.filter(Q(group_id=request.data['group'])
+                                              & Q(person__user__user_type="STUDENT"))
+    result = []
+    for student in students:
+        result.append({'person_id': student.person.id, 'name': student.person.name,
+                       'surname': student.person.surname, 'group_assignment': student.pk})
+    return Response(json.loads(json.dumps(result)), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
