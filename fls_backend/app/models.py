@@ -14,7 +14,7 @@ class User(AbstractUser):
 
 
 class Person(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     surname = models.TextField()
     name = models.TextField()
     mobile_number = models.IntegerField()

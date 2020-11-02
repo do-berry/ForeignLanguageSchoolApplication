@@ -49,9 +49,9 @@ def user_login(request):
         return Response("User does not exist", status=status.HTTP_404_NOT_FOUND)
     if user.password != request.data['password']:
         return Response("Incorrect password was used", status=status.HTTP_406_NOT_ACCEPTABLE)
-    person = Person.objects.get(user__username=request.data['username'])
-    result = serializers.serialize('json', [person, ])
-    return Response(json.loads(result), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
+    person = Person.objects.filter(user__username=request.data['username'])
+    result = {'userId': person[0].user.id, 'user_type': person[0].user.user_type}
+    return Response(json.loads(json.dumps(result)), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
