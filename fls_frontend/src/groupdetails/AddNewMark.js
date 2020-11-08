@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import './GroupMarks.css';
-import {ButtonToolbar, DropdownButton} from "react-bootstrap";
-import {MenuItem} from "react-bootstrap";
-import {UserType} from "../static/UserType";
 
 export const AddNewMark = (props) => {
     const [click, setClick] = useState(false);
@@ -40,7 +37,7 @@ export const AddNewMark = (props) => {
     }, []);
 
     function save() {
-        if (description === '') {
+        if (description === '' && student === {}) {
             return;
         }
         fetch('http://127.0.0.1:8000/school/group/marks', {
@@ -83,6 +80,7 @@ export const AddNewMark = (props) => {
                 <select className="form-control"
                         value={selected}
                         onChange={e => selectStudent(e.target.value)}>
+                    <option>Wybierz studenta</option>
                     {Object.entries(students).map(item =>
                         <option value={item}>{fullName(item[1])}</option>
                     )}

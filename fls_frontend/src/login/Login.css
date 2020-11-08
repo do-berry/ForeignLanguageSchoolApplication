@@ -6,4 +6,10 @@ div .inputField {
 h1 {
     color: #17a2b8;
 }
+
+#alert {
+    display: inline-block;
+    width: 500px;
+    align-content: center;
+}
   

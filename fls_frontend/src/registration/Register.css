@@ -10,3 +10,9 @@
 input[type=checkbox] {
     width: 30px;
 }
+
+#registered {
+    display: inline-block;
+    width: 500px;
+    align-content: center;
+}

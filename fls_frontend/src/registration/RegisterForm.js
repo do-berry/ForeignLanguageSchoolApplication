@@ -100,12 +100,12 @@ class RegisterForm extends React.Component {
         return (
             <div className='register'>
                 {this.state.isRegistered === false &&
-                <Alert bsStyle="warning">
+                <Alert id='registered' bsStyle="warning">
                     <strong>Nie udało się stworzyć użytkownika!</strong> Wprowadz poprawne dane.
                 </Alert>
                 }
                 {this.state.isRegistered === true &&
-                <Alert bsStyle="warning">
+                <Alert bsStyle="warning" id='registered'>
                     <strong>Uzytkownik zostal utworzony.</strong>
                 </Alert>
                 }
@@ -136,7 +136,7 @@ class RegisterForm extends React.Component {
                                 </Col>
                                 <Col sm={9}>
                                     <InputField
-                                        type="text"
+                                        type="password"
                                         placeholder="Password"
                                         value={this.state.password}
                                         onChange={(val) => this.setInputValue(

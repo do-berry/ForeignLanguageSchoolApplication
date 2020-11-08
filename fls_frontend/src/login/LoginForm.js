@@ -3,6 +3,7 @@ import {Alert, Button, Form} from "react-bootstrap";
 import InputField from "./InputField";
 import FormGroup from "reactstrap/es/FormGroup";
 import {Redirect} from "react-router";
+import './Login.css';
 
 export const LoginForm = () => {
     const [username, setUsername] = useState('');
@@ -59,7 +60,7 @@ export const LoginForm = () => {
             <Redirect to='/'/>
             }
             {correctLogin === false &&
-            <Alert bsStyle="warning">
+            <Alert bsStyle="warning" id='alert'>
                 <strong>Niepowodzenie logowania!</strong> Wprowadz poprawny login i haslo.
             </Alert>
             }

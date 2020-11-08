@@ -4,19 +4,9 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import isLoggedInReducer from "./reducers/isLoggedInReducer";
-import {createStore} from "redux";
-import {Provider} from 'react-redux';
-
-const store = createStore(
-    isLoggedInReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
 
 ReactDOM.render(
-    <Provider store={store}>
-        <App/>
-    </Provider>,
+    <App/>,
     document.getElementById('root')
 );
 
