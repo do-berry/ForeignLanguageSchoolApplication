@@ -150,7 +150,8 @@ def get_marks_by_person_and_group(request):
 
 @api_view(['POST'])
 def get_marks_by_group(request):
-    marks = Mark.objects.filter(group_assignment__group=request.data['group'])
+    marks = Mark.objects.filter(group_assignment__group=request.data['group']).order_by(
+        'group_assignment__person__surname')
     persons = []
     for mark in marks:
         if not is_person_id_in_list(mark.group_assignment.person.id, persons):
