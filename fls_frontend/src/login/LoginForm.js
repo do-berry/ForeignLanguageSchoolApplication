@@ -8,7 +8,10 @@ export const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [type, setType] = useState('');
+    // const isLoggedIn = useSelector(state => state.isLoggedIn);
     const [correctLogin, setCorrectLogin] = useState(null);
+
+    // const dispatch = useDispatch();
 
     function doLogin() {
         try {
@@ -19,32 +22,25 @@ export const LoginForm = () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    username: username,
-                    password: password
+                    message: btoa(JSON.stringify({
+                        username: username,
+                        password: password
+                    }))
                 })
             }).then(res => res.json())
                 .then(data => {
-                    if (data.length !== 1) {
+                    if ((data === "User does not exist") ||
+                        (data === "Incorrect password was used")) {
                         setCorrectLogin(false);
+                        sessionStorage.setItem("isLoggedIn", false);
                     } else {
                         setCorrectLogin(true);
-                        //window.location.reload(false);
+                        data = JSON.parse(atob(data));
 
-                        fetch('http://127.0.0.1:8000/user/type', {
-                            method: 'post',
-                            body: JSON.stringify({
-                                username: username,
-                                password: password
-                            }),
-                            headers: {
-                                'Content-Type': 'application/json',
-                            }
-                        }).then(resp => resp.json())
-                            .then(resp => {
-                                sessionStorage.setItem("userType", resp.user_type.toString());
-                            });
-                        sessionStorage.setItem("username", username.toString());
-                        sessionStorage.setItem("userId", data[0]['pk']);
+                        sessionStorage.setItem("userType", data['user_type']);
+                        //dispatch(isLoggedIn());
+                        sessionStorage.setItem("isLoggedIn", true);
+                        sessionStorage.setItem("userId", data['userId']);
                     }
                 });
         } catch (e) {
@@ -52,29 +48,7 @@ export const LoginForm = () => {
         }
     }
 
-
-    function handleRedirect() {
-        window.location.reload(false);
-    }
-
-    //if (sessionStorage.getItem("username") != null) {
     return (
-        // <div>
-        //     <h1>Witaj {sessionStorage.getItem("username")}!</h1>
-        //     <Button
-        //         bsStyle="primary"
-        //         bsSize="large"
-        //         active
-        //         onClick={doLogout.bind(this)}
-        //     >
-        //         Wyloguj
-        //     </Button>
-        // </div>
-        // );
-        //} else {
-        //return (
-
-
         <div className='loginForm'>
             {correctLogin &&
             <Redirect to='/'/>

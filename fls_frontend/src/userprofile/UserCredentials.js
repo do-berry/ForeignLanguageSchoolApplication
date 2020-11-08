@@ -98,6 +98,7 @@ export const UserCredentials = () => {
                         <Col sm={1.5}>
                             <FormControl
                                 type="number"
+                                max="999999999"
                                 value={mobileNumber}
                                 onChange={e => setMobileNumber(e.target.value)}
                                 disabled={editIsDisabled}

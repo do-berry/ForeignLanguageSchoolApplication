@@ -1,3 +1,4 @@
+import base64
 import json
 
 from django.core import serializers
@@ -43,15 +44,17 @@ def all_users():
 
 @api_view(['POST'])
 def user_login(request):
+    req =  json.loads(base64.b64decode(request.data['message']).decode('utf-8'))
     try:
-        user = User.objects.get(username=request.data['username'])
+        user = User.objects.get(username=req['username'])
     except ObjectDoesNotExist:
         return Response("User does not exist", status=status.HTTP_404_NOT_FOUND)
-    if user.password != request.data['password']:
+    if user.password != req['password']:
         return Response("Incorrect password was used", status=status.HTTP_406_NOT_ACCEPTABLE)
-    person = Person.objects.get(user__username=request.data['username'])
-    result = serializers.serialize('json', [person, ])
-    return Response(json.loads(result), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
+    person = Person.objects.filter(user__username=req['username'])
+    r = json.dumps({'userId': person[0].user.id, 'user_type': person[0].user.user_type})
+    result = base64.b64encode(r.encode('utf-8'))
+    return Response(result, content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
