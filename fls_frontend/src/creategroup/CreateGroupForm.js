@@ -53,23 +53,23 @@ export const CreateGroupForm = () => {
                 Nie mozna utworzyc grupy.
             </Alert>
             }
-            <Form horizontal>
+            <Form>
                 <FormGroup>
                     <Row>
-                        <Col componentClass={ControlLabel} sm={1}>
+                        <Col componentClass={ControlLabel} sm={2}>
                             Sala
                         </Col>
-                        <Col sm={1}>
+                        <Col sm={4}>
                             <FormControl
                                 type="number"
                                 value={room}
                                 onChange={e => setRoom(e.target.value)}
                             />
                         </Col>
-                        <Col componentClass={ControlLabel} sm={1}>
+                        <Col componentClass={ControlLabel} sm={2}>
                             Godzina
                         </Col>
-                        <Col sm={1}>
+                        <Col sm={4}>
                             <FormControl
                                 type="time"
                                 value={dateHour}
@@ -79,10 +79,10 @@ export const CreateGroupForm = () => {
                     </Row>
                     <br/>
                     <Row>
-                        <Col componentClass={ControlLabel} sm={1}>
+                        <Col componentClass={ControlLabel} sm={2}>
                             Cena
                         </Col>
-                        <Col sm={1}>
+                        <Col sm={4}>
                             <FormControl
                                 type="number"
                                 step="0.01"
@@ -90,10 +90,10 @@ export const CreateGroupForm = () => {
                                 onChange={e => setCost(e.target.value)}
                             />
                         </Col>
-                        <Col componentClass={ControlLabel} sm={1}>
+                        <Col componentClass={ControlLabel} sm={2}>
                             Dzien
                         </Col>
-                        <Col sm={1}>
+                        <Col sm={4}>
                             <select className="form-control"
                                     value={dateDay}
                                     onChange={e => setDateDay(e.target.value)}>
@@ -105,10 +105,10 @@ export const CreateGroupForm = () => {
                     </Row>
                     <br/>
                     <Row>
-                        <Col componentClass={ControlLabel} sm={1}>
+                        <Col componentClass={ControlLabel} sm={2}>
                             Jezyk
                         </Col>
-                        <Col sm={1}>
+                        <Col sm={4}>
                             <select className="form-control"
                                     value={languageName}
                                     onChange={e => setLanguageName(e.target.value)}>
@@ -117,10 +117,10 @@ export const CreateGroupForm = () => {
                                 )}
                             </select>
                         </Col>
-                        <Col componentClass={ControlLabel} sm={1}>
+                        <Col componentClass={ControlLabel} sm={2}>
                             Poziom
                         </Col>
-                        <Col sm={1}>
+                        <Col sm={4}>
                             <select className="form-control"
                                     value={languageLevel}
                                     onChange={e => setLanguageLevel(e.target.value)}>
