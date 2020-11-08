@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {Alert, Button, ControlLabel, FormGroup} from "react-bootstrap";
+import {Alert, Button, FormGroup} from "react-bootstrap";
 import './AllUsers.css';
 import InputField from "../registration/InputField";
 import {AllUsersContext} from "../AllUsersContext";
@@ -45,6 +45,7 @@ const FindUser = () => {
 
     return (
         <div className='findUser'>
+            <br/>
             <form>
                 {noData === true &&
                 <Alert bsStyle="warning" id='noDataAlert'>
@@ -52,7 +53,6 @@ const FindUser = () => {
                 </Alert>
                 }
                 <FormGroup controlId="formBasicText">
-                    <ControlLabel>Wyszukaj osobe:</ControlLabel>
                     <InputField
                         id='name'
                         type="text"
