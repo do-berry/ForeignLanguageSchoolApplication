@@ -8,6 +8,8 @@ class AllGroups extends React.Component {
         return (
             <SavedAssignmentProvider>
                 <div className='groupsForm'>
+                    <h1>Wyszukiwanie grup</h1>
+                    <br/>
                     <GroupsForm/>
                 </div>
             </SavedAssignmentProvider>

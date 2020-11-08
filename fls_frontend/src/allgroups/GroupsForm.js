@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Alert} from 'react-bootstrap';
+import {Alert, Table} from 'react-bootstrap';
 import TableRow from "./TableRow";
 import './Table.css';
 import {SavedAssignmentContext} from "../SavedAssignmentContext";
@@ -34,7 +34,7 @@ const GroupsForm = () => {
                 <strong>Uzytkownik nie zostal przypisany do grupy.</strong> Nalezy wybrac inna grupe.
             </Alert>
             }
-            <table>
+            <Table striped bordered condensed hover id='allgroups'>
                 <tr>
                     <th>sala</th>
                     <th>godzina</th>
@@ -48,7 +48,7 @@ const GroupsForm = () => {
                 {Object.entries(groups).map(([key, value]) => (
                     <TableRow key={value} item={value}/>
                 ))}
-            </table>
+            </Table>
         </div>
     );
 }
