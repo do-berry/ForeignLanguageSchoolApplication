@@ -4,6 +4,7 @@ import {Redirect} from "react-router";
 export const LogOut = () => {
     useEffect(() => {
         sessionStorage.clear();
+        window.location.reload(false);
     }, []);
 
     return (

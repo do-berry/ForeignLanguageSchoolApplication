@@ -34,18 +34,23 @@ export const LoginForm = () => {
                         setCorrectLogin(false);
                         sessionStorage.setItem("isLoggedIn", false);
                     } else {
+                        sessionStorage.setItem("isLoggedIn", true);
                         setCorrectLogin(true);
                         data = JSON.parse(atob(data));
 
                         sessionStorage.setItem("userType", data['user_type']);
-                        //dispatch(isLoggedIn());
-                        sessionStorage.setItem("isLoggedIn", true);
                         sessionStorage.setItem("userId", data['userId']);
+
+                        window.location.reload(false);
                     }
                 });
         } catch (e) {
             console.log(e);
         }
+    }
+
+    function refresh() {
+        window.location.reload(false);
     }
 
     return (
