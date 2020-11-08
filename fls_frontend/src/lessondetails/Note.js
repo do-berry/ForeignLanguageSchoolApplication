@@ -39,9 +39,9 @@ export const Note = () => {
             <br/>
             {show &&
             <div id='shownNote'>
-                <h3>Temat: {topic}</h3>
-                <h4>Opis: {description}</h4>
-                <p>Utworzono: {created.substring(0, 10)}</p>
+                <h4><b>Temat:</b> {topic}</h4>
+                <h4><b>Opis:</b> {description}</h4>
+                <p><b>Utworzono:</b> {created.substring(0, 10)}</p>
             </div>}
         </div>
     );
