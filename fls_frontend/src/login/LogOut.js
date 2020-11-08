@@ -3,9 +3,7 @@ import {Redirect} from "react-router";
 
 export const LogOut = () => {
     useEffect(() => {
-        sessionStorage.removeItem("isLoggedIn");
-        sessionStorage.removeItem("userId");
-        sessionStorage.removeItem("userType");
+        sessionStorage.clear();
     }, []);
 
     return (

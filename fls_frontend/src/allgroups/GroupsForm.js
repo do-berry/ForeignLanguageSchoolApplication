@@ -22,6 +22,12 @@ const GroupsForm = () => {
             });
     }, []);
 
+    React.useEffect(() => {
+        return () => {
+            sessionStorage.removeItem('person');
+        };
+    }, []);
+
     return (
         <div className='groupsTable'>
             {savedAssignment === true &&

@@ -7,6 +7,7 @@ import {SavedAssignmentContext} from "../SavedAssignmentContext";
 const TableRow = (props) => {
     const [savedAssignment, setSavedAssignment] = useContext(SavedAssignmentContext);
 
+
     function plan() {
         if (sessionStorage.getItem("group") !== null) {
             sessionStorage.removeItem("group");
