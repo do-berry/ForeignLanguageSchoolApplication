@@ -13,6 +13,12 @@ const UserCredentials = {
     is_admin: false
 };
 
+const TmpUserType = {
+    STUDENT: 'SLUCHACZ',
+    TEACHER: 'LEKTOR',
+    CUSTOMER_ASSISTANT: 'DORADCA KLIENTA'
+};
+
 class RegisterForm extends React.Component {
     constructor(props) {
         super(props);
@@ -210,8 +216,8 @@ class RegisterForm extends React.Component {
                                     value={this.state.userType}
                                     onChange={e => this
                                         .setInputValue('userType', e.target.value)}>
-                                {Object.keys(UserType).map(item =>
-                                    <option value={item}>{UserType[item]}</option>
+                                {Object.keys(TmpUserType).map(item =>
+                                    <option value={item}>{TmpUserType[item]}</option>
                                 )}
                             </select>
                         </FormGroup>
