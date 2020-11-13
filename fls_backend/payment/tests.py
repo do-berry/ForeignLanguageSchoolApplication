@@ -18,9 +18,3 @@ class PaymentTestCase(TestCase):
         self.assertIsInstance(self.payment.to_pay, float)
         self.assertIsInstance(self.payment.paid, bool)
 
-    # def test_person_can_have_multiple_payments(self):
-    #     payments = [Payment.objects.create() for _ in range(5)]
-    #     for payment in payments:
-    #         payment.person = self.person
-    #     count = Payment.objects.filter(person=self.person)
-    #     self.assertEquals(len(payments), count)
