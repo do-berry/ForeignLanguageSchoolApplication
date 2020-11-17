@@ -21,7 +21,7 @@ from school import school_views
 
 urlpatterns = [
     path('createuser', app_views.create_user),
-    path('allusers', app_views.all_users),
+    path('allusers', app_views.all_persons),
     path('login', app_views.user_login),
     path('school/creategroup', school_views.create_group),
     path('school/allgroups', school_views.all_groups),

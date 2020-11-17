@@ -29,7 +29,7 @@ def set_paid(request):
 
 @api_view(['POST'])
 def find_payments_by_person_and_group(request):
-    payments = Payment.objects.filter(Q(person=request.data['person']))
+    payments = Payment.objects.filter(Q(group_assignment__person=request.data['person']))
     payments_to_return = serializers.serialize('json', payments)
     return Response(json.loads(payments_to_return), status=status.HTTP_200_OK)
 

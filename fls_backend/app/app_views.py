@@ -36,8 +36,8 @@ def group_assignment(request):
 
 
 @api_view(['GET'])
-def all_users():
-    users = User.objects.all()
+def all_persons():
+    users = Person.objects.all()
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
 
