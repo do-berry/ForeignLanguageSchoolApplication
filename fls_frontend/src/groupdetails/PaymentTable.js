@@ -84,13 +84,13 @@ export const PaymentTable = (props) => {
 
     return (
         <div>
-            <h4>Platnosci uzytkownika</h4>
+            <h4>Płatności użytkownika</h4>
             <table id='paymentTable'>
                 <tr>
                     <th>Nr</th>
                     <th>Opis</th>
                     <th>Kwota</th>
-                    <th>Zaplacono</th>
+                    <th>Zapłacono</th>
                 </tr>
                 {paymentsCounter > 0 &&
                 payments.map((value, index) => {
@@ -111,7 +111,7 @@ export const PaymentTable = (props) => {
             </table>
             <br/>
             {sessionStorage.getItem('userType') === "CUSTOMER_ASSISTANT" &&
-            <button onClick={addPayment}>Dodaj platnosc</button>}
+            <button onClick={addPayment}>Dodaj płatność</button>}
             {'   '}
             {sessionStorage.getItem('userType') === "CUSTOMER_ASSISTANT" &&
             <button onClick={acceptPayments}>{acceptButtonText}</button>}

@@ -37,8 +37,8 @@ export const AssignedGroups = () => {
                 <thead>
                 <th>Sala</th>
                 <th>Godzina</th>
-                <th>Dzien</th>
-                <th>Jezyk</th>
+                <th>Dzień</th>
+                <th>Język</th>
                 <th>Poziom</th>
                 <th>Wybierz</th>
                 </thead>

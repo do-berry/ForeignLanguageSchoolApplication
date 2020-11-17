@@ -15,7 +15,7 @@ export const AssignedGroupsTableRow = (props) => {
             <td><Link
                 bsStyle="info"
                 to={url}>
-                Szczegoly
+                Szczegóły
             </Link></td>
         </tr>
     );

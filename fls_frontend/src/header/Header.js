@@ -2,6 +2,24 @@ import React, {useEffect, useState} from 'react'
 import '../static/Header.css';
 
 
+const UType = {
+    STUDENT: 'Słuchacz',
+    TEACHER: 'Lektor',
+    CUSTOMER_ASSISTANT: 'Doradca klienta'
+};
+
+function returnValue(val) {
+    if (val === "STUDENT") {
+        return UType.STUDENT;
+    } else if (val === "TEACHER") {
+        return UType.TEACHER;
+    } else if (val === "CUSTOMER_ASSISTANT") {
+        return UType.CUSTOMER_ASSISTANT;
+    } else {
+        return null;
+    }
+}
+
 export const Header = () => {
     const [menu, setMenu] = useState([]);
     const [type, setType] = useState(null);
@@ -11,8 +29,8 @@ export const Header = () => {
         'key': 'Profil',
         'value': '/user/profile'
     }, {'key': 'Grupy', 'value': '/school/allgroups'},
-        {'key': 'Nowa grupa', 'value': '/school/creategroup'}, {'key': 'Uzytkownicy', 'value': '/school/allusers'}, {
-            'key': 'Nowy uzytkownik',
+        {'key': 'Nowa grupa', 'value': '/school/creategroup'}, {'key': 'Użytkownicy', 'value': '/school/allusers'}, {
+            'key': 'Nowy użytkownik',
             'value': '/register'
         }];
     const teacherArray = [{'key': 'Wyloguj', 'value': '/logout'}, {'key': 'Profil', 'value': '/user/profile'}];
@@ -38,6 +56,11 @@ export const Header = () => {
 
     return (
         <div class="sidenav">
+            {menu.length > 1 && <div id='userInfo'>
+                <p>Zalogowany użytkownik: {sessionStorage.getItem('username')}</p>
+                <p>Typ użytkownika: {returnValue(sessionStorage.getItem('userType'))}</p>
+            </div>}
+            <br/>
             {menu.map((item) =>
                 <a
                     key={item.key}

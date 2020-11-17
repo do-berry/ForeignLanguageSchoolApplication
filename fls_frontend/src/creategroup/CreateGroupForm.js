@@ -133,7 +133,7 @@ export const CreateGroupForm = () => {
                 </FormGroup>
             </Form>
             <Button bsStyle="info" onClick={handleClick}>
-                Zapisz grupe
+                Zapisz grupę
             </Button>
         </div>
     );

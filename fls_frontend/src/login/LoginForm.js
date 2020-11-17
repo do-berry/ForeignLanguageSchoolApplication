@@ -41,6 +41,7 @@ export const LoginForm = () => {
 
                         sessionStorage.setItem("userType", data['user_type']);
                         sessionStorage.setItem("userId", data['userId']);
+                        sessionStorage.setItem("username", username);
 
                         window.location.reload(false);
                     }

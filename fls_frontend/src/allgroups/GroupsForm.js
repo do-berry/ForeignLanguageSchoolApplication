@@ -32,23 +32,23 @@ const GroupsForm = () => {
         <div className='groupsTable'>
             {savedAssignment === true &&
             <Alert id='okAlert' bsStyle="warning">
-                Uzytkownik zostal przypisany do grupy.
+                Użytkownik został przypisany do grupy.
             </Alert>
             }
             {savedAssignment === false &&
             <Alert id='okAlert' bsStyle="warning">
-                <strong>Uzytkownik nie zostal przypisany do grupy.</strong> Nalezy wybrac inna grupe.
+                <strong>Użytkownik nie został przypisany do grupy.</strong> Należy wybrać inną grupę.
             </Alert>
             }
             <Table striped bordered condensed hover id='allgroups'>
                 <tr>
                     <th>sala</th>
                     <th>godzina</th>
-                    <th>dzien</th>
-                    <th>jezyk</th>
+                    <th>dzień</th>
+                    <th>język</th>
                     <th>poziom</th>
-                    <th>oplata</th>
-                    <th>Plan zajec</th>
+                    <th>opłata</th>
+                    <th>plan zajęć</th>
                     {sessionStorage.getItem('person') && <th>Przypisz</th>}
                 </tr>
                 {Object.entries(groups).map(([key, value]) => (

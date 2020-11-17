@@ -10,8 +10,8 @@ export const GroupDetails = (props) => {
     return (
         <ShowNoteProvider>
             <div id='groupDetails'>
-                <h1>Szczegoly</h1>
-                <h4>Plan zajec</h4>
+                <h1>Szczegóły</h1>
+                <h4>Plan zajęć</h4>
                 <LessonList item={props.match.params.id}/>
                 <br/> <br/>
                 {sessionStorage.getItem('userType') === "STUDENT" &&

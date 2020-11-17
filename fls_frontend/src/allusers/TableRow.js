@@ -23,7 +23,7 @@ const TableRow = (props) => {
                     bsStyle="info"
                     onClick={handleClick.bind(this)}
                     to={'/user/' + props.item['pk'] + '/payments/'}>
-                    Platnosci
+                    Płatności
                 </Link>
             </td>
         </tr>

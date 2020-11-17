@@ -14,9 +14,9 @@ const UserCredentials = {
 };
 
 const TmpUserType = {
-    STUDENT: 'SLUCHACZ',
-    TEACHER: 'LEKTOR',
-    CUSTOMER_ASSISTANT: 'DORADCA KLIENTA'
+    STUDENT: 'Słuchacz',
+    TEACHER: 'Lektor',
+    CUSTOMER_ASSISTANT: 'Doradca klienta'
 };
 
 class RegisterForm extends React.Component {
@@ -109,7 +109,7 @@ class RegisterForm extends React.Component {
                     <strong>Uzytkownik zostal utworzony.</strong>
                 </Alert>
                 }
-                <h1>Rejestracja uzytkownika</h1>
+                <h1>Rejestracja użytkownika</h1>
                 <br/>
                 <div className='registerForm'>
                     <Form horizontal>
@@ -148,7 +148,7 @@ class RegisterForm extends React.Component {
                         <FormGroup className='name'>
                             <Row>
                                 <Col componentClass={ControlLabel} sm={3}>
-                                    Imie:
+                                    Imię:
                                 </Col>
                                 <Col sm={9}>
                                     <InputField

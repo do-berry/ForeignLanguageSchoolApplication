@@ -37,7 +37,7 @@ export const LessonListTable = (props) => {
                 <tr>
                     <th>Nr</th>
                     <th>Data</th>
-                    <th>Szczegoly lekcji</th>
+                    <th>Szczegóły lekcji</th>
                 </tr>
                 {lessonCounter > 0 &&
                 dates.map((value, index) => {

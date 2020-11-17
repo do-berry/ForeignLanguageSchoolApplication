@@ -49,7 +49,7 @@ const FindUser = () => {
             <form>
                 {noData === true &&
                 <Alert bsStyle="warning" id='noDataAlert'>
-                    Nalezy wprowadzic dane.
+                    Należy wprowadzić dane.
                 </Alert>
                 }
                 <FormGroup controlId="formBasicText">

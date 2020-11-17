@@ -68,7 +68,7 @@ export const UserCredentials = () => {
                 <Form horizontal>
                     <Row>
                         <Col componentClass={ControlLabel} sm={2}>
-                            Imie
+                            Imię
                         </Col>
                         <Col sm={1.5}>
                             <FormControl
@@ -134,7 +134,7 @@ export const UserCredentials = () => {
                                 disabled={!student}
                                 bsStyle='info'
                                 href={'/user/' + sessionStorage.getItem('userId') + '/payments'}
-                            >Platnosci</Button>
+                            >Płatności</Button>
                         </ButtonToolbar></Row>
                     </div>
                 </Form>

@@ -26,6 +26,12 @@
     margin-left: 200px; /* Same as the width of the sidenav */
 }
 
+div#userInfo {
+    color: dimgrey;
+    font-size: 12px;
+    line-height: 3px;
+}
+
 @media screen and (max-height: 450px) {
     .sidenav {
         padding-top: 15px;

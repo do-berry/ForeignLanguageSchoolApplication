@@ -38,7 +38,7 @@ export const MarksForGroup = (props) => {
             <table>
                 <tr>
                     <th>l.p.</th>
-                    <th>Imie</th>
+                    <th>Imię</th>
                     <th>Nazwisko</th>
                     <th>Ocena</th>
                 </tr>

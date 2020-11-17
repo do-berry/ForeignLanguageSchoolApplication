@@ -15,10 +15,10 @@ const UsersTable = () => {
             }
             <Table striped bordered condensed hover>
                 <tr>
-                    <th>Imie</th>
+                    <th>Imię</th>
                     <th>Nazwisko</th>
                     <th>Przypisz do grupy</th>
-                    <th>Platnosci</th>
+                    <th>Płatności</th>
                 </tr>
                 {Object.entries(users).map(([key, value]) => (
                     <TableRow key={key} item={value}/>
