@@ -143,7 +143,9 @@ def get_marks_by_person_and_group(request):
     result = []
     result = {'person_id': ga.person.id, 'name': ga.person.name, 'surname': ga.person.surname,
               'group_id': ga.group.id, 'marks': []}
-    result['marks'] = [{'mark_id': mark.id, 'description': mark.description, 'value': int(mark.value)}
+    result['marks'] = [{'mark_id': mark.id, 'description': mark.description, 'value': int(mark.value),
+                        'date': str(mark.date), 'lesson': mark.lesson.id, 'teacher': (mark.teacher.name +
+                                                                                      " " + mark.teacher.surname)}
                        for mark in marks]
     return Response(json.loads(json.dumps(result)), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
 
@@ -160,7 +162,9 @@ def get_marks_by_group(request):
                  'name': mark.group_assignment.person.name, 'group_id': mark.group_assignment.group.id,
                  'marks': []})
     for person in persons:
-        person['marks'] = [{'mark_id': mark.id, 'description': mark.description, 'value': int(mark.value)}
+        person['marks'] = [{'mark_id': mark.id, 'description': mark.description, 'value': int(mark.value),
+                            'date': str(mark.date), 'lesson': mark.lesson.id, 'teacher': (mark.teacher.name +
+                                                                                          " " + mark.teacher.surname)}
                            for mark in marks if mark.group_assignment.person.id == person['person_id']]
 
     return Response(json.loads(json.dumps(persons)), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)

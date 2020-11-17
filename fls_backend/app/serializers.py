@@ -2,7 +2,7 @@ from rest_framework import serializers, permissions
 
 from app.models import Person, GroupAssignment, Mark, Presence
 from school.models import Language
-from school.serializers import FindGroupSerializer
+from school.serializers import FindGroupSerializer, FindLessonSerializer
 from . import models
 
 
@@ -108,16 +108,25 @@ class PresenceSerializer(serializers.ModelSerializer):
 
 
 class MarkSerializer(serializers.ModelSerializer):
+    teacher = FindPersonSerializer(required=True)
     group_assignment = FindGroupAssignmentSerializer(required=True)
+    lesson = FindLessonSerializer(required=True)
 
     class Meta:
         model = Mark
-        fields = ('value', 'description', 'group_assignment',)
+        fields = ('value', 'description', 'lesson', 'group_assignment', 'teacher',)
 
     def create(self, validated_data):
-        ga_data = validated_data.pop('group_assignment')
-        group_assignment = FindGroupAssignmentSerializer.find(FindGroupAssignmentSerializer(), validated_data=ga_data)
+        teacher_data = validated_data.pop('teacher')
+        teacher = FindPersonSerializer.find(FindPersonSerializer(), validated_data=teacher_data)
+        group_assignment_data = validated_data.pop('group_assignment')
+        group_assignment = FindGroupAssignmentSerializer.find(FindGroupAssignmentSerializer(),
+                                                              validated_data=group_assignment_data)
+        lesson_data = validated_data.pop('lesson')
+        lesson = FindLessonSerializer.find(FindLessonSerializer(), validated_data=lesson_data)
         mark, created = Mark.objects.update_or_create(value=validated_data.pop('value'),
                                                       description=validated_data.pop('description'),
-                                                      group_assignment=group_assignment)
+                                                      lesson=lesson,
+                                                      group_assignment=group_assignment,
+                                                      teacher=teacher)
         return created

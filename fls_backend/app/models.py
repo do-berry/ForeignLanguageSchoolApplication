@@ -32,6 +32,7 @@ class Mark(models.Model):
     date = models.DateField(auto_now=True)
     description = models.TextField(default='')
     lesson = models.ForeignKey(Lesson, default=None, on_delete=models.CASCADE)
+    group_assignment = models.ForeignKey(GroupAssignment, default=None, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Person, default=None, on_delete=models.CASCADE)
 
 

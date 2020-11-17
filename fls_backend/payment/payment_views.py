@@ -1,6 +1,5 @@
 import json
 
-from django.core import serializers
 from django.db.models import Q
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -30,8 +29,13 @@ def set_paid(request):
 @api_view(['POST'])
 def find_payments_by_person_and_group(request):
     payments = Payment.objects.filter(Q(group_assignment__person=request.data['person']))
-    payments_to_return = serializers.serialize('json', payments)
-    return Response(json.loads(payments_to_return), status=status.HTTP_200_OK)
+    result = []
+    for payment in payments:
+        result.append({'details': payment.details, 'amount': payment.amount, 'paid': payment.paid,
+                       'person_id': payment.group_assignment.person.id, 'group_id': payment.group_assignment.group.id,
+                       'approved': str(payment.approved), 'assistant': (payment.assistant.name +
+                                                                        " " + payment.assistant.surname)})
+    return Response(json.loads(json.dumps(result)), status=status.HTTP_200_OK)
 
 
 @api_view(['DELETE'])
