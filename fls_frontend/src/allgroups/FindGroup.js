@@ -19,6 +19,8 @@ const FindGroup = () => {
                 return item;
             }
         }));
+
+        console.log(groups);
     }
 
     return (
