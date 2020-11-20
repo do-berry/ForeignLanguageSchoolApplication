@@ -15,10 +15,10 @@ const FindUser = () => {
 
     function findUser() {
         if (name === '' && surname === '') {
-            setNoData(true);
-            setUsers([]);
+            //setNoData(true);
+            setFilteredUsers(users);
         } else {
-            setNoData(false);
+            //setNoData(false);
 
             setFilteredUsers(users.filter(item => {
                 if (name === '') {

@@ -1,12 +1,25 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Alert, Table} from "react-bootstrap";
 import TableRow from "../allusers/TableRow";
 import {AllUsersContext} from "../AllUsersContext";
 import {FilteredUsersContext} from "../FilteredUsersContext";
+import ReactPaginate from 'react-paginate';
+import './AllUsers.css';
+
 
 const UsersTable = () => {
     const [users, setUsers] = useContext(AllUsersContext);
+    const [currentPage, setCurrentPage] = useState(0);
     const [filteredUsers, setFilteredUsers] = useContext(FilteredUsersContext);
+
+    const PER_PAGE = 10;
+
+    const offset = currentPage * PER_PAGE;
+
+    const currentPageData = filteredUsers
+        .slice(offset, offset + PER_PAGE);
+
+    const pageCount = Math.ceil(filteredUsers.length / PER_PAGE);
 
     useEffect(() => {
         let myUsers = [];
@@ -31,6 +44,10 @@ const UsersTable = () => {
             });
     }, []);
 
+    function handlePageClick({selected: selectedPage}) {
+        setCurrentPage(selectedPage);
+    }
+
     return (
         <div className='usersTable'>
             {filteredUsers.length <= 0 &&
@@ -45,10 +62,30 @@ const UsersTable = () => {
                     <th>Przypisz do grupy</th>
                     <th>Płatności</th>
                 </tr>
-                {Object.entries(filteredUsers).map(([key, value]) => (
+                {Object.entries(currentPageData).map(([key, value]) => (
                     <TableRow key={key} item={value}/>
                 ))}
             </Table>
+            <div
+                id='pagination'>
+                <ReactPaginate
+                    previousLabel={"← Poprzednia"}
+                    nextLabel={"Następna →"}
+                    pageCount={pageCount}
+                    onPageChange={handlePageClick}
+                    disabledClassName={"pagination__link--disabled"}
+                    breakClassName={'page-item'}
+                    breakLinkClassName={'page-link'}
+                    containerClassName={'pagination'}
+                    pageClassName={'page-item'}
+                    pageLinkClassName={'page-link'}
+                    previousClassName={'page-item'}
+                    previousLinkClassName={'page-link'}
+                    nextClassName={'page-item'}
+                    nextLinkClassName={'page-link'}
+                    activeClassName={'active'}
+                />
+            </div>
         </div>
     );
 }
