@@ -33,7 +33,7 @@ const UsersTable = () => {
 
     return (
         <div className='usersTable'>
-            {users.length <= 0 &&
+            {filteredUsers.length <= 0 &&
             <Alert bsStyle="warning" id='alert'>
                 <strong>Brak wynikow dla zapytania.</strong>
             </Alert>

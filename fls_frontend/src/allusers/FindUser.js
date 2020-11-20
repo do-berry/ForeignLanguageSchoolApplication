@@ -31,8 +31,6 @@ const FindUser = () => {
                     }
                 }
             }));
-
-            console.log(filteredUsers);
         }
     }
 
