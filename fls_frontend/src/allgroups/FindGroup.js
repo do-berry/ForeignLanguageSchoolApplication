@@ -19,9 +19,6 @@ const FindGroup = () => {
                 return item;
             }
         }));
-
-        console.log(level);
-        console.log(language);
     }
 
     return (
