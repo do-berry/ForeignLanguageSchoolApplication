@@ -19,6 +19,10 @@ export const LanguageLevel = {
     C2: "C2",
 }
 
+export const getLanguageLevelValue = (key) => {
+    return LanguageLevel[key];
+}
+
 export const Day = {
     D1: "poniedziałek",
     D2: "wtorek",

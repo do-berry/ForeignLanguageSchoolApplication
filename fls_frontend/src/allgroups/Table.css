@@ -2,6 +2,11 @@
     width: 60px;
 }
 
+#findGroup {
+    width: 300px;
+    display: inline-block;
+}
+
 #okAlert {
     display: inline-block;
     width: 500px;

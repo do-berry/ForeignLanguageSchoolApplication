@@ -1,16 +1,18 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Alert, Table} from 'react-bootstrap';
 import TableRow from "./TableRow";
 import './Table.css';
 import {SavedAssignmentContext} from "../SavedAssignmentContext";
+import {AllGroupsContext} from "./AllGroupsContext";
+import {FilteredGroupsContext} from "./FilteredGroupsContext";
 
 const GroupsForm = () => {
-    const [groups, setGroups] = useState([]);
+    const [groups, setGroups] = useContext(AllGroupsContext);
+    const [filteredGroups, setFilteredGroups] = useContext(FilteredGroupsContext);
     const [savedAssignment, setSavedAssignment] = useContext(SavedAssignmentContext);
 
     useEffect(() => {
         let myGroups = []
-        //setSavedAssignment(null);
 
         fetch('http://127.0.0.1:8000/school/allgroups')
             .then(response => response.json())
@@ -19,6 +21,7 @@ const GroupsForm = () => {
                     return myGroups.push(value);
                 })
                 setGroups(myGroups);
+                setFilteredGroups(myGroups);
             });
     }, []);
 
@@ -51,7 +54,7 @@ const GroupsForm = () => {
                     <th>plan zajęć</th>
                     {sessionStorage.getItem('person') && <th>Przypisz</th>}
                 </tr>
-                {Object.entries(groups).map(([key, value]) => (
+                {Object.entries(filteredGroups).map(([key, value]) => (
                     <TableRow key={value} item={value}/>
                 ))}
             </Table>
