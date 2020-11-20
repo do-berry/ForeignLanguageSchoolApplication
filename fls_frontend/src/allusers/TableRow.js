@@ -8,8 +8,8 @@ const TableRow = (props) => {
 
     return (
         <tr>
-            <td>{props.item.fields.name}</td>
-            <td>{props.item.fields.surname}</td>
+            <td>{props.item.name}</td>
+            <td>{props.item.surname}</td>
             <td>
                 <Link
                     bsStyle="info"

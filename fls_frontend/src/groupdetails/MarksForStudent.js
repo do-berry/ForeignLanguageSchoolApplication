@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {TableRowForStudent} from "./TableRowForStudent";
-import {set} from "mobx";
 import './MarksForStudent.css';
 
 export const MarksForStudent = (props) => {
@@ -38,9 +37,12 @@ export const MarksForStudent = (props) => {
             <h4>Oceny dla: {name}</h4>
             <table>
                 <tr>
-                    <th>x</th>
-                    <th>opis</th>
-                    <th>ocena</th>
+                    <th>Nr</th>
+                    <th>Opis</th>
+                    <th>Ocena</th>
+                    <th>Data</th>
+                    <th>Lekcja</th>
+                    <th>Lektor</th>
                 </tr>
                 {marks.map((item, i) => <TableRowForStudent item={item} index={i}/>)}
             </table>

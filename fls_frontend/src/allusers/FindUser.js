@@ -3,6 +3,7 @@ import {Alert, Button, FormGroup} from "react-bootstrap";
 import './AllUsers.css';
 import InputField from "../registration/InputField";
 import {AllUsersContext} from "../AllUsersContext";
+import {FilteredUsersContext} from "../FilteredUsersContext";
 
 const FindUser = () => {
     const [name, setName] = useState('');
@@ -10,6 +11,7 @@ const FindUser = () => {
     const [noData, setNoData] = useState(false);
 
     const [users, setUsers] = useContext(AllUsersContext);
+    const [filteredUsers, setFilteredUsers] = useContext(FilteredUsersContext);
 
     function findUser() {
         if (name === '' && surname === '') {
@@ -18,28 +20,19 @@ const FindUser = () => {
         } else {
             setNoData(false);
 
-            let myUsers = [];
-
-            fetch('http://127.0.0.1:8000/user/finduserbysurnameandname', {
-                method: 'post',
-                body: JSON.stringify({
-                    name: name,
-                    surname: surname
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }).then(res => res.json())
-                .then(response => {
-                    if (Object.keys(response).length > 0) {
-                        Object.entries(response).map(([key, value]) => {
-                            return myUsers.push(value);
-                        })
-                        setUsers(myUsers);
-                    } else {
-                        setUsers([]);
+            setFilteredUsers(users.filter(item => {
+                if (name === '') {
+                    if (item.surname === surname) {
+                        return item;
                     }
-                });
+                } else {
+                    if (item.name === name) {
+                        return item;
+                    }
+                }
+            }));
+
+            console.log(filteredUsers);
         }
     }
 

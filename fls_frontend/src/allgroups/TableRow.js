@@ -2,6 +2,8 @@ import React, {useContext} from 'react';
 import {Day, Language, LanguageLevel} from '../stores/SchoolStore';
 import './Table.css';
 import {Link} from "react-router-dom";
+import moment from "moment";
+import 'moment/locale/pl';
 import {SavedAssignmentContext} from "../SavedAssignmentContext";
 
 const TableRow = (props) => {
@@ -49,10 +51,11 @@ const TableRow = (props) => {
             });
     }
 
+    moment().locale('pl');
     return (
         <tr>
             <td>{props.item.room}</td>
-            <td>{props.item.date_hour}</td>
+            <td>{moment(props.item.date_hour, "HH:mm:ss").format('LT')}</td>
             <td>{Day[props.item.date_day]}</td>
             <td>{Language[props.item.language_name]}</td>
             <td>{LanguageLevel[props.item.language_level]}</td>

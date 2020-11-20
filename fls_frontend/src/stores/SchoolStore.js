@@ -6,6 +6,10 @@ export const Language = {
     NOR: "norweski",
 }
 
+export const getLanguageValue = (key) => {
+    return Language[key];
+}
+
 export const LanguageLevel = {
     A1: "A1",
     A2: "A2",

@@ -1,6 +1,6 @@
 table#listTable, th, td {
     margin: auto;
-    width: 35%;
+    width: 20%;
     border: 1px solid black;
     border-collapse: collapse;
 }

@@ -4,4 +4,10 @@ td#marks {
 
 div#newMark {
     display: inline-block;
+    width: 30%;
+}
+
+select#select {
+    width: 40%;
+    display: inline;
 }

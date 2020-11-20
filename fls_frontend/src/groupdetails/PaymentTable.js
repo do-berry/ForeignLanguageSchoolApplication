@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import './PaymentTable.css';
 import {NewPayment} from "./NewPayment";
+import moment from "moment";
+import 'moment/locale/pl';
 
 export const PaymentTable = (props) => {
     const [payments, setPayments] = useState([]);
@@ -57,7 +59,7 @@ export const PaymentTable = (props) => {
     }
 
     function checkCheckbox(obj) {
-        obj.fields.paid = !obj.fields.paid;
+        obj.paid = !obj.paid;
         let newState = Object.assign([], payments);
         Object.assign(newState.find(x => x['pk'] === obj['pk']), obj);
         setPayments(newState);
@@ -79,6 +81,8 @@ export const PaymentTable = (props) => {
                     payments.push(item)
                 });
                 setPaymentsCounter(data.length);
+                console.log(payments);
+                console.log(data);
             });
     }, []);
 
@@ -90,17 +94,24 @@ export const PaymentTable = (props) => {
                     <th>Nr</th>
                     <th>Opis</th>
                     <th>Kwota</th>
+                    <th>Data</th>
+                    <th>Osoba płacąca</th>
+                    <th>Osoba przyjmująca</th>
                     <th>Zapłacono</th>
                 </tr>
                 {paymentsCounter > 0 &&
                 payments.map((value, index) => {
-                    return (<tr key={index}>
+                    moment().locale('pl');
+                    return (<tr key={(++index)}>
                             <td>{index}</td>
-                            <td>{value.fields.description}</td>
-                            <td>{value.fields.to_pay}</td>
+                            <td>{value.details}</td>
+                            <td>{value.amount} PLN</td>
+                            <td>{moment(value.approved).format('lll')}</td>
+                            <td>{value.student}</td>
+                            <td>{value.assistant}</td>
                             <td>
                                 <input type="checkbox"
-                                       checked={value.fields.paid}
+                                       checked={value.paid}
                                        onChange={() => checkCheckbox(value)}
                                        disabled={!edit}/>
                             </td>

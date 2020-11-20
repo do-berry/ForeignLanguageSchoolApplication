@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework import serializers, permissions
 
 from app.models import Person, GroupAssignment, Mark, Presence
@@ -89,8 +90,18 @@ class FindGroupAssignmentSerializer(serializers.ModelSerializer):
         return GroupAssignment.objects.get(id=validated_data['id'])
 
 
+class FindGroupAssignmentByPersonAndGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GroupAssignment
+        fields = ('person', 'group', )
+
+    def find(self, validated_data):
+        return GroupAssignment.objects.filter(Q(person_id=validated_data['person'])
+                                              & Q(group_id=validated_data['group'])).first()
+
+
 class PresenceSerializer(serializers.ModelSerializer):
-    group_assignment = FindGroupAssignmentSerializer(required=True)
+    group_assignment = FindGroupAssignmentByPersonAndGroupSerializer(required=True)
 
     class Meta:
         model = Presence
@@ -98,7 +109,8 @@ class PresenceSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         ga_data = validated_data.pop('group_assignment')
-        group_assignment = FindGroupAssignmentSerializer.find(FindGroupAssignmentSerializer(), validated_data=ga_data)
+        group_assignment = FindGroupAssignmentByPersonAndGroupSerializer\
+            .find(FindGroupAssignmentByPersonAndGroupSerializer(), validated_data=ga_data)
         try:
             Presence.objects.create(present=validated_data.pop('present'),
                                     group_assignment=group_assignment)
@@ -109,7 +121,7 @@ class PresenceSerializer(serializers.ModelSerializer):
 
 class MarkSerializer(serializers.ModelSerializer):
     teacher = FindPersonSerializer(required=True)
-    group_assignment = FindGroupAssignmentSerializer(required=True)
+    group_assignment = FindGroupAssignmentByPersonAndGroupSerializer(required=True)
     lesson = FindLessonSerializer(required=True)
 
     class Meta:
@@ -120,7 +132,8 @@ class MarkSerializer(serializers.ModelSerializer):
         teacher_data = validated_data.pop('teacher')
         teacher = FindPersonSerializer.find(FindPersonSerializer(), validated_data=teacher_data)
         group_assignment_data = validated_data.pop('group_assignment')
-        group_assignment = FindGroupAssignmentSerializer.find(FindGroupAssignmentSerializer(),
+        group_assignment = FindGroupAssignmentByPersonAndGroupSerializer\
+            .find(FindGroupAssignmentByPersonAndGroupSerializer(),
                                                               validated_data=group_assignment_data)
         lesson_data = validated_data.pop('lesson')
         lesson = FindLessonSerializer.find(FindLessonSerializer(), validated_data=lesson_data)
