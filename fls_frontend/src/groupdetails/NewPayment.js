@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import './NewPayment.css';
 
 export const NewPayment = (props) => {
     const [amount, setAmount] = useState(0);
@@ -30,14 +31,14 @@ export const NewPayment = (props) => {
     }
 
     return (
-        <div>
+        <div id='new'>
             <br/>
             <label>Kwota:</label>{'   '}
-            <input type='number' placeholder='kwota'
+            <input id='number' type='number' placeholder='kwota'
                    value={amount} onChange={e => setAmount(e.target.value)}/>
-            <br/>
-            <label>Opis:</label>{'     '}
-            <input type='text' placeholder='opis'
+            {'         '}
+            <label>Szczegóły:</label>{'     '}
+            <input id='text' type='text' placeholder='opis'
                    value={details} onChange={e => setDetails(e.target.value)}/>
             <br/>
             <label>Wplacono:</label>{'    '}

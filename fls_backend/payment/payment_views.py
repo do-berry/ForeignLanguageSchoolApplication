@@ -31,7 +31,7 @@ def find_payments_by_person_and_group(request):
     payments = Payment.objects.filter(Q(student__id=request.data['person'])).distinct()
     result = []
     for payment in payments:
-        result.append({'details': payment.details, 'amount': payment.amount, 'paid': payment.paid,
+        result.append({'id': payment.id, 'details': payment.details, 'amount': payment.amount, 'paid': payment.paid,
                        'student': (payment.student.name + " " + payment.student.surname),
                        'approved': str(payment.approved), 'assistant': (payment.assistant.name +
                                                                         " " + payment.assistant.surname)})

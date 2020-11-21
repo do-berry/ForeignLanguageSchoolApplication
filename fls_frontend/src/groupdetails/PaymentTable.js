@@ -32,12 +32,14 @@ export const PaymentTable = (props) => {
             }).then(res => res.json())
                 .then(res => console.log(res));
         }
+
+        console.log(getObjArray());
     }
 
     function getObjArray() {
         let arr = [];
         payments.map(payment => {
-            arr.push({id: payment.pk, paid: payment.fields.paid})
+            arr.push({id: payment.pk, paid: payment.paid})
         });
         return arr;
     }
@@ -61,7 +63,7 @@ export const PaymentTable = (props) => {
     function checkCheckbox(obj) {
         obj.paid = !obj.paid;
         let newState = Object.assign([], payments);
-        Object.assign(newState.find(x => x['pk'] === obj['pk']), obj);
+        Object.assign(newState.find(x => x['id'] === obj['id']), obj);
         setPayments(newState);
     }
 
@@ -126,6 +128,7 @@ export const PaymentTable = (props) => {
             {'   '}
             {sessionStorage.getItem('userType') === "CUSTOMER_ASSISTANT" &&
             <button onClick={acceptPayments}>{acceptButtonText}</button>}
+            <br/>
             {newPayment &&
             <NewPayment user={props.user}/>}
         </div>
