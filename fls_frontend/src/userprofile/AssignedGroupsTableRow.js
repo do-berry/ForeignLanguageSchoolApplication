@@ -9,6 +9,11 @@ export const AssignedGroupsTableRow = (props) => {
 
     moment().locale('pl');
 
+    function sendInfo() {
+        sessionStorage.setItem("language", props.item.language_name);
+        sessionStorage.setItem("level", props.item.language_level);
+    }
+
     return (
         <tr>
             <td>{props.item.room}</td>
@@ -18,7 +23,9 @@ export const AssignedGroupsTableRow = (props) => {
             <td>{LanguageLevel[props.item.language_level]}</td>
             <td><Link
                 bsStyle="info"
-                to={url}>
+                to={url}
+                onClick={sendInfo}
+            >
                 Szczegóły
             </Link></td>
         </tr>
