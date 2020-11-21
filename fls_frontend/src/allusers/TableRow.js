@@ -22,7 +22,7 @@ const TableRow = (props) => {
                 <Link
                     bsStyle="info"
                     onClick={handleClick.bind(this)}
-                    to={'/user/' + props.item['pk'] + '/payments/'}>
+                    to={'/user/' + props.item['id'] + '/payments/'}>
                     Płatności
                 </Link>
             </td>
