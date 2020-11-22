@@ -2,9 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {Table} from "react-bootstrap";
 import {AssignedGroupsTableRow} from "./AssignedGroupsTableRow";
 import './UserProfile.css';
+import ReactPaginate from "react-paginate";
 
 export const AssignedGroups = () => {
     let [assignedGroupsData, setAssignedGroupsData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
 
     useEffect(() => {
         let groups = [];
@@ -30,6 +32,19 @@ export const AssignedGroups = () => {
             });
     }, []);
 
+    const PER_PAGE = 10;
+
+    const offset = currentPage * PER_PAGE;
+
+    const currentPageData = assignedGroupsData
+        .slice(offset, offset + PER_PAGE);
+
+    const pageCount = Math.ceil(assignedGroupsData.length / PER_PAGE);
+
+    function handlePageClick({selected: selectedPage}) {
+        setCurrentPage(selectedPage);
+    }
+
     return (
         <div id='assignedGroups'>
             <h4>Przypisany do grup</h4>
@@ -43,11 +58,31 @@ export const AssignedGroups = () => {
                 <th>Wybierz</th>
                 </thead>
                 <tbody>
-                {Object.entries(assignedGroupsData).map(([key, value]) => (
+                {Object.entries(currentPageData).map(([key, value]) => (
                     <AssignedGroupsTableRow key={key} item={value}/>
                 ))}
                 </tbody>
             </Table>
+            <div
+                id='pagination'>
+                <ReactPaginate
+                    previousLabel={"← Poprzednia"}
+                    nextLabel={"Następna →"}
+                    pageCount={pageCount}
+                    onPageChange={handlePageClick}
+                    disabledClassName={"pagination__link--disabled"}
+                    breakClassName={'page-item'}
+                    breakLinkClassName={'page-link'}
+                    containerClassName={'pagination'}
+                    pageClassName={'page-item'}
+                    pageLinkClassName={'page-link'}
+                    previousClassName={'page-item'}
+                    previousLinkClassName={'page-link'}
+                    nextClassName={'page-item'}
+                    nextLinkClassName={'page-link'}
+                    activeClassName={'active'}
+                />
+            </div>
         </div>
     );
 }
