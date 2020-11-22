@@ -9,3 +9,13 @@ table {
 td {
     width: 25%;
 }
+
+div#date {
+    width: 30%;
+    display: inline-block;
+}
+
+select#date {
+    margin-left: 35%;
+    width: 35%;
+}

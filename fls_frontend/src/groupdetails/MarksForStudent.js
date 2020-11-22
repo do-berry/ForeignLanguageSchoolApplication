@@ -1,10 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {TableRowForStudent} from "./TableRowForStudent";
 import './MarksForStudent.css';
+import {AllDatesContext} from "../lessonlist/AllDatesContext";
 
 export const MarksForStudent = (props) => {
     const [marks, setMarks] = useState([]);
     const [name, setName] = useState('');
+    const [lesson, setLesson] = useState(0);
+    const [dates, setDates] = useContext(AllDatesContext);
+    const [filteredDates, setFilteredDates] = useState([]);
+    const [date, setDate] = useState('');
 
     useEffect(() => {
         let myMarks = [];
@@ -30,11 +35,34 @@ export const MarksForStudent = (props) => {
                 setName(fullName);
             });
 
+        setFilteredDates(marks);
     }, []);
+
+    function selectDate(val) {
+        setDate(val);
+        let tmp = marks.filter(item => {
+            if (item.date === date) {
+                return item;
+            }
+        });
+        setFilteredDates(tmp);
+        console.log(date);
+        console.log(tmp);
+    }
 
     return (
         <div>
             <h4>Oceny dla: {name}</h4>
+            <div id='date'>
+                <select className="form-control"
+                        id='date'
+                        value={date}
+                        onChange={e => selectDate(e.target.value)}>
+                    {Object.keys(dates).map(item =>
+                        <option value={dates[item].date}>{dates[item].date}</option>
+                    )}
+                </select>
+            </div>
             <table>
                 <tr>
                     <th>Nr</th>
@@ -44,7 +72,7 @@ export const MarksForStudent = (props) => {
                     <th>Lekcja</th>
                     <th>Lektor</th>
                 </tr>
-                {marks.map((item, i) => <TableRowForStudent item={item} index={i}/>)}
+                {filteredDates.map((item, i) => <TableRowForStudent item={item} index={i}/>)}
             </table>
         </div>
     );

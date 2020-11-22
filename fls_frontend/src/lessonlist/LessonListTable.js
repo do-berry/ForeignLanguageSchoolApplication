@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import './LessonList.css';
 import {TableRow} from "../lessondetails/TableRow";
+import {AllDatesContext} from "./AllDatesContext";
 
 export const LessonListTable = (props) => {
     const [lessonCounter, setLessonCounter] = useState(0);
-    const [dates, setDates] = useState([]);
+    const [dates, setDates] = useContext(AllDatesContext);
 
     function handleClick(id) {
         sessionStorage.setItem('lesson', id);
