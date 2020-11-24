@@ -11,6 +11,7 @@ export const MarksForStudent = (props) => {
     const [dates, setDates] = useContext(AllDatesContext);
     const [filteredDates, setFilteredDates] = useState([]);
     const [date, setDate] = useState('');
+    const [lessonCount, setLessonCount] = useState(0);
 
     useEffect(() => {
         let myMarks = [];
@@ -35,18 +36,21 @@ export const MarksForStudent = (props) => {
                 setFilteredDates(myMarks);
                 fullName = response.name + " " + response.surname;
                 setName(fullName);
+                setLessonCount(dates.length);
             });
     }, []);
 
-    function selectDate(val) {
-        setDate(val);
-        setFilter(val);
-    }
-
-    function setFilter(val) {
-        let arr = marks.filter(mark => {
-            if (mark.)
-        });
+    function setFilter() {
+        if (lesson === 0) {
+            setFilteredDates(marks);
+        } else {
+            let arr = marks.filter(mark => {
+                if (mark.lesson.toString() === lesson.toString()) {
+                    return mark;
+                }
+            });
+            setFilteredDates(arr);
+        }
     }
 
     return (
@@ -57,10 +61,10 @@ export const MarksForStudent = (props) => {
                         id='date'
                         value={lesson}
                         onChange={e => setLesson(e.target.value)}>
-                    <option selected>Wybierz numer lekcji</option>
-                    {Object.keys(dates).map((item, index) => {
-                        var i = ++index;
-                        return <option value={i}>{i}</option>;
+                    <option value={0} selected>Wybierz numer lekcji</option>
+                    {Array.from({length: lessonCount}, (_, key) => {
+                        let val = key + 1;
+                        return <option value={val}>{val}</option>;
                     })}
                 </select>{'   '}
                 <Button id='filter' bsStyle="info" onClick={setFilter}>Filtruj</Button>
