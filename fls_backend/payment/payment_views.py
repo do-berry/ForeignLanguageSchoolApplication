@@ -28,7 +28,7 @@ def set_paid(request):
 
 @api_view(['POST'])
 def find_payments_by_person_and_group(request):
-    payments = Payment.objects.filter(Q(student__id=request.data['person'])).order_by('approved')
+    payments = Payment.objects.filter(Q(student__id=request.data['person'])).order_by('-approved')
     result = []
     for payment in payments:
         result.append({'id': payment.id, 'details': payment.details, 'amount': payment.amount, 'paid': payment.paid,
