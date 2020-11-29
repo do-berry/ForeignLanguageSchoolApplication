@@ -11,3 +11,11 @@ select#select {
     width: 40%;
     display: inline;
 }
+
+tr#mytr {
+    width: 100%;
+}
+
+th#myth {
+    width: 10%;
+}
