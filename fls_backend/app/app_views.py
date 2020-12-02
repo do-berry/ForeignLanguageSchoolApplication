@@ -7,6 +7,7 @@ from django.db.models import Q
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.contrib.auth.hashers import make_password, check_password
 
 from app.models import User, Person, GroupAssignment, Mark
 from app.serializers import PersonSerializer, GroupAssignmentSerializer, MarkSerializer, \
@@ -51,7 +52,7 @@ def user_login(request):
         user = User.objects.get(username=req['username'])
     except ObjectDoesNotExist:
         return Response("User does not exist", status=status.HTTP_404_NOT_FOUND)
-    if user.password != req['password']:
+    if not check_password(req['password'], user.password):
         return Response("Incorrect password was used", status=status.HTTP_406_NOT_ACCEPTABLE)
     person = Person.objects.filter(user__username=req['username'])
     r = json.dumps({'userId': person[0].user.id, 'user_type': person[0].user.user_type})
@@ -189,3 +190,9 @@ def get_students_by_group_id(request):
         result.append({'person_id': student.person.id, 'name': student.person.name,
                        'surname': student.person.surname, 'group_assignment': student.pk})
     return Response(json.loads(json.dumps(result)), content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def return_made_password(request):
+    result = make_password(request.data['password'])
+    return Response(result, status=status.HTTP_200_OK)

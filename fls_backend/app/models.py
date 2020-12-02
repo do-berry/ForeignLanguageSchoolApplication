@@ -8,7 +8,7 @@ from school.models import Group, Lesson
 
 class User(AbstractUser):
     username = models.CharField(max_length=16, unique=True)
-    password = models.CharField(max_length=32)
+    password = models.CharField(max_length=255)
     user_type = models.CharField(max_length=18, choices=[(tag.name, tag.value) for tag in UserType],
                                  default=UserType.STUDENT)
 

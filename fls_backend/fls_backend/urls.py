@@ -46,4 +46,5 @@ urlpatterns = [
     path('school/group/get_marks_by_ga', app_views.get_marks_by_person_and_group),
     path('school/group/get_marks_by_group', app_views.get_marks_by_group),
     path('school/group/get_students_by_group', app_views.get_students_by_group_id),
+    path('checkpassword', app_views.return_made_password),
 ]

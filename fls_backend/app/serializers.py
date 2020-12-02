@@ -1,10 +1,11 @@
 from django.db.models import Q
 from rest_framework import serializers, permissions
 
-from app.models import Person, GroupAssignment, Mark, Presence
+from app.models import Person, GroupAssignment, Mark, Presence, User
 from school.models import Language
 from school.serializers import FindGroupSerializer, FindLessonSerializer
 from . import models
+from django.contrib.auth.hashers import make_password, check_password
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -12,6 +13,15 @@ class UserSerializer(serializers.ModelSerializer):
         model = models.User
         fields = ('username', 'password', 'user_type')
         extra_kwargs = {'password': {'write_only': True}}
+
+    # def create(self, validated_data):
+    #     try:
+    #         user, created = User.objects.create(username=validated_data['username'],
+    #                                                   password=make_password(validated_data['password']),
+    #                                                   user_type=validated_data['user_type'])
+    #         return user
+    #     except Exception as e:
+    #         print(e)
 
 
 class PersonSerializer(serializers.ModelSerializer):
@@ -24,6 +34,8 @@ class PersonSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
+        user_data['password'] = make_password(user_data['password'])
+        print(user_data['password'])
         user = UserSerializer.create(UserSerializer(), validated_data=user_data)
         person, created = Person.objects.update_or_create(user=user, name=validated_data.pop('name'),
                                                           surname=validated_data.pop('surname'),
