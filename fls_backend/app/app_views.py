@@ -196,3 +196,12 @@ def get_students_by_group_id(request):
 def return_made_password(request):
     result = make_password(request.data['password'])
     return Response(result, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def check_if_user_exists(request):
+    try:
+        User.objects.get(username=request.data['username'])
+    except ObjectDoesNotExist:
+        return Response(False, status=status.HTTP_200_OK)
+    return Response(True, status=status.HTTP_200_OK)

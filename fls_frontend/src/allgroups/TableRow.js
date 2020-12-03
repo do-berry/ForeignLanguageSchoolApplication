@@ -59,7 +59,7 @@ const TableRow = (props) => {
             <td>{Day[props.item.date_day]}</td>
             <td>{Language[props.item.language_name]}</td>
             <td>{LanguageLevel[props.item.language_level]}</td>
-            <td>{props.item.cost}</td>
+            <td>{props.item.cost} PLN</td>
             <td>
                 <Link
                     to={"/school/group/" + props.item['id']}
