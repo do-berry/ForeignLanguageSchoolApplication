@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 const TableRow = (props) => {
     function handleClick() {
-        sessionStorage.setItem('person', props.item['pk']);
+        sessionStorage.setItem('person', props.item['id']);
     }
 
     return (

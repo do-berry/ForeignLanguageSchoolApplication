@@ -205,3 +205,4 @@ def check_if_user_exists(request):
     except ObjectDoesNotExist:
         return Response(False, status=status.HTTP_200_OK)
     return Response(True, status=status.HTTP_200_OK)
+

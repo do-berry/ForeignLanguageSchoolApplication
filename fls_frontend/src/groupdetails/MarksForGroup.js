@@ -89,6 +89,7 @@ export const MarksForGroup = (props) => {
                 </tr>
                 {filtered.map((item, i) => <TableRowForGroup item={item} index={i}/>)}
             </table>
+            <br/>
         </div>
     );
 }

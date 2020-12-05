@@ -43,8 +43,8 @@ const TableRow = (props) => {
                     });
 
                     setSavedAssignment(true);
-                    sessionStorage.removeItem("person");
-                    sessionStorage.removeItem("group");
+                    // sessionStorage.removeItem("person");
+                    // sessionStorage.removeItem("group");
                 } else {
                     setSavedAssignment(false);
                 }
