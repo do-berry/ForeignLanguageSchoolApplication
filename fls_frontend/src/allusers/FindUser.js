@@ -22,11 +22,11 @@ const FindUser = () => {
 
             setFilteredUsers(users.filter(item => {
                 if (name === '') {
-                    if (item.surname === surname) {
+                    if (item.surname.toLowerCase().startsWith(surname.toLowerCase())) {
                         return item;
                     }
                 } else {
-                    if (item.name === name) {
+                    if (item.name.toLowerCase().startsWith(name.toLowerCase())) {
                         return item;
                     }
                 }
