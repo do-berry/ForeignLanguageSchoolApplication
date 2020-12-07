@@ -48,4 +48,5 @@ urlpatterns = [
     path('school/group/get_students_by_group', app_views.get_students_by_group_id),
     path('checkpassword', app_views.return_made_password),
     path('checkifuserexists', app_views.check_if_user_exists),
+    path('user/changepassword', app_views.change_user_password),
 ]

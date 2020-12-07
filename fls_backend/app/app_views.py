@@ -206,3 +206,11 @@ def check_if_user_exists(request):
         return Response(False, status=status.HTTP_200_OK)
     return Response(True, status=status.HTTP_200_OK)
 
+
+@api_view(['PUT'])
+def change_user_password(request):
+    try:
+        User.objects.filter(id=request.data['id']).update(password=make_password(request.data['password']))
+        return Response(True, content_type=APPLICATION_JSON, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response(e, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
