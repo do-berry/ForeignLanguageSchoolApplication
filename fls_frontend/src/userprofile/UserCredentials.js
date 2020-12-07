@@ -147,9 +147,11 @@ export const UserCredentials = () => {
                         </Col>
                     </Row>
                     <br/>
+                    <h5>Zmiana hasła</h5>
+                    <br/>
                     <Row>
                         <Col componentClass={ControlLabel} sm={2}>
-                            Hasło:
+                            Nowe hasło:
                         </Col>
                         <Col sm={1.5}>
                             <FormControl
