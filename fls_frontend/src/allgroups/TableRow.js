@@ -14,6 +14,8 @@ const TableRow = (props) => {
         if (sessionStorage.getItem("group") !== null) {
             sessionStorage.removeItem("group");
         }
+        sessionStorage.setItem('language', props.item.language_name);
+        sessionStorage.setItem('level', props.item.language_level);
     }
 
     function handleClick() {
@@ -25,7 +27,7 @@ const TableRow = (props) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "person": sessionStorage.getItem('person'),
+                "person": props.person,
                 "group": sessionStorage.getItem('group')
             })
         }).then(res => res.json())
@@ -37,7 +39,7 @@ const TableRow = (props) => {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            person: {id: sessionStorage.getItem('person')},
+                            person: {id: props.person},
                             group: {id: sessionStorage.getItem('group')}
                         })
                     });
@@ -69,7 +71,7 @@ const TableRow = (props) => {
                 </Link>
             </td>
             {
-                sessionStorage.getItem('person') &&
+                props.person > 0 &&
                 <td>
                     <Link
                         bsStyle="info"

@@ -59,6 +59,7 @@ const UsersTable = () => {
                 <tr>
                     <th>Imię</th>
                     <th>Nazwisko</th>
+                    <th>Typ użytkownika</th>
                     <th>Przypisz do grupy</th>
                     <th>Płatności</th>
                 </tr>

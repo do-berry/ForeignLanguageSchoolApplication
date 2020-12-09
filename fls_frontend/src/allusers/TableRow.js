@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {getUserType} from "../header/Header";
 
 const TableRow = (props) => {
     function handleClick() {
@@ -10,6 +11,7 @@ const TableRow = (props) => {
         <tr>
             <td>{props.item.name}</td>
             <td>{props.item.surname}</td>
+            <td>{getUserType(props.item.type)}</td>
             <td>
                 <Link
                     bsStyle="info"

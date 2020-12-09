@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import '../static/Header.css';
+import {UserType} from "../static/UserType";
 
 
 const UType = {
@@ -7,6 +8,10 @@ const UType = {
     TEACHER: 'Lektor',
     CUSTOMER_ASSISTANT: 'Doradca klienta'
 };
+
+export const getUserType = (key) => {
+    return UType[key];
+}
 
 function returnValue(val) {
     if (val === "STUDENT") {

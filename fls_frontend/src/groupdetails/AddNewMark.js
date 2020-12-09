@@ -101,6 +101,8 @@ export const AddNewMark = (props) => {
             console.log("Pozniej");
             setLate(true);
         }
+
+        window.location.reload(false);
     }
 
     function clicked() {

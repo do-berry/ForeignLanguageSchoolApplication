@@ -33,7 +33,7 @@ export const NewPayment = (props) => {
     return (
         <div id='new'>
             <br/>
-            <label>Kwota:</label>{'   '}
+            <label>Kwota [PLN]:</label>{'   '}
             <input id='number' type='number' placeholder='kwota'
                    value={amount} onChange={e => setAmount(e.target.value)}/>
             {'         '}

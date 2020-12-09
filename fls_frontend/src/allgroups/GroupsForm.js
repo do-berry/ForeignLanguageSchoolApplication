@@ -7,7 +7,7 @@ import {AllGroupsContext} from "./AllGroupsContext";
 import {FilteredGroupsContext} from "./FilteredGroupsContext";
 import ReactPaginate from "react-paginate";
 
-const GroupsForm = () => {
+const GroupsForm = (props) => {
     const [groups, setGroups] = useContext(AllGroupsContext);
     const [currentPage, setCurrentPage] = useState(0);
     const [filteredGroups, setFilteredGroups] = useContext(FilteredGroupsContext);
@@ -67,10 +67,10 @@ const GroupsForm = () => {
                     <th>poziom</th>
                     <th>opłata</th>
                     <th>plan zajęć</th>
-                    {sessionStorage.getItem('person') && <th>Przypisz</th>}
+                    {props.person > 0 && <th>Przypisz</th>}
                 </tr>
                 {Object.entries(currentPageData).map(([key, value]) => (
-                    <TableRow key={value} item={value}/>
+                    <TableRow key={value} item={value} person={props.person}/>
                 ))}
             </Table>
             <div

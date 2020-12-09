@@ -44,7 +44,8 @@ const ProtectedRoute = ({component: Component, type: type, ...rest}) => (
             && type.includes(sessionStorage.getItem('userType').toString()) ? (
                 <Component {...props} />) : (
                 <Redirect to={{pathname: '/404'}}/>
-            )) : (<Redirect to={{pathname: '/404'}}/>))}/>
+            )) : (<Redirect to={{pathname: '/404'}}/>))}
+    />
 );
 
 export default BaseRouter;

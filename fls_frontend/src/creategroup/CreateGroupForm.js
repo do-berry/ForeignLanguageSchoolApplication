@@ -45,12 +45,12 @@ export const CreateGroupForm = () => {
         <div id='createGroupForm'>
             {correctlySaved && !init &&
             <Alert id='okAlert' bsStyle="warning">
-                Grupa zostala utworzona.
+                Grupa została utworzona.
             </Alert>
             }
             {!correctlySaved && !init &&
             <Alert id='okAlert' bsStyle="warning">
-                Nie mozna utworzyc grupy.
+                Nie mozna utworzyć grupy.
             </Alert>
             }
             <Form>
@@ -80,7 +80,7 @@ export const CreateGroupForm = () => {
                     <br/>
                     <Row>
                         <Col componentClass={ControlLabel} sm={2}>
-                            Cena
+                            Cena [PLN]
                         </Col>
                         <Col sm={4}>
                             <FormControl
@@ -91,7 +91,7 @@ export const CreateGroupForm = () => {
                             />
                         </Col>
                         <Col componentClass={ControlLabel} sm={2}>
-                            Dzien
+                            Dzień
                         </Col>
                         <Col sm={4}>
                             <select className="form-control"
@@ -106,7 +106,7 @@ export const CreateGroupForm = () => {
                     <br/>
                     <Row>
                         <Col componentClass={ControlLabel} sm={2}>
-                            Jezyk
+                            Język
                         </Col>
                         <Col sm={4}>
                             <select className="form-control"
