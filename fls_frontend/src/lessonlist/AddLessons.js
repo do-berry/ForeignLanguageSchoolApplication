@@ -11,7 +11,7 @@ export const AddLessons = (props) => {
     return (
         <div>
             <br/>
-            <button type='button' onClick={enable}>Uzupelnij daty zajec</button>
+            <button type='button' onClick={enable}>Uzupełnij daty zajęć</button>
             <br/>
             <br/>
             {calendarDisabled ? <Calendar id={props.item}/> : null}

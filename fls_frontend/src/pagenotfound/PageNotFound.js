@@ -7,7 +7,7 @@ export const PageNotFound = () => {
             <h1>404</h1>
             <h2>Nie znaleziono strony.</h2>
             <br/>
-            <a href='/'>Powrot do strony glownej</a>
+            <a href='/'>Powrót do strony głównej</a>
         </div>
     );
 }

@@ -13,6 +13,12 @@ const UserCredentials = {
     is_admin: false
 };
 
+const TmpUserType = {
+    STUDENT: 'Słuchacz',
+    TEACHER: 'Lektor',
+    CUSTOMER_ASSISTANT: 'Doradca klienta'
+};
+
 class RegisterForm extends React.Component {
     constructor(props) {
         super(props);
@@ -42,7 +48,7 @@ class RegisterForm extends React.Component {
                     name: this.state.name,
                     user: {
                         username: this.state.username,
-                        password: this.state.password,
+                        password: this.state.username,
                         user_type: this.state.userType
                     },
                     mobile_number: this.state.mobile_number,
@@ -69,7 +75,6 @@ class RegisterForm extends React.Component {
         this.setState({
             [property]: val
         });
-        console.log(this.state[property])
     }
 
     setInputValueForUserCredentials(property, val) {
@@ -90,20 +95,45 @@ class RegisterForm extends React.Component {
         }));
     }
 
+    generateUsername = (counter) => {
+        let tmp = this.state.name.slice(0, counter + 1).toLowerCase() + this.state.surname.toLowerCase().replace(' ', '')
+
+        var status = false;
+        fetch('http://127.0.0.1:8000/checkifuserexists', {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: tmp
+            })
+        }).then(res => res.json())
+            .then(res => {
+                if (res !== true) {
+                    this.setState({
+                        username: tmp
+                    });
+                } else {
+                    this.generateUsername(++counter);
+                }
+            });
+    }
+
     render() {
         return (
             <div className='register'>
                 {this.state.isRegistered === false &&
-                <Alert bsStyle="warning">
+                <Alert id='registered' bsStyle="warning">
                     <strong>Nie udało się stworzyć użytkownika!</strong> Wprowadz poprawne dane.
                 </Alert>
                 }
                 {this.state.isRegistered === true &&
-                <Alert bsStyle="warning">
+                <Alert bsStyle="warning" id='registered'>
                     <strong>Uzytkownik zostal utworzony.</strong>
                 </Alert>
                 }
-                <h1>Rejestracja uzytkownika</h1>
+                <h1>Rejestracja użytkownika</h1>
                 <br/>
                 <div className='registerForm'>
                     <Form horizontal>
@@ -112,39 +142,33 @@ class RegisterForm extends React.Component {
                                 <Col componentClass={ControlLabel} sm={3}>
                                     Username:
                                 </Col>
-                                <Col sm={9}>
+                                <Col sm={8}>
                                     <InputField
                                         type="text"
                                         placeholder="Username"
                                         value={this.state.username}
                                         onChange={(val) => this.setInputValue(
                                             'username', val)}
+                                        disabled
                                     />
                                 </Col>
-                            </Row>
-                        </FormGroup>
-                        <FormGroup controlId="formHorizontalPassword">
-                            <Row>
-                                <Col componentClass={ControlLabel} sm={3}>
-                                    Password
-                                </Col>
-                                <Col sm={9}>
-                                    <InputField
-                                        type="text"
-                                        placeholder="Password"
-                                        value={this.state.password}
-                                        onChange={(val) => this.setInputValue(
-                                            'password', val)}
-                                    />
+                                <Col sm={1}>
+                                    <Button
+                                        bsStyle="info"
+                                        onClick={() => this.generateUsername(0)}
+                                        disabled={!this.state.name || !this.state.surname}
+                                    >
+                                        Generuj
+                                    </Button>
                                 </Col>
                             </Row>
                         </FormGroup>
                         <FormGroup className='name'>
                             <Row>
                                 <Col componentClass={ControlLabel} sm={3}>
-                                    Imie:
+                                    Imię:
                                 </Col>
-                                <Col sm={9}>
+                                <Col sm={8}>
                                     <InputField
                                         type="text"
                                         placeholder="Imie"
@@ -159,7 +183,7 @@ class RegisterForm extends React.Component {
                                 <Col componentClass={ControlLabel} sm={3}>
                                     Nazwisko:
                                 </Col>
-                                <Col sm={9}>
+                                <Col sm={8}>
                                     <InputField
                                         type="text"
                                         placeholder="Nazwisko"
@@ -174,7 +198,7 @@ class RegisterForm extends React.Component {
                                 <Col componentClass={ControlLabel} sm={3}>
                                     Numer telefonu:
                                 </Col>
-                                <Col sm={9}>
+                                <Col sm={8}>
                                     <InputField
                                         type="number"
                                         placeholder="Numer telefonu"
@@ -190,7 +214,7 @@ class RegisterForm extends React.Component {
                                 <Col componentClass={ControlLabel} sm={3}>
                                     Adres:
                                 </Col>
-                                <Col sm={9}>
+                                <Col sm={8}>
                                     <InputField
                                         type="text"
                                         placeholder="Adres"
@@ -210,8 +234,8 @@ class RegisterForm extends React.Component {
                                     value={this.state.userType}
                                     onChange={e => this
                                         .setInputValue('userType', e.target.value)}>
-                                {Object.keys(UserType).map(item =>
-                                    <option value={item}>{UserType[item]}</option>
+                                {Object.keys(TmpUserType).map(item =>
+                                    <option value={item}>{TmpUserType[item]}</option>
                                 )}
                             </select>
                         </FormGroup>

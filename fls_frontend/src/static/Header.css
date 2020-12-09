@@ -1,37 +1,43 @@
-.page-header {
-    background-position: center;
-    background-size: 100%;
-    margin: 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
-    box-shadow: -5px 10px 50px #a2a2a2;
+.sidenav {
+    height: 100%;
+    width: 260px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #282c34;
+    overflow-x: hidden;
+    padding-top: 20px;
 }
 
-
-/* menu bar */
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: auto;
-    background-color: #575757;
-    border: 1px solid #b8b8b8;
-}
-
-li {
-    float: left;
-}
-
-li a {
-    display: block;
-    color: rgb(255, 255, 255);
-    text-align: center;
-    padding: 14px 30px;
+.sidenav a {
+    padding: 6px 6px 6px 20px;
     text-decoration: none;
-    font-family: 'Raleway';
-    box-shadow: 10px 10px #575757;
+    font-size: 25px;
+    color: lightgrey;
+    display: block;
 }
 
-li a:hover {
-    background-color: #a6a6a6;
+.sidenav a:hover {
+    color: #17a2b8;
+}
+
+.main {
+    margin-left: 200px; /* Same as the width of the sidenav */
+}
+
+div#userInfo {
+    color: dimgrey;
+    font-size: 12px;
+    line-height: 3px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
 }

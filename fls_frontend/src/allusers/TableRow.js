@@ -1,15 +1,17 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {getUserType} from "../header/Header";
 
 const TableRow = (props) => {
     function handleClick() {
-        sessionStorage.setItem('person', props.item['pk']);
+        sessionStorage.setItem('person', props.item['id']);
     }
 
     return (
         <tr>
-            <td>{props.item.fields.name}</td>
-            <td>{props.item.fields.surname}</td>
+            <td>{props.item.name}</td>
+            <td>{props.item.surname}</td>
+            <td>{getUserType(props.item.type)}</td>
             <td>
                 <Link
                     bsStyle="info"
@@ -22,8 +24,8 @@ const TableRow = (props) => {
                 <Link
                     bsStyle="info"
                     onClick={handleClick.bind(this)}
-                    to={'/user/' + props.item['pk'] + '/payments/'}>
-                    Platnosci
+                    to={'/user/' + props.item['id'] + '/payments/'}>
+                    Płatności
                 </Link>
             </td>
         </tr>

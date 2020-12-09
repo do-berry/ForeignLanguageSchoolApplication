@@ -1,0 +1,12 @@
+div#new {
+    display: inline-block;
+    width: 50%;
+}
+
+input#number {
+    width: 10%;
+}
+
+input#text {
+    width: 30%;
+}

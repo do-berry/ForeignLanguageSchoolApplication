@@ -6,7 +6,7 @@ import {UserType} from "../static/UserType";
 export const UserProfileSchema = () => {
     return (
         <div>
-            <h4>Dane uzytkownika</h4>
+            <h4>Dane użytkownika</h4>
             <UserCredentials/>
             {sessionStorage.getItem('userType') !== UserType.CUSTOMER_ASSISTANT &&
             <AssignedGroups/>}

@@ -21,6 +21,7 @@ class Group(models.Model):
 class Lesson(models.Model):
     date = models.DateField(auto_now=False)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    number = models.IntegerField(default=1)
 
 
 class Note(models.Model):

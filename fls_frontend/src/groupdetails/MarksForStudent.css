@@ -1,6 +1,6 @@
 table {
     table-layout: fixed;
-    width: 35%;
+    width: 45%;
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
@@ -8,4 +8,13 @@ table {
 
 td {
     width: 25%;
+}
+
+div#date {
+    width: 30%;
+    display: inline-block;
+}
+
+select#date {
+    width: 45%;
 }

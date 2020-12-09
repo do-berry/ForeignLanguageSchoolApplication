@@ -1,9 +1,13 @@
 export const Language = {
     ENG: "angielski",
     GER: "niemiecki",
-    ITA: "wloski",
+    ITA: "włoski",
     RUS: "rosyjski",
     NOR: "norweski",
+}
+
+export const getLanguageValue = (key) => {
+    return Language[key];
 }
 
 export const LanguageLevel = {
@@ -15,12 +19,16 @@ export const LanguageLevel = {
     C2: "C2",
 }
 
+export const getLanguageLevelValue = (key) => {
+    return LanguageLevel[key];
+}
+
 export const Day = {
-    D1: "poniedzialek",
+    D1: "poniedziałek",
     D2: "wtorek",
-    D3: "sroda",
+    D3: "środa",
     D4: "czwartek",
-    D5: "piatek",
+    D5: "piątek",
 }
 
 export const Group = {

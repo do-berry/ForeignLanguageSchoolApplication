@@ -26,7 +26,7 @@ export const TableRow = (props) => {
                     className='btn'
                     onClick={() => handleClick(props.value.id)}
                 >
-                    Wybierz
+                    Pokaż
                 </button>
             </td>
         </tr>

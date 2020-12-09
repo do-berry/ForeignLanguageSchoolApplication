@@ -3,12 +3,11 @@ import {Redirect} from "react-router";
 
 export const LogOut = () => {
     useEffect(() => {
-        sessionStorage.removeItem("username");
-        sessionStorage.removeItem("userId");
-        sessionStorage.removeItem("userType");
+        sessionStorage.clear();
+        window.location.reload(false);
     }, []);
 
     return (
-        <Redirect to='/'/>
+        <Redirect to='/login'/>
     );
 };

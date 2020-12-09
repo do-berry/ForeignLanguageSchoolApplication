@@ -9,10 +9,35 @@ export const UserCredentials = () => {
     const [address, setAddress] = useState('');
     const [editIsDisabled, setEditIsDisabled] = useState(true);
     const [saved, setSaved] = useState(false);
+    const [notSaved, setNotSaved] = useState(false);
     const [student, setStudent] = useState(true);
+    const [password, setPassword] = useState('');
+    const [confPassword, setConfPassword] = useState('');
 
     function saveData() {
         if (!editIsDisabled) {
+            if (password.length > 0) {
+                if (password.localeCompare(confPassword)) {
+                    console.log("wewn");
+                    setNotSaved(true);
+                    setSaved(false);
+                    return;
+                }
+                console.log("warunek");
+                fetch('http://127.0.0.1:8000/user/changepassword', {
+                    method: 'put',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: sessionStorage.getItem('userId'),
+                        password: password
+                    })
+                }).then(res => res.json())
+                    .then(res => console.log(res));
+            }
+
             fetch('http://127.0.0.1:8000/user/update', {
                 method: 'put',
                 headers: {
@@ -29,6 +54,7 @@ export const UserCredentials = () => {
             }).then(res => {
                 if (res.ok) {
                     setSaved(true);
+                    setNotSaved(false);
                 }
             });
             setEditIsDisabled(true);
@@ -62,13 +88,17 @@ export const UserCredentials = () => {
         <div id='userCredentialsForm'>
             {saved &&
             <Alert bsStyle="warning" id='savedAlert'>
-                Dane zostaly zapisane.
+                Dane zostały zapisane.
+            </Alert>}
+            {notSaved &&
+            <Alert bsStyle="warning" id='savedAlert'>
+                Hasło nie zostało zmienione. Wprowadź poprawne hasło i potwierdź.
             </Alert>}
             <div id='userCredentials'>
                 <Form horizontal>
                     <Row>
                         <Col componentClass={ControlLabel} sm={2}>
-                            Imie
+                            Imię
                         </Col>
                         <Col sm={1.5}>
                             <FormControl
@@ -98,6 +128,7 @@ export const UserCredentials = () => {
                         <Col sm={1.5}>
                             <FormControl
                                 type="number"
+                                max="999999999"
                                 value={mobileNumber}
                                 onChange={e => setMobileNumber(e.target.value)}
                                 disabled={editIsDisabled}
@@ -111,6 +142,33 @@ export const UserCredentials = () => {
                                 type="text"
                                 value={address}
                                 onChange={e => setAddress(e.target.value)}
+                                disabled={editIsDisabled}
+                            />
+                        </Col>
+                    </Row>
+                    <br/>
+                    <h5>Zmiana hasła</h5>
+                    <br/>
+                    <Row>
+                        <Col componentClass={ControlLabel} sm={2}>
+                            Nowe hasło:
+                        </Col>
+                        <Col sm={1.5}>
+                            <FormControl
+                                type="password"
+                                value={password}
+                                onChange={e => setPassword(e.target.value)}
+                                disabled={editIsDisabled}
+                            />
+                        </Col>
+                        <Col componentClass={ControlLabel} sm={2}>
+                            Potwierdź hasło:
+                        </Col>
+                        <Col sm={1.5}>
+                            <FormControl
+                                type="password"
+                                value={confPassword}
+                                onChange={e => setConfPassword(e.target.value)}
                                 disabled={editIsDisabled}
                             />
                         </Col>
@@ -133,7 +191,7 @@ export const UserCredentials = () => {
                                 disabled={!student}
                                 bsStyle='info'
                                 href={'/user/' + sessionStorage.getItem('userId') + '/payments'}
-                            >Platnosci</Button>
+                            >Płatności</Button>
                         </ButtonToolbar></Row>
                     </div>
                 </Form>

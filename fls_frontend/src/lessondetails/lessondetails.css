@@ -9,9 +9,10 @@
 }
 
 div#shownNote {
-    width: 450px;
+    width: 30%;
     margin-left: auto;
     margin-right: auto;
-    text-align: justify;
+    text-align: center;
+    display: block;
     border: 2px outset black;
 }

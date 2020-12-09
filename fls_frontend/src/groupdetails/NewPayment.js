@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
+import './NewPayment.css';
 
 export const NewPayment = (props) => {
-    const [cost, setCost] = useState(0);
-    const [description, setDescription] = useState("");
+    const [amount, setAmount] = useState(0);
+    const [details, setDetails] = useState("");
     const [paid, setPaid] = useState(false);
+    const [group, setGroup] = useState(1);
 
     function newPayment() {
+        setGroup(1);
         fetch('http://127.0.0.1:8000/payment/createpayment', {
             method: 'post',
             headers: {
@@ -13,25 +16,30 @@ export const NewPayment = (props) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                person: {id: props.user},
-                description: description,
-                to_pay: cost,
-                paid: Boolean(paid)
+                details: details,
+                amount: amount,
+                paid: Boolean(paid),
+                student: {
+                    id: props.user
+                },
+                assistant: {
+                    id: sessionStorage.getItem("userId")
+                }
             })
         });
         window.location.reload(false);
     }
 
     return (
-        <div>
+        <div id='new'>
             <br/>
-            <label>Kwota:</label>{'   '}
-            <input type='number' placeholder='kwota'
-                   value={cost} onChange={e => setCost(e.target.value)}/>
-            <br/>
-            <label>Opis:</label>{'     '}
-            <input type='text' placeholder='opis'
-                   value={description} onChange={e => setDescription(e.target.value)}/>
+            <label>Kwota [PLN]:</label>{'   '}
+            <input id='number' type='number' placeholder='kwota'
+                   value={amount} onChange={e => setAmount(e.target.value)}/>
+            {'         '}
+            <label>Szczegóły:</label>{'     '}
+            <input id='text' type='text' placeholder='opis'
+                   value={details} onChange={e => setDetails(e.target.value)}/>
             <br/>
             <label>Wplacono:</label>{'    '}
             <input type="checkbox" id="paid" value={paid}

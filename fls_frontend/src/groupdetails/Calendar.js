@@ -43,7 +43,7 @@ export const Calendar = (props) => {
                 selected={date}
                 onChange={tmp => setDate(tmp)}
             />{'     '}
-            <button type='button' onClick={addDate}>Dodaj date</button>
+            <button type='button' onClick={addDate}>Dodaj datę</button>
         </div>
     );
 }

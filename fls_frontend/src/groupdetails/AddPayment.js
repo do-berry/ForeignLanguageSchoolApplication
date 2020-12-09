@@ -65,7 +65,7 @@ export const AddPayment = (props) => {
     return (
         <div>
             <br/>
-            <button onClick={addPayment}>Dodaj platnosc</button>
+            <button onClick={addPayment}>Dodaj płatność</button>
             {'   '}
             <button onClick={acceptPayments}>{acceptButtonText}</button>
             {newPayment &&

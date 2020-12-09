@@ -13,6 +13,7 @@ django-enumfield = "==1.2.1"
 django-cors-headers = "*"
 django-enumchoicefield = "*"
 jsons = "*"
+view = "*"
 
 [requires]
 python_version = "3.8"

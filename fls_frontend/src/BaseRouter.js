@@ -23,7 +23,7 @@ const BaseRouter = () => (
         <ProtectedRoute path='/school/allusers' component={AllUsers} type={[UserType.CUSTOMER_ASSISTANT]}/>
         <ProtectedRoute path='/school/creategroup' component={CreateGroup} type={[UserType.CUSTOMER_ASSISTANT]}/>
         <ProtectedRoute path='/user/profile' component={UserProfile} type={[UserType.STUDENT, UserType.TEACHER,
-            UserType.CUSTOMER_ASSISTANT, UserType.ADMIN]}/>
+            UserType.CUSTOMER_ASSISTANT]}/>
         <ProtectedRoute path='/school/group/:id' component={GroupDetails} type={[UserType.STUDENT, UserType.TEACHER,
             UserType.CUSTOMER_ASSISTANT]}/>
         <ProtectedRoute path='/school/group/lesson/note' component={LessonDetails}
@@ -44,7 +44,8 @@ const ProtectedRoute = ({component: Component, type: type, ...rest}) => (
             && type.includes(sessionStorage.getItem('userType').toString()) ? (
                 <Component {...props} />) : (
                 <Redirect to={{pathname: '/404'}}/>
-            )) : (<Redirect to={{pathname: '/404'}}/>))}/>
+            )) : (<Redirect to={{pathname: '/404'}}/>))}
+    />
 );
 
 export default BaseRouter;

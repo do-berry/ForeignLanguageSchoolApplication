@@ -4,4 +4,18 @@ td#marks {
 
 div#newMark {
     display: inline-block;
+    width: 30%;
+}
+
+select#select {
+    width: 30%;
+    display: inline;
+}
+
+tr#mytr {
+    width: 100%;
+}
+
+th#myth {
+    width: 10%;
 }
