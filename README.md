@@ -1,4 +1,7 @@
 # ForeignLanguageSchoolApplication
 
-Backend: Django + MySQL database
+Backend: Django, Django REST Framework
+
 Frontend: React.js, Bootstrap
+
+Database: MySQL
